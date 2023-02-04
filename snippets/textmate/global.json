@@ -1,0 +1,27 @@
+{
+  "cd": {
+    "prefix": "cd",
+    "body": "/**\n * $1\n * =====================\n * $2\n *\n * Usage:\n * <element [$3]=\"$4\"></element>\n *\n * Example:\n * <i [$3]=\"$5\"></i>\n *\n *\n *  (optional)\n * ---------------------------------\n * The second parameter is the color of the star.\n *\n * Usage:\n * <element [$3]=\"expression\" [color]=\"'color'\"></element>\n *\n * Example:\n * <i [appFavoriteIcon]=\"contact.favorite\" [color]=\"'blue'></i>\n */",
+    "description": "Create comment directive"
+  },
+  "prom": {
+    "prefix": "prom",
+    "body": "Promise<${1:Type}>",
+    "description": "Promise<T=any>"
+  },
+  "cl": {
+    "prefix": "cl",
+    "body": "console.log(\"$1\", ${1:value})",
+    "description": "console.log('value', value)"
+  },
+  "cl;": {
+    "prefix": "cl;",
+    "body": "console.log(\"$1\", ${1:value});",
+    "description": "console.log('value', value);"
+  },
+  "ctrl": {
+    "prefix": "ctrl",
+    "body": "${1:public} get ${2:name}Ctrl(): ${3:FormControl} {\n  return this.${4:form}.controls.$2 as $3;\n}",
+    "description": "create get FormControl"
+  }
+}

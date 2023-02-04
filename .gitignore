@@ -1,0 +1,6 @@
+/undodir/*
+/db_ui/*
+vimspector-config/gadgets/*
+/UltiSnips/
+# plugin/packer_compiled.lua
+.netrwhist

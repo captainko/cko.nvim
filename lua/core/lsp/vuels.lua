@@ -1,0 +1,33 @@
+-- local M = {
+-- 	init_options = {
+-- 		-- languageFeatures = {
+-- 		-- 	implementation = true, -- new in @volar/vue-language-server v0.33
+-- 		-- 	references = false,
+-- 		-- 	definition = false,
+-- 		-- 	typeDefinition = false,
+-- 		-- 	callHierarchy = false,
+-- 		-- 	hover = true,
+-- 		-- 	rename = false,
+-- 		-- 	renameFileRefactoring = false,
+-- 		-- 	signatureHelp = false,
+-- 		-- 	codeAction = true,
+-- 		-- 	workspaceSymbol = true,
+-- 		-- 	completion = false,
+-- 		-- 	-- completion = {
+-- 		-- 	-- 	defaultTagNameCase = "both",
+-- 		-- 	-- 	defaultAttrNameCase = "kebabCase",
+-- 		-- 	-- 	getDocumentNameCasesRequest = false,
+-- 		-- 	-- 	getDocumentSelectionRequest = false,
+-- 		-- 	-- },
+-- 		-- },
+-- 	},
+-- 	-- settings = { html = { format = { wrapAttributes = "force-aligned" } } },
+-- 	-- root_dir = u.root_pattern("package.json", "node_modules", ".git"),
+-- 	-- on_attach = function(client, bufnr)
+-- 	-- 	if vim.g.use_eslint or vim.g.use_prettier then
+-- 	-- 		cko.lsp.disable_formatting(client)
+-- 	-- 	end
+-- 	-- 	cko.lsp.on_attach(client, bufnr)
+-- 	-- end,
+-- }
+-- return M

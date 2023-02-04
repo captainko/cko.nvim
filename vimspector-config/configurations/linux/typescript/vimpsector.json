@@ -1,0 +1,43 @@
+{
+  "configurations": {
+    "run": {
+      "adapter": "vscode-node",
+      "configuration": {
+        "request": "launch",
+        "protocol": "inspector",
+        "stopOnEntry": true,
+        "autoAttach": true,
+        "console": "integratedTerminal",
+        "runtimeExecutable": "node_modules/.bin/nodemon",
+        "runtimeArgs": [
+          "--inspect-brk",
+          "src/index.ts"
+        ],
+        "skipFiles": [
+          "node_modules/**"
+        ]
+      }
+    },
+    "attach": {
+      "adapter": "vscode-node",
+      "configuration": {
+        "request": "attach",
+        "protocol": "inspector",
+        "pauseAtEntry": false,
+        "console": "integratedTerminal",
+        "restart": true,
+        "autoAttach": true,
+        "skipFiles": [
+          "**/node_modules/**",
+          "**/node_modules/**/*.js",
+          "**/<node_internals>/**",
+          "**/<node_internals>/**/*.js",
+          "_vimspector_tmp/<node_internals>/**/*.js"
+        ],
+        "outFiles": [
+          "${workspaceRoot}/dist/**/*.js"
+        ]
+      }
+    }
+  }
+}

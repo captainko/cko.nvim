@@ -1,0 +1,52 @@
+{
+  "c": {
+    "prefix": "c",
+    "body": "chore($1): $2\n\n$0",
+    "description": "chore($1): $2"
+  },
+  "f": {
+    "prefix": "f",
+    "body": "fix($1): $2\n\n$0",
+    "description": "fix($1): $2"
+  },
+  "e": {
+    "prefix": "e",
+    "body": "feat($1): $2\n\n$0",
+    "description": "feat($1): $2"
+  },
+  "w": {
+    "prefix": "w",
+    "body": "rewrite($1): $2\n\n$0",
+    "description": "rewrite($1): $2"
+  },
+  "r": {
+    "prefix": "r",
+    "body": "refactor($1): $2\n\n$0",
+    "description": "refactor($1): $2"
+  },
+  "cw": {
+    "prefix": "cw",
+    "body": "WH: chore($1): $2\n\n$0",
+    "description": "WH: chore($1): $2"
+  },
+  "fw": {
+    "prefix": "fw",
+    "body": "WH: fix($1): $2\n\n$0",
+    "description": "WH: fix($1): $2"
+  },
+  "ew": {
+    "prefix": "ew",
+    "body": "WH: feat($1): $2\n\n$0",
+    "description": "WH: feat($1): $2"
+  },
+  "ww": {
+    "prefix": "ww",
+    "body": "WH: rewrite($1): $2\n\n$0",
+    "description": "WH: rewrite($1): $2"
+  },
+  "rw": {
+    "prefix": "rw",
+    "body": "WH: refactor($1): $2\n\n$0",
+    "description": "WH: refactor($1): $2"
+  }
+}

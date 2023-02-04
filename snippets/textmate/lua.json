@@ -1,0 +1,12 @@
+{
+  "nm": {
+    "prefix": "nm",
+    "body": "core.${1|n,i,v,x|}noremap{ \"$2\", $3 $0 }",
+    "description": "noremap"
+  },
+  "cl": {
+    "prefix": "cl",
+    "body": "P(\"$1\",${1:value})$0",
+    "description": "Inspect and return"
+  }
+}
