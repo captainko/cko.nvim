@@ -15,6 +15,31 @@ local M = {
 }
 
 function M.config()
+	local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
+	parser_configs.http = {
+		install_info = {
+			url = "https://github.com/NTBBloodbath/tree-sitter-http",
+			files = { "src/parser.c" },
+			branch = "main",
+		},
+	}
+
+	parser_configs.org = {
+		install_info = {
+			url = "https://github.com/milisims/tree-sitter-org",
+			revision = "main",
+			files = { "src/parser.c", "src/scanner.cc" },
+		},
+		filetype = "org",
+	}
+	-- list.sql = {
+	--   install_info = {
+	--     url = "https://github.com/DerekStride/tree-sitter-sql",
+	--     files = { "src/parser.c" },
+	--     branch = "main",
+	--   },
+	-- }
+
 	local langs = {
 		"bash",
 		"cmake",
@@ -57,31 +82,6 @@ function M.config()
 		-- "comment",
 		-- "sql",
 	}
-	local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
-	parser_configs.http = {
-		install_info = {
-			url = "https://github.com/NTBBloodbath/tree-sitter-http",
-			files = { "src/parser.c" },
-			branch = "main",
-		},
-	}
-
-	parser_configs.org = {
-		install_info = {
-			url = "https://github.com/milisims/tree-sitter-org",
-			revision = "main",
-			files = { "src/parser.c", "src/scanner.cc" },
-		},
-		filetype = "org",
-	}
-	-- list.sql = {
-	--   install_info = {
-	--     url = "https://github.com/DerekStride/tree-sitter-sql",
-	--     files = { "src/parser.c" },
-	--     branch = "main",
-	--   },
-	-- }
-
 	require("nvim-treesitter.configs").setup({
 		ensure_installed = langs, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
 		-- ignore_install = { "rust" },
