@@ -7,7 +7,7 @@ local M = {
 	{ "tweekmonster/startuptime.vim", cmd = { "StartupTime" } },
 	{ "nvim-lua/popup.nvim" },
 	{ "mg979/vim-visual-multi", keys = { "<C-n>" } },
-	{ "tpope/vim-sleuth", event = { "VeryLazy" }, enabled = not_has_vscode },
+	-- { "tpope/vim-sleuth", event = { "VeryLazy" }, enabled = not_has_vscode },
 	{ "tpope/vim-repeat" },
 	{ "tpope/vim-surround", event = { "VeryLazy" } }, -- Surround
 	{ "rbong/vim-flog", dependencies = { "vim-fugitive" }, enabled = not_has_vscode },
