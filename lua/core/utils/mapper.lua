@@ -1,3 +1,20 @@
+---@class core.MakeMappingOption
+---@field noremap boolean
+---@field silent  boolean
+
+---@class core.MappingOption
+---@field [1]    string - lhs
+---@field [2]    string|function - rhs
+---@field lhs    string - lhs
+---@field rhs    string|function - rhs
+---@field bufnr  number?
+---@field desc   string?
+---@field nowait boolean?
+---@field silent boolean?
+---@field expr   boolean?
+---@field unique boolean?
+---@field script string?
+
 local M = {}
 
 -- check if a mapping already exists
@@ -9,33 +26,15 @@ function M.has_map(lhs, mode)
 	return vim.fn.maparg(lhs, mode, nil, nil) ~= ""
 end
 
----@class core.MakeMappingOption
----@field noremap boolean
----@field silent  boolean
-
 ---create a mapping function factory
 ---@param mode        string
 ---@param default_opt core.MakeMappingOption
----@return fun(opts: core.MakeMappingOption)
+---@return fun(opt: core.MappingOption)
 local function make_mapper(mode, default_opt)
 	-- copy the opts table as extends will mutate the opts table passed in otherwise
 	local parent_opt = vim.deepcopy(default_opt)
 	---Create a mapping
 
-	---@class core.MappingOption
-	---@field [1]    string - lhs
-	---@field [2]    string|function - rhs
-	---@field lhs    string - lhs
-	---@field rhs    string|function - rhs
-	---@field bufnr  number?
-	---@field desc   string?
-	---@field nowait boolean?
-	---@field silent boolean?
-	---@field expr   boolean?
-	---@field unique boolean?
-	---@field script string?
-
-	---@function mapping function
 	return function(opt)
 		opt = opt and vim.deepcopy(opt) or {}
 
