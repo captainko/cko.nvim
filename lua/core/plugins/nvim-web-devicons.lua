@@ -34,6 +34,7 @@ function M.config()
 		},
 		["spec.ts"] = { icon = "", color = palette.green, name = "TsTest" },
 		["snippets"] = { icon = " ", color = palette.green, name = "Snippet" },
+		["vue"] = { icon = "﵂", name = "Vue", color = palette.green },
 	}
 
 	require("nvim-web-devicons").setup({
