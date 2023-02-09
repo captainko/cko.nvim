@@ -2,7 +2,7 @@ local a = require("plenary.async")
 local Pipeline = require("core.utils.pipeline")
 ---comment
 ---@param question string?
----@param default string?
+---@param default  string?
 ---@return string
 local function get_input(question, default)
 	question = question or ""

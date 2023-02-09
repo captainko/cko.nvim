@@ -51,7 +51,7 @@ function M.config()
 
 	---Customize null-ls attach
 	---@param client table
-	---@param bufnr number
+	---@param bufnr  number
 	local function on_attach(client, bufnr)
 		lsp.setup_autocommands(client, bufnr)
 		lsp.setup_common_mappings(client, bufnr)

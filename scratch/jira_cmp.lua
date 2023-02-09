@@ -36,7 +36,7 @@ local function parse_text_info(search_text)
 end
 
 ---comment
----@param jql string
+---@param jql      string
 ---@param and_cond string|nil
 local function add_and(jql, and_cond)
 	and_cond = and_cond or ""
