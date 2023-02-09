@@ -1,14 +1,19 @@
 ---@type LazyPlugin
 local M = {
 	"nvim-tree/nvim-tree.lua",
-	keys = { "<Leader><c-n>" },
+	keys = { {
+		"<Leader><c-n>",
+		function()
+			require("nvim-tree.api").tree.toggle(false, true)
+		end,
+	} },
 	dependencies = { "antosha417/nvim-lsp-file-operations" },
 }
 
 function M.config()
 	require("lsp-file-operations").setup()
 	local mapper = require("core.utils.mapper")
-	mapper.nnoremap({ "<Leader><c-n>", "<Cmd>NvimTreeToggle<CR>" })
+	-- mapper.nnoremap({ "<Leader><c-n>",  })
 
 	local icons = require("core.global.style").icons
 
