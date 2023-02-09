@@ -381,14 +381,13 @@ function M.setup_servers()
 		["jdtls"] = empty_config,
 		["rust_analyzer"] = empty_config,
 		["tsserver"] = function(_)
-			local opt = get_server_option("tsserver")
 			require("typescript").setup({
 				disable_commands = false, -- prevent the plugin from creating Vim commands
 				debug = false, -- enable debug logging for commands
 				go_to_source_definition = {
 					fallback = true, -- fall back to standard LSP definition on failure
 				},
-				server = opt,
+				server = get_server_option("tsserver"),
 			})
 		end,
 	})
