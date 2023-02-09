@@ -8,7 +8,9 @@ local M = {
 }
 
 function M.config()
-	require("barbecue").setup()
+	require("barbecue").setup({
+		exclude_filetypes = { "gitcommit", "toggleterm", "Trouble" },
+	})
 end
 
 return M
