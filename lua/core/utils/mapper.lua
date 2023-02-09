@@ -9,20 +9,20 @@ function M.has_map(lhs, mode)
 	return vim.fn.maparg(lhs, mode, nil, nil) ~= ""
 end
 
----@class CoreMakeMappingOption
+---@class core.MakeMappingOption
 ---@field noremap boolean
 ---@field silent  boolean
 
 ---create a mapping function factory
 ---@param mode        string
----@param default_opt CoreMakeMappingOption
----@return fun(opts: CoreMakeMappingOption)
+---@param default_opt core.MakeMappingOption
+---@return fun(opts: core.MakeMappingOption)
 local function make_mapper(mode, default_opt)
 	-- copy the opts table as extends will mutate the opts table passed in otherwise
 	local parent_opt = vim.deepcopy(default_opt)
 	---Create a mapping
 
-	---@class CoreMappingOption
+	---@class core.MappingOption
 	---@field [1]    string - lhs
 	---@field [2]    string|function - rhs
 	---@field lhs    string - lhs
@@ -61,9 +61,9 @@ local function make_mapper(mode, default_opt)
 	end
 end
 
----@type CoreMakeMappingOption
+---@type core.MakeMappingOption
 local map_opt = { noremap = false, silent = true }
----@type CoreMakeMappingOption
+---@type core.MakeMappingOption
 local noremap_opt = { noremap = true, silent = true }
 
 M.map = make_mapper("", map_opt)
@@ -91,7 +91,7 @@ M.cnoremap = make_mapper("c", { noremap = true, silent = false })
 ---Factory function to create multi mode map functions
 ---e.g. `M.map({"n", "s"}, opts)`
 ---@param target "map"|"noremap"
----@return fun(modes: string[], opts: CoreMappingOption)
+---@return fun(modes: string[], opts: core.MappingOption)
 local function multimap(target)
 	return function(modes, opts)
 		for _, m in ipairs(modes) do

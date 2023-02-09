@@ -1,5 +1,5 @@
 local M = {}
----@class CoreAutoCommand
+---@class core.AutoCommand
 ---@field description string
 ---@field event       string[]|string list of autocommand events
 ---@field pattern     string[]|string list of autocommand patterns
@@ -11,7 +11,7 @@ local M = {}
 ---Create an autocommand
 ---returns the group ID so that it can be cleared or manipulated.
 ---@param name     string
----@param commands CoreAutoCommand[]
+---@param commands core.AutoCommand[]
 ---@return number
 function M.augroup(name, commands)
 	local id = vim.api.nvim_create_augroup(name, { clear = true })
@@ -32,14 +32,14 @@ function M.augroup(name, commands)
 	return id
 end
 
---- @class CoreCommandArgs
+--- @class core.CommandArgs
 --- @field args  string
 --- @field fargs table
 --- @field bang  boolean,
 
 ---Create an nvim command
 ---@param name string
----@param rhs  string|fun(args: CoreCommandArgs)
+---@param rhs  string|fun(args: core.CommandArgs)
 ---@param opts table<string, any>?
 function M.command(name, rhs, opts)
 	opts = opts or {}
