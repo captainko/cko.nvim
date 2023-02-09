@@ -11,6 +11,7 @@ local M = {
 		"williamboman/mason-lspconfig.nvim",
 		"jose-elias-alvarez/typescript.nvim",
 		"folke/neodev.nvim",
+		"folke/neoconf.nvim",
 		"b0o/schemastore.nvim",
 	},
 }
