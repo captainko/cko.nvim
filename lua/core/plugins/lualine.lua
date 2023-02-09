@@ -3,11 +3,11 @@ local M = {
 	"nvim-lualine/lualine.nvim",
 	enabled = true,
 	lazy = false,
-	dependencies = { "SmiteshP/nvim-navic" },
+	-- dependencies = { "SmiteshP/nvim-navic" },
 }
 
 function M.config()
-	local navic = require("nvim-navic")
+	-- local navic = require("nvim-navic")
 
 	require("lualine").setup({
 		options = {
@@ -38,7 +38,12 @@ function M.config()
 				{ "filename", file_status = true, path = 1 },
 				-- 'require"lsp-status".status()',
 			},
-			lualine_x = { { navic.get_location, cond = navic.is_available }, "encoding", "fileformat", "filetype" },
+			lualine_x = {
+				-- { navic.get_location, cond = navic.is_available },
+				"encoding",
+				"fileformat",
+				"filetype",
+			},
 			lualine_y = { "progress" },
 			lualine_z = { "location" },
 		},
