@@ -1,4 +1,3 @@
-local M = {}
 ---@class core.AutoCommand
 ---@field description string
 ---@field event       string[]|string list of autocommand events
@@ -7,6 +6,13 @@ local M = {}
 ---@field nested      boolean?
 ---@field once        boolean?
 ---@field buffer      number?
+
+--- @class core.CommandArgs
+--- @field args  string
+--- @field fargs table
+--- @field bang  boolean,
+
+local M = {}
 
 ---Create an autocommand
 ---returns the group ID so that it can be cleared or manipulated.
@@ -31,11 +37,6 @@ function M.augroup(name, commands)
 	end
 	return id
 end
-
---- @class core.CommandArgs
---- @field args  string
---- @field fargs table
---- @field bang  boolean,
 
 ---Create an nvim command
 ---@param name string
