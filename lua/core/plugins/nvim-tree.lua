@@ -2,9 +2,11 @@
 local M = {
 	"nvim-tree/nvim-tree.lua",
 	keys = { "<Leader><c-n>" },
+	dependencies = { "antosha417/nvim-lsp-file-operations" },
 }
 
 function M.config()
+	require("lsp-file-operations").setup()
 	local mapper = require("core.utils.mapper")
 	mapper.nnoremap({ "<Leader><c-n>", "<Cmd>NvimTreeToggle<CR>" })
 
