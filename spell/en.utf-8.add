@@ -267,6 +267,7 @@ Selection
 Serializable
 Serv
 Ses
+SharedKernel
 Srcs
 Srv
 Ssc
@@ -766,6 +767,7 @@ graphql
 grayscale
 grey
 grp
+grpc
 gruvbox
 gsettings
 gsp
@@ -1154,6 +1156,7 @@ prntId
 proc
 projectlombok
 promisify
+proto
 providers
 ps
 psql
