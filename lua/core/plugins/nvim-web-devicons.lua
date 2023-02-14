@@ -6,10 +6,6 @@ local M = {
 function M.config()
 	local palette = require("core.global.style").palette
 	local override = {
-		csproj = {
-			icon = "",
-			color = palette.bright_blue,
-		},
 		["component.ts"] = {
 			icon = "",
 			color = palette.dark_orange,
