@@ -1,6 +1,7 @@
 ---@type LazyPlugin
 local M = {
 	"nvim-tree/nvim-tree.lua",
+	commit = "8b8d457e07d279976a9baac6bbff5aa036afdc5f",
 	keys = { {
 		"<Leader><c-n>",
 		function()
