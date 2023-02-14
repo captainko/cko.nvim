@@ -1,6 +1,7 @@
 ---@type LazyPlugin
 local M = {
 	"folke/trouble.nvim",
+	enabled = false,
 	keys = {
 		{ "<Leader>xw", "<Cmd>TroubleToggle workspace_diagnostics<CR>" },
 		{ "<Leader>xd", "<Cmd>TroubleToggle document_diagnostics<CR>" },
