@@ -93,6 +93,7 @@ function M.config()
 	require("telescope").load_extension("media_files")
 	require("telescope").load_extension("frecency")
 	require("telescope").load_extension("file_browser")
+	require("telescope").load_extension("git_worktree")
 end
 
 return M

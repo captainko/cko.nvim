@@ -25,6 +25,7 @@
   "fidget.nvim": { "branch": "main", "commit": "9dc6d15fdb877b2fb09ea0ba2dfde9beccb5965a" },
   "friendly-snippets": { "branch": "main", "commit": "1645e7cd98ed99e766c84ab3cf13a1612c77dcee" },
   "git-conflict.nvim": { "branch": "main", "commit": "c92604a64a2cce15a6e6a753f4501bcee06fa00a" },
+  "git-worktree.nvim": { "branch": "master", "commit": "d7f4e2584e81670154f07ca9fa5dd791d9c1b458" },
   "gitsigns.nvim": { "branch": "main", "commit": "a5caac26768af80b7c57b919f77b3fed3d7424d0" },
   "go.nvim": { "branch": "master", "commit": "4977d3165d6ee8a06781f7b3443484fe7e91c9a3" },
   "guess-indent.nvim": { "branch": "main", "commit": "c37467baa1a51b74ed767cbe0540fce44e03d828" },
