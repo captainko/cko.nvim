@@ -69,12 +69,12 @@ function M.config()
 	---@param bufnr number
 	local function mapped(group, bufnr)
 		bufnr = bufnr or vim.api.nvim_get_current_buf()
-		nnoremap({ "<C-A>", dial.inc_normal(group), bufnr = bufnr })
-		nnoremap({ "<C-X>", dial.dec_normal(group), bufnr = bufnr })
-		vnoremap({ "<C-A>", dial.inc_visual(group), bufnr = bufnr })
-		vnoremap({ "<C-X>", dial.dec_visual(group), bufnr = bufnr })
-		vnoremap({ "g<C-A>", dial.inc_gvisual(group), bufnr = bufnr })
-		vnoremap({ "g<C-X>", dial.dec_gvisual(group), bufnr = bufnr })
+		nnoremap({ "<C-A>", dial.inc_normal(group), buffer = bufnr })
+		nnoremap({ "<C-X>", dial.dec_normal(group), buffer = bufnr })
+		vnoremap({ "<C-A>", dial.inc_visual(group), buffer = bufnr })
+		vnoremap({ "<C-X>", dial.dec_visual(group), buffer = bufnr })
+		vnoremap({ "g<C-A>", dial.inc_gvisual(group), buffer = bufnr })
+		vnoremap({ "g<C-X>", dial.dec_gvisual(group), buffer = bufnr })
 		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-a>", require("dial.map").inc_normal(group), { noremap = false })
 	end
 

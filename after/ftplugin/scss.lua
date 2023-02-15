@@ -2,8 +2,9 @@ if vim.g.vscode then
 	return
 end
 local mapper = require("core.utils.mapper")
+---@param opts core.MappingOption
 local function b_map(opts)
-	opts.bufnr = 0
+	opts.buffer = 0
 	mapper.nnoremap(opts)
 end
 

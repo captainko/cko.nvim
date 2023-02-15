@@ -82,7 +82,7 @@ commander.augroup("SmartClose", {
 				or contains(smart_close_filetypes, vim.bo.filetype)
 
 			if is_eligible then
-				mapper.nnoremap({ "q", smart_close, bufnr = 0, nowait = true })
+				mapper.nnoremap({ "q", smart_close, buffer = 0, nowait = true })
 			end
 		end,
 	},

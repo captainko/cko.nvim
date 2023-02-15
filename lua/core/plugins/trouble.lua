@@ -1,7 +1,7 @@
 ---@type LazyPlugin
 local M = {
 	"folke/trouble.nvim",
-	enabled = false,
+	enabled = true,
 	keys = {
 		{ "<Leader>xw", "<Cmd>TroubleToggle workspace_diagnostics<CR>" },
 		{ "<Leader>xd", "<Cmd>TroubleToggle document_diagnostics<CR>" },
@@ -23,8 +23,7 @@ local M = {
 }
 
 function M.config()
-	local trouble = require("trouble")
-	trouble.setup({
+	require("trouble").setup({
 		-- your configuration comes here
 		-- or leave it empty to use the default settings
 		-- refer to the configuration section below

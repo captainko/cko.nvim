@@ -14,8 +14,8 @@ local M = {
 		lsp.on_attach(client, bufnr)
 
 		if client.server_capabilities.codeActionProvider then
-			mapper.nnoremap({ "<Leader>ca", "<Cmd>RustCodeAction<CR>", bufnr = bufnr, nowait = true })
-			mapper.vnoremap({ "<Leader>ca", "<Cmd>RustCodeAction<CR>", bufnr = bufnr, nowait = true })
+			mapper.nnoremap({ "<Leader>ca", "<Cmd>RustCodeAction<CR>", buffer = bufnr, nowait = true })
+			mapper.vnoremap({ "<Leader>ca", "<Cmd>RustCodeAction<CR>", buffer = bufnr, nowait = true })
 		end
 		mapper.nnoremap({ "<C-j>", "<Cmd>RustJoinLines<CR>" })
 	end,

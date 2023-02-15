@@ -7,7 +7,7 @@
 ---@field [2]    string|function - rhs
 ---@field lhs    string - lhs
 ---@field rhs    string|function - rhs
----@field bufnr  number?
+---@field buffer number?
 ---@field desc   string?
 ---@field nowait boolean?
 ---@field silent boolean?
@@ -26,6 +26,13 @@ function M.has_map(lhs, mode)
 	return vim.fn.maparg(lhs, mode, nil, nil) ~= ""
 end
 
+---@param opt core.MappingOption
+local function clear_opt(opt)
+	opt[1] = nil
+	opt[2] = nil
+	opt.lhs = nil
+	opt.rhs = nil
+end
 ---create a mapping function factory
 ---@param mode        string
 ---@param default_opt core.MakeMappingOption
@@ -40,23 +47,10 @@ local function make_mapper(mode, default_opt)
 
 		local lhs = opt[1] or opt.lhs
 		local rhs = opt[2] or opt.rhs
-		opt[1] = nil
-		opt[2] = nil
-		assert(type(rhs) == "string" or type(rhs) == "function", '"rhs" should be a function or string')
+		clear_opt(opt)
 
-		local bufnr = opt.bufnr
-		opt.bufnr = nil
-		if type(rhs) == "function" then
-			opt.callback = rhs
-			rhs = ""
-		end
-
-		if bufnr then
-			opt = vim.tbl_extend("keep", opt, parent_opt)
-			vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opt)
-		elseif not bufnr then
-			vim.api.nvim_set_keymap(mode, lhs, rhs, vim.tbl_extend("keep", opt, parent_opt))
-		end
+		opt = vim.tbl_extend("keep", opt, parent_opt)
+		vim.keymap.set(mode, lhs, rhs, opt)
 	end
 end
 
@@ -87,19 +81,27 @@ M.cnoremap = make_mapper("c", { noremap = true, silent = false })
 
 ---steal from @akinsho again :))
 
+---@class core.MultiMappingOption: core.MappingOption
+---@field noremap boolean
+
 ---Factory function to create multi mode map functions
----e.g. `M.map({"n", "s"}, opts)`
----@param target "map"|"noremap"
----@return fun(modes: string[], opts: core.MappingOption)
-local function multimap(target)
-	return function(modes, opts)
-		for _, m in ipairs(modes) do
-			M[m .. target](opts)
-		end
+---e.g. `M.map({"n", "s"}, opt)`
+---@param noremap boolean
+---@return fun(modes: string[], opt: core.MultiMappingOption)
+local function multimap(noremap)
+	return function(modes, opt)
+		opt = opt and vim.deepcopy(opt) or {}
+		opt.noremap = noremap
+
+		local lhs = opt[1] or opt.lhs
+		local rhs = opt[2] or opt.rhs
+
+		clear_opt(opt)
+		vim.keymap.set(modes, lhs, rhs, opt)
 	end
 end
 
-M.multi_map = multimap("map")
-M.multi_noremap = multimap("noremap")
+M.multi_map = multimap(false)
+M.multi_noremap = multimap(true)
 
 return M

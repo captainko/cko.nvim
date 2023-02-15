@@ -62,13 +62,13 @@ function M.config()
 				"<C-q>",
 				"<Cmd>lua _lazydocker_toggle()<CR>",
 				silent = true,
-				bufnr = term.bufnr,
+				buffer = term.bufnr,
 			})
 
-			tnoremap({ "<C-h>", "<C-h>", silent = true, bufnr = term.bufnr })
-			tnoremap({ "<C-j>", "<C-j>", silent = true, bufnr = term.bufnr })
-			tnoremap({ "<C-k>", "<C-k>", silent = true, bufnr = term.bufnr })
-			tnoremap({ "<C-l>", "<C-l>", silent = true, bufnr = term.bufnr })
+			tnoremap({ "<C-h>", "<C-h>", silent = true, buffer = term.bufnr })
+			tnoremap({ "<C-j>", "<C-j>", silent = true, buffer = term.bufnr })
+			tnoremap({ "<C-k>", "<C-k>", silent = true, buffer = term.bufnr })
+			tnoremap({ "<C-l>", "<C-l>", silent = true, buffer = term.bufnr })
 		end,
 		-- function to run on closing the terminal
 		-- on_close = function(term)
@@ -92,12 +92,12 @@ function M.config()
 				"<c-q>",
 				"<Cmd>lua _lazygit_toggle()<CR>",
 				silent = true,
-				bufnr = term.bufnr,
+				buffer = term.bufnr,
 			})
-			tnoremap({ "<C-h>", "<C-h>", silent = true, bufnr = term.bufnr })
-			tnoremap({ "<C-j>", "<C-j>", silent = true, bufnr = term.bufnr })
-			tnoremap({ "<C-k>", "<C-k>", silent = true, bufnr = term.bufnr })
-			tnoremap({ "<C-l>", "<C-l>", silent = true, bufnr = term.bufnr })
+			tnoremap({ "<C-h>", "<C-h>", silent = true, buffer = term.bufnr })
+			tnoremap({ "<C-j>", "<C-j>", silent = true, buffer = term.bufnr })
+			tnoremap({ "<C-k>", "<C-k>", silent = true, buffer = term.bufnr })
+			tnoremap({ "<C-l>", "<C-l>", silent = true, buffer = term.bufnr })
 		end,
 		-- function to run on closing the terminal
 		-- on_close = function(term)
@@ -129,22 +129,22 @@ function M.config()
 		tnoremap({
 			"<C-h>",
 			"<C-\\><C-n><Cmd>lua require'Navigator'.left()<CR>",
-			bufnr = 0,
+			buffer = 0,
 		})
 		tnoremap({
 			"<C-k>",
 			"<C-\\><C-n><Cmd>lua require'Navigator'.up()<CR>",
-			bufnr = 0,
+			buffer = 0,
 		})
 		tnoremap({
 			"<C-j>",
 			"<C-\\><C-n><Cmd>lua require'Navigator'.down()<CR>",
-			bufnr = 0,
+			buffer = 0,
 		})
 		tnoremap({
 			"<C-l>",
 			"<C-\\><C-n><Cmd>lua require'Navigator'.right()<CR>",
-			bufnr = 0,
+			buffer = 0,
 		})
 	end
 

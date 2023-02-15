@@ -8,8 +8,8 @@ local should_reload = false
 local function replace_termcodes(str)
 	return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
-local function map_tele(lhs, rhs, options, bufnr, mode)
-	local map_key = replace_termcodes(lhs .. rhs .. (bufnr or ""))
+local function map_tele(lhs, rhs, options, buffer, mode)
+	local map_key = replace_termcodes(lhs .. rhs .. (buffer or ""))
 
 	TelescopeMapArgs[map_key] = options or {}
 
@@ -21,13 +21,9 @@ local function map_tele(lhs, rhs, options, bufnr, mode)
 		map_key
 	)
 
-	local map_opts = { noremap = true, silent = true, nowait = true }
+	local map_opts = { noremap = true, silent = true, nowait = true, buffer = buffer }
 
-	if not bufnr then
-		vim.api.nvim_set_keymap(mode, lhs, rhs, map_opts)
-	else
-		vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, map_opts)
-	end
+	vim.keymap.set(mode, lhs, rhs, map_opts)
 end
 -- TJ config
 

@@ -43,7 +43,7 @@ function M.setup_autocommands(client, bufnr)
 				command = vim.lsp.codelens.refresh,
 			},
 		})
-		mapper.nnoremap({ "<Leader>cl", vim.lsp.codelens.run, bufnr = bufnr })
+		mapper.nnoremap({ "<Leader>cl", vim.lsp.codelens.run, buffer = bufnr })
 	end
 
 	if server_capabilities.documentHighlightProvider then
@@ -154,23 +154,23 @@ function M.setup_common_mappings(client, bufnr)
 	local server_capabilities = client.server_capabilities
 	local nnoremap = mapper.nnoremap
 
-	nnoremap({ "]g", M.diag_go_next, bufnr = bufnr, nowait = true })
-	nnoremap({ "[g", M.diag_go_prev, bufnr = bufnr, nowait = true })
-	nnoremap({ "]w", M.diag_go_next_warn, bufnr = bufnr, nowait = true })
-	nnoremap({ "[w", M.diag_go_prev_warn, bufnr = bufnr, nowait = true })
-	nnoremap({ "]e", M.diag_go_next_err, bufnr = bufnr, nowait = true })
-	nnoremap({ "[e", M.diag_go_prev_err, bufnr = bufnr, nowait = true })
+	nnoremap({ "]g", M.diag_go_next, buffer = bufnr, nowait = true })
+	nnoremap({ "[g", M.diag_go_prev, buffer = bufnr, nowait = true })
+	nnoremap({ "]w", M.diag_go_next_warn, buffer = bufnr, nowait = true })
+	nnoremap({ "[w", M.diag_go_prev_warn, buffer = bufnr, nowait = true })
+	nnoremap({ "]e", M.diag_go_next_err, buffer = bufnr, nowait = true })
+	nnoremap({ "[e", M.diag_go_prev_err, buffer = bufnr, nowait = true })
 
 	if server_capabilities.renameProvider then
-		nnoremap({ "<Leader>rr", vim.lsp.buf.rename, bufnr = bufnr, nowait = true })
+		nnoremap({ "<Leader>rr", vim.lsp.buf.rename, buffer = bufnr, nowait = true })
 	end
 
 	if server_capabilities.definitionProvider then
-		nnoremap({ "gd", vim.lsp.buf.definition, bufnr = bufnr, nowait = true })
+		nnoremap({ "gd", vim.lsp.buf.definition, buffer = bufnr, nowait = true })
 	end
 
 	if server_capabilities.inlayHintProvider then
-		nnoremap({ "<Leader>ti", "<Cmd>lua require('lsp-inlayhints').toggle()", bufnr = bufnr, nowait = true })
+		nnoremap({ "<Leader>ti", "<Cmd>lua require('lsp-inlayhints').toggle()", buffer = bufnr, nowait = true })
 	end
 
 	if server_capabilities.typeDefinitionProvider then
@@ -185,15 +185,15 @@ function M.setup_common_mappings(client, bufnr)
 	end
 
 	if server_capabilities.hoverProvider then
-		nnoremap({ "K", vim.lsp.buf.hover, bufnr = bufnr, nowait = true })
+		nnoremap({ "K", vim.lsp.buf.hover, buffer = bufnr, nowait = true })
 	end
 
 	if server_capabilities.callHierarchyProvider then
-		nnoremap({ "gI", vim.lsp.buf.incoming_calls, bufnr = bufnr, nowait = true })
+		nnoremap({ "gI", vim.lsp.buf.incoming_calls, buffer = bufnr, nowait = true })
 	end
 
 	if server_capabilities.referencesProvider then
-		nnoremap({ "gr", vim.lsp.buf.references, bufnr = bufnr, nowait = true })
+		nnoremap({ "gr", vim.lsp.buf.references, buffer = bufnr, nowait = true })
 	end
 
 	if server_capabilities.documentSymbolProvider then
@@ -219,12 +219,12 @@ function M.setup_mappings(client, bufnr)
 	-- local ft = vim.api.nvim_buf_get_option(bufnr, "filetype")
 
 	if extras.hover then
-		nnoremap({ "<Leader>K", extras.hover, bufnr = bufnr, nowait = true })
+		nnoremap({ "<Leader>K", extras.hover, buffer = bufnr, nowait = true })
 	end
 
 	if server_capabilities.codeActionProvider then
-		nnoremap({ "<Leader>ca", vim.lsp.buf.code_action, bufnr = bufnr, nowait = true })
-		vnoremap({ "<Leader>ca", vim.lsp.buf.code_action, bufnr = bufnr, nowait = true })
+		nnoremap({ "<Leader>ca", vim.lsp.buf.code_action, buffer = bufnr, nowait = true })
+		vnoremap({ "<Leader>ca", vim.lsp.buf.code_action, buffer = bufnr, nowait = true })
 	end
 
 	if server_capabilities.documentFormattingProvider then
@@ -233,7 +233,7 @@ function M.setup_mappings(client, bufnr)
 			function()
 				(extras.format or vim.lsp.buf.format)({ async = false })
 			end,
-			bufnr = bufnr,
+			buffer = bufnr,
 			nowait = true,
 		})
 	end
@@ -242,20 +242,20 @@ function M.setup_mappings(client, bufnr)
 		vnoremap({
 			"<Leader><Leader>f",
 			extras.range_format or vim.lsp.buf.format,
-			bufnr = bufnr,
+			buffer = bufnr,
 			nowait = true,
 		})
 	end
 
 	if server_capabilities.implementationProvider then
-		nnoremap({ "gi", vim.lsp.buf.implementation, bufnr = bufnr, nowait = true })
+		nnoremap({ "gi", vim.lsp.buf.implementation, buffer = bufnr, nowait = true })
 	end
 
 	if server_capabilities.typeDefinitionProvider then
 		nnoremap({
 			"<Leader>gd",
 			vim.lsp.buf.type_definition,
-			bufnr = bufnr,
+			buffer = bufnr,
 			nowait = true,
 		})
 	end

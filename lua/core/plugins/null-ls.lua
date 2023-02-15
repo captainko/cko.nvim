@@ -65,7 +65,7 @@ function M.config()
 				mapper.nnoremap({
 					"<Leader><Leader>f",
 					vim.lsp.buf.format,
-					bufnr = bufnr,
+					buffer = bufnr,
 					nowait = true,
 				})
 			end
@@ -74,13 +74,13 @@ function M.config()
 				mapper.vnoremap({
 					"<Leader><Leader>f",
 					vim.lsp.buf.format,
-					bufnr = bufnr,
+					buffer = bufnr,
 					nowait = true,
 				})
 			end
 		end
 		if not config.disable_rename and client.server_capabilities.renameProvider then
-			mapper.nnoremap({ "<Leader>rr", vim.lsp.buf.rename, bufnr = bufnr, nowait = true })
+			mapper.nnoremap({ "<Leader>rr", vim.lsp.buf.rename, buffer = bufnr, nowait = true })
 		end
 	end
 
