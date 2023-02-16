@@ -6,20 +6,14 @@ local M = {
 		{ mode = "v", "gc", noremap = false },
 		{ mode = "v", "gC", "<Plug>(comment_toggle_blockwise_visual)", noremap = false },
 		{
+			mode = { "i", "n" },
 			"<C-_>",
 			function()
 				require("Comment.api").toggle.linewise.current()
 			end,
 			noremap = false,
 		},
-		{
-			mode = "i",
-			"<C-_>",
-			function()
-				require("Comment.api").toggle.linewise.current()
-			end,
-			noremap = false,
-		},
+		{ mode = "v", "<C-_>", "<Plug>(comment_toggle_linewise_visual)", noremap = false },
 	},
 }
 function M.config()
