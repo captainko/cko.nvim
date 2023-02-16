@@ -1,7 +1,7 @@
 ---@alias core.MappingMode "c"|"i"|"n"|"o"|"s"|"t"|"v"|"x"
 
 ---@class core.MakeMappingOption
----@field noremap boolean
+---@field remap boolean
 ---@field silent  boolean
 
 ---@class core.MappingOption
@@ -20,6 +20,7 @@
 
 ---@class core.MultiMappingOption: core.MappingOption
 ---@field noremap boolean
+---@field remap boolean
 
 local M = {}
 
@@ -62,9 +63,9 @@ local function make_mapper(mode, default_opt)
 end
 
 ---@type core.MakeMappingOption
-local map_opt = { noremap = false, silent = true }
+local map_opt = { remap = true, silent = true }
 ---@type core.MakeMappingOption
-local noremap_opt = { noremap = true, silent = true }
+local noremap_opt = { remap = false, silent = true }
 
 M.map = make_mapper("", map_opt)
 M.nmap = make_mapper("n", map_opt)
@@ -74,7 +75,7 @@ M.vmap = make_mapper("v", map_opt)
 M.omap = make_mapper("o", map_opt)
 M.tmap = make_mapper("t", map_opt)
 M.smap = make_mapper("s", map_opt)
-M.cmap = make_mapper("c", { noremap = false, silent = false })
+M.cmap = make_mapper("c", { remap = true, silent = false })
 
 M.noremap = make_mapper("", noremap_opt)
 M.nnoremap = make_mapper("n", noremap_opt)
@@ -84,18 +85,18 @@ M.inoremap = make_mapper("i", noremap_opt)
 M.onoremap = make_mapper("o", noremap_opt)
 M.tnoremap = make_mapper("t", noremap_opt)
 M.snoremap = make_mapper("s", noremap_opt)
-M.cnoremap = make_mapper("c", { noremap = true, silent = false })
+M.cnoremap = make_mapper("c", { remap = false, silent = false })
 
 ---steal from @akinsho again :))
 
 ---Factory function to create multi mode map functions
 ---e.g. `M.map({"n", "s"}, opt)`
----@param noremap boolean
+---@param remap boolean
 ---@return fun(modes: core.MappingMode[], opt: core.MultiMappingOption)
-local function multimap(noremap)
+local function multimap(remap)
 	return function(modes, opt)
 		opt = opt and vim.deepcopy(opt) or {}
-		opt.noremap = noremap
+		opt.remap = remap
 
 		local lhs = opt[1] or opt.lhs
 		local rhs = opt[2] or opt.rhs
@@ -105,7 +106,7 @@ local function multimap(noremap)
 	end
 end
 
-M.multi_map = multimap(false)
-M.multi_noremap = multimap(true)
+M.multi_map = multimap(true)
+M.multi_noremap = multimap(false)
 
 return M
