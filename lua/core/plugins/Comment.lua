@@ -2,19 +2,27 @@
 local M = {
 	"numToStr/Comment.nvim",
 	keys = {
-		"<C-_>",
-		{ mode = "v", "<C-_>" },
-		"gcc",
 		"gc",
-		{ mode = "i", "<C-_>" },
-		{ mode = "n", "<C-_>" },
+		{ mode = "v", "gc", noremap = false },
+		{ mode = "v", "gC", "<Plug>(comment_toggle_blockwise_visual)", noremap = false },
+		{
+			"<C-_>",
+			function()
+				require("Comment.api").toggle.linewise.current()
+			end,
+			noremap = false,
+		},
+		{
+			mode = "i",
+			"<C-_>",
+			function()
+				require("Comment.api").toggle.linewise.current()
+			end,
+			noremap = false,
+		},
 	},
 }
 function M.config()
-	local mapper = require("core.utils.mapper")
-	mapper.nmap({ "<C-_>", "gcc" })
-	mapper.vmap({ "<C-_>", "gc" })
-	mapper.inoremap({ "<C-_>", "<C-o>gcc" })
 	require("Comment").setup({
 		ignore = "^$",
 		---@param ctx CommentCtx
@@ -33,6 +41,7 @@ function M.config()
 				location = require("ts_context_commentstring.utils").get_visual_start_location()
 			end
 
+			---@diagnostic disable-next-line: return-type-mismatch
 			return require("ts_context_commentstring.internal").calculate_commentstring({
 				key = type,
 				location = location,
