@@ -205,15 +205,6 @@ commander.augroup("UpdateVim", {
 			vim.notify(msg)
 		end,
 	},
-	{
-		-- TODO: not clear what effect this has in the post vimscript world
-		-- it correctly sources $MYVIMRC but all the other files that it
-		-- requires will need to be resourced or reloaded themselves
-		event = "BufWritePost",
-		pattern = "plugins/*.lua",
-		-- modifiers = { "++nested" },
-		command = "PackerCompile",
-	},
 	-- { event = { "FocusLost" }, pattern = { "*" }, command = "silent! wall" },
 	-- Make windows equal size when vim resizes
 	{ event = "VimResized", pattern = "*", command = "wincmd =" },

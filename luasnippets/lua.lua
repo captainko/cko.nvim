@@ -7,18 +7,6 @@ local fmt = require("luasnip.extras.fmt").fmt
 local rep = require("luasnip.extras").rep
 
 local M = {
-	-- s({
-	-- 	trig = "use",
-	-- 	name = "packer use",
-	-- 	dscr = { "packer use plugin block", "e.g.", "use {'author/plugin'}" },
-	-- }, {
-	-- 	t("use { '"),
-	-- 	i(1, "author/plugin"),
-	-- 	t("' "),
-	-- 	i(2, { ", config = function()", "", "end" }),
-	-- 	t("}"),
-	-- }),
-
 	s(
 		{ trig = "lo", name = "localize" },
 		fmt("local {} = {}", {

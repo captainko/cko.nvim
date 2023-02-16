@@ -24,7 +24,6 @@ local M = {
 					"pending",
 					"clear",
 					"teardown",
-					"packer_plugins",
 				},
 			},
 			completion = { keywordSnippet = "Replace", callSnippet = "Replace" },
