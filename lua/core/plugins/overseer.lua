@@ -7,9 +7,9 @@ local M = {
 }
 
 function M.config()
-	require("overseer").setup()
 	-- override default jsonc parser
 	require("overseer.util").decode_json = require("json5").parse
+	require("overseer").setup()
 end
 
 return M
