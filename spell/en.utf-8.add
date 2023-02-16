@@ -888,6 +888,7 @@ keepjumps
 keeppatterns
 keycloak
 keycode
+keycodes
 keydown
 keymap
 keymaps
