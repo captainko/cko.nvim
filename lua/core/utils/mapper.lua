@@ -1,19 +1,25 @@
+---@alias core.MappingMode "c"|"i"|"n"|"o"|"s"|"t"|"v"|"x"
+
 ---@class core.MakeMappingOption
 ---@field noremap boolean
 ---@field silent  boolean
 
 ---@class core.MappingOption
----@field [1]    string - lhs
----@field [2]    string|function - rhs
----@field lhs    string - lhs
----@field rhs    string|function - rhs
----@field buffer number?
----@field desc   string?
----@field nowait boolean?
----@field silent boolean?
----@field expr   boolean?
----@field unique boolean?
----@field script string?
+---@field [1]              string - lhs
+---@field [2]              string|function - rhs
+---@field lhs              string - lhs
+---@field rhs              string|function - rhs
+---@field buffer           number?
+---@field desc             string?
+---@field nowait           boolean?
+---@field silent           boolean?
+---@field expr             boolean?
+---@field replace_keycodes boolean?
+---@field unique           boolean?
+---@field script           string?
+
+---@class core.MultiMappingOption: core.MappingOption
+---@field noremap boolean
 
 local M = {}
 
@@ -33,8 +39,9 @@ local function clear_opt(opt)
 	opt.lhs = nil
 	opt.rhs = nil
 end
+
 ---create a mapping function factory
----@param mode        string
+---@param mode        "" | core.MappingMode
 ---@param default_opt core.MakeMappingOption
 ---@return fun(opt: core.MappingOption)
 local function make_mapper(mode, default_opt)
@@ -81,13 +88,10 @@ M.cnoremap = make_mapper("c", { noremap = true, silent = false })
 
 ---steal from @akinsho again :))
 
----@class core.MultiMappingOption: core.MappingOption
----@field noremap boolean
-
 ---Factory function to create multi mode map functions
 ---e.g. `M.map({"n", "s"}, opt)`
 ---@param noremap boolean
----@return fun(modes: string[], opt: core.MultiMappingOption)
+---@return fun(modes: core.MappingMode[], opt: core.MultiMappingOption)
 local function multimap(noremap)
 	return function(modes, opt)
 		opt = opt and vim.deepcopy(opt) or {}
