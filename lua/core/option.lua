@@ -134,14 +134,16 @@ o.fillchars = {
 }
 --- This is used to handle markdown code blocks where the language might
 --- be set to a value that isn't equivalent to a vim filetype
--- g.markdown_fenced_languages = {
--- 	"js=javascript",
--- 	"ts=typescript",
--- 	"shell=sh",
--- 	"bash=sh",
--- 	"console=sh",
--- 	"csharp=cs",
--- }
+g.markdown_fenced_languages = {
+	"js=javascript",
+	"jsx=javascriptreact",
+	"ts=typescript",
+	"tsx=typescriptreact",
+	"shell=sh",
+	"bash=sh",
+	"console=sh",
+	"csharp=cs",
+}
 
 -- =============================================================================
 -- }}}
