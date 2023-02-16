@@ -527,6 +527,7 @@ cr
 cre
 creCpns
 crypto
+csharp
 csproj
 css
 cssls
@@ -598,6 +599,7 @@ docson
 dofile
 dotenv
 dotfiles
+dotnet
 dracula
 dropdown
 dropdownedit
@@ -830,6 +832,7 @@ init
 initdb
 initializer
 inits
+inlined
 inoreabbrev
 inoremap
 inputrc
@@ -1456,6 +1459,7 @@ uselast
 useopen
 userdetails
 usetab
+usings
 usr
 usrs
 utc
