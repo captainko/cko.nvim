@@ -92,7 +92,7 @@ local M = {
 		enabled = not_has_vscode,
 		event = { "VeryLazy" },
 		config = function()
-			require("git-conflict").setup()
+			require("git-conflict").setup({})
 		end,
 	},
 	{ "Joakker/lua-json5", build = "./install.sh" },
