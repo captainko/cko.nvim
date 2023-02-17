@@ -3,7 +3,6 @@ local M = {
 	"nvim-lualine/lualine.nvim",
 	enabled = true,
 	lazy = false,
-	-- dependencies = { "SmiteshP/nvim-navic" },
 }
 
 function M.config()
