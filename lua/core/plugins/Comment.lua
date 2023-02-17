@@ -3,17 +3,11 @@ local M = {
 	"numToStr/Comment.nvim",
 	keys = {
 		"gc",
-		{ mode = "v", "gc", noremap = false },
-		{ mode = "v", "gC", "<Plug>(comment_toggle_blockwise_visual)", noremap = false },
-		{
-			mode = { "i", "n" },
-			"<C-_>",
-			function()
-				require("Comment.api").toggle.linewise.current()
-			end,
-			noremap = false,
-		},
-		{ mode = "v", "<C-_>", "<Plug>(comment_toggle_linewise_visual)", noremap = false },
+		{ mode = "v", "gc", remap = true },
+		{ mode = "v", "gC", "<Plug>(comment_toggle_blockwise_visual)", remap = true },
+		{ "<C-_>", "gcc", remap = true },
+		{ mode = "i", "<C-_>", remap = true, "<C-o>gcc", },
+		{ mode = "v", "<C-_>", "gcc", remap = true },
 	},
 }
 function M.config()
