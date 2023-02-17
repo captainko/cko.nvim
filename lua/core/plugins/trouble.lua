@@ -2,6 +2,7 @@
 local M = {
 	"folke/trouble.nvim",
 	enabled = true,
+	-- commit = "949199a9ac60ce784a417f90388b8f173ef53819",
 	keys = {
 		{ "<Leader>xw", "<Cmd>TroubleToggle workspace_diagnostics<CR>" },
 		{ "<Leader>xd", "<Cmd>TroubleToggle document_diagnostics<CR>" },
