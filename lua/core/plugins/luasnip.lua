@@ -3,13 +3,17 @@ local M = {
 	"L3MON4D3/LuaSnip",
 	event = { "InsertEnter" },
 	dependencies = { "rafamadriz/friendly-snippets" },
+	keys = {
+		{ "<leader>cs", "<Cmd>LuaSnipUnlinkCurrent<CR>", noremap = true },
+		{ mode = { "i", "s" }, "<C-E>", "<Plug>luasnip-next-choice", remap = true },
+	},
 }
 
 function M.config()
-	local mapper = require("core.utils.mapper")
-	mapper.nnoremap({ "<leader>cs", "<Cmd>LuaSnipUnlinkCurrent<CR>" })
-	mapper.imap({ "<C-E>", "<Plug>luasnip-next-choice" })
-	mapper.smap({ "<C-E>", "<Plug>luasnip-next-choice" })
+	-- local mapper = require("core.utils.mapper")
+	-- mapper.nnoremap({ "<leader>cs", "<Cmd>LuaSnipUnlinkCurrent<CR>" })
+	-- mapper.imap({ "<C-E>", "<Plug>luasnip-next-choice" })
+	-- mapper.smap({ "<C-E>", "<Plug>luasnip-next-choice" })
 
 	local ls = require("luasnip")
 	local types = require("luasnip.util.types")
