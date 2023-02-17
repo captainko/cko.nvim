@@ -19,6 +19,7 @@ local M = {
 function M.config()
 	local lsp = require("core.utils.lsp")
 	local commander = require("core.utils.commander")
+	local icons = require("core.global.style").icons.git
 
 	commander.command("LspLog", function()
 		vim.api.nvim_command("edit " .. vim.lsp.get_log_path())
@@ -40,7 +41,6 @@ function M.config()
 	-- Signs
 	-- =============================================================================
 
-	local icons = require("core.global.style").icons.git
 	vim.fn.sign_define({
 		{
 			name = "DiagnosticSignError",
@@ -68,12 +68,9 @@ function M.config()
 	-- Handler Override
 	-- =============================================================================
 
-	local publishDiagnostics = vim.lsp.with(function(...)
-		---@diagnostic disable-next-line: missing-parameter
+	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(function(...)
 		return vim.lsp.diagnostic.on_publish_diagnostics(...)
 	end, { virtual_text = { prefix = "▇", spacing = 2, severity_sort = true } })
-
-	vim.lsp.handlers["textDocument/publishDiagnostics"] = publishDiagnostics
 
 	-- NOTE: the hover handler returns the bufnr,winnr so can be used for mappings
 	vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
