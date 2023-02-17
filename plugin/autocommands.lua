@@ -58,7 +58,7 @@ commander.augroup("VimrcIncSearchHighlight", {
 
 local function smart_close()
 	if fn.winnr("$") ~= 1 then
-		vim.api.nvim_win_close(0, true)
+		pcall(vim.api.nvim_win_close, 0, true)
 	end
 end
 
