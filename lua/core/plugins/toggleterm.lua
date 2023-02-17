@@ -47,7 +47,7 @@ function M.config()
 	local Terminal = require("toggleterm.terminal").Terminal
 
 	local lazydocker = Terminal:new({
-		id = 100,
+		count = 9,
 		cmd = "lazydocker",
 		shade_terminals = false,
 		-- dir = "git_dir",
@@ -60,24 +60,22 @@ function M.config()
 		on_open = function(term)
 			tnoremap({
 				"<C-q>",
-				"<Cmd>lua _lazydocker_toggle()<CR>",
-				silent = true,
+				function()
+					term:close()
+				end,
 				buffer = term.bufnr,
 			})
 
-			tnoremap({ "<C-h>", "<C-h>", silent = true, buffer = term.bufnr })
-			tnoremap({ "<C-j>", "<C-j>", silent = true, buffer = term.bufnr })
-			tnoremap({ "<C-k>", "<C-k>", silent = true, buffer = term.bufnr })
-			tnoremap({ "<C-l>", "<C-l>", silent = true, buffer = term.bufnr })
+			tnoremap({ "<C-h>", "<C-h>", buffer = term.bufnr })
+			tnoremap({ "<C-j>", "<C-j>", buffer = term.bufnr })
+			tnoremap({ "<C-k>", "<C-k>", buffer = term.bufnr })
+			tnoremap({ "<C-l>", "<C-l>", buffer = term.bufnr })
 		end,
-		-- function to run on closing the terminal
-		-- on_close = function(term)
-		--   -- vim.cmd("Closing terminal")
-		-- end,
 	})
 
 	local lazygit = Terminal:new({
-		id = 101,
+		count = 8,
+		-- id = 101,
 		cmd = "lazygit",
 		shade_terminals = false,
 		-- dir = "git_dir",
@@ -90,8 +88,9 @@ function M.config()
 		on_open = function(term)
 			tnoremap({
 				"<c-q>",
-				"<Cmd>lua _lazygit_toggle()<CR>",
-				silent = true,
+				function()
+					term:close()
+				end,
 				buffer = term.bufnr,
 			})
 			tnoremap({ "<C-h>", "<C-h>", silent = true, buffer = term.bufnr })
@@ -99,56 +98,46 @@ function M.config()
 			tnoremap({ "<C-k>", "<C-k>", silent = true, buffer = term.bufnr })
 			tnoremap({ "<C-l>", "<C-l>", silent = true, buffer = term.bufnr })
 		end,
-		-- function to run on closing the terminal
-		-- on_close = function(term)
-		--   -- vim.cmd("Closing terminal")
-		-- end,
 	})
 
-	mapper.nnoremap({
-		"<LocalLeader>gg",
-		"<Cmd>lua _lazygit_toggle()<CR>",
-		silent = true,
-	})
-
-	mapper.nnoremap({
-		"<LocalLeader>dd",
-		"<Cmd>lua _lazydocker_toggle()<CR>",
-		silent = true,
-	})
-
-	function _G._lazydocker_toggle()
+	local function lazydocker_toggle()
 		lazydocker:toggle()
 	end
-	function _G._lazygit_toggle()
+	local function lazygit_toggle()
 		lazygit:toggle()
 	end
 
-	function _G._set_terminal_keymaps()
+	mapper.nnoremap({ "<LocalLeader>gg", lazygit_toggle })
+	mapper.nnoremap({ "<LocalLeader>dd", lazydocker_toggle })
+
+	local function set_terminal_keymaps(event)
 		tnoremap({ "<C-`>", [[<C-\><C-n><Cmd>ToggleTermToggleAll<CR>]] })
 		tnoremap({
 			"<C-h>",
 			"<C-\\><C-n><Cmd>lua require'Navigator'.left()<CR>",
-			buffer = 0,
+			buffer = event.buf,
 		})
 		tnoremap({
 			"<C-k>",
 			"<C-\\><C-n><Cmd>lua require'Navigator'.up()<CR>",
-			buffer = 0,
+			buffer = event.buf,
 		})
 		tnoremap({
 			"<C-j>",
 			"<C-\\><C-n><Cmd>lua require'Navigator'.down()<CR>",
-			buffer = 0,
+			buffer = event.buf,
 		})
 		tnoremap({
 			"<C-l>",
 			"<C-\\><C-n><Cmd>lua require'Navigator'.right()<CR>",
-			buffer = 0,
+			buffer = event.buf,
 		})
 	end
 
-	vim.api.nvim_command([[autocmd! TermOpen term://* lua _set_terminal_keymaps()]])
+	vim.api.nvim_create_autocmd("TermOpen", {
+		pattern = "term://*",
+		callback = set_terminal_keymaps,
+	})
 
 	mapper.nnoremap({
 		"<C-`>",
