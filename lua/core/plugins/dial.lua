@@ -11,12 +11,21 @@ function M.config()
 	local nnoremap = mapper.nnoremap
 	local vnoremap = mapper.vnoremap
 
-	nnoremap({ "<C-A>", dial.inc_normal() })
-	nnoremap({ "<C-X>", dial.dec_normal() })
-	vnoremap({ "<C-A>", dial.inc_visual() })
-	vnoremap({ "<C-X>", dial.dec_visual() })
-	vnoremap({ "g<C-A>", dial.inc_gvisual() })
-	vnoremap({ "g<C-X>", dial.dec_gvisual() })
+	--- mapping dial functions to a specific group
+	---@param group string?
+	---@param bufnr number?
+	local function create_dial_mappings(group, bufnr)
+		bufnr = bufnr or vim.api.nvim_get_current_buf()
+		nnoremap({ "<C-A>", dial.inc_normal(group), buffer = bufnr })
+		nnoremap({ "<C-X>", dial.dec_normal(group), buffer = bufnr })
+		vnoremap({ "<C-A>", dial.inc_visual(group), buffer = bufnr })
+		vnoremap({ "<C-X>", dial.dec_visual(group), buffer = bufnr })
+		vnoremap({ "g<C-A>", dial.inc_gvisual(group), buffer = bufnr })
+		vnoremap({ "g<C-X>", dial.dec_gvisual(group), buffer = bufnr })
+		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-a>", require("dial.map").inc_normal(group), { noremap = false })
+	end
+
+	create_dial_mappings(nil, nil)
 
 	local function get_default_augends()
 		return {
@@ -30,8 +39,14 @@ function M.config()
 		}
 	end
 
-	local frontend_group_text = "frontend_group"
-	local frontend_group = vim.list_extend(get_default_augends(), {
+	---@param augends Augend[]
+	---@return Augend[]
+	local function with_default_augends(augends)
+		return vim.list_extend(get_default_augends(), augends)
+	end
+
+	local FRONTEND_KEY = "frontend_group"
+	local frontend_group = with_default_augends({
 		augend.constant.new({
 			elements = { "const", "let" },
 			word = true,
@@ -39,8 +54,8 @@ function M.config()
 		}),
 	})
 
-	local backend_group_text = "backend_group"
-	local backend_group = vim.list_extend(get_default_augends(), {
+	local BACKGROUND_KEY = "backend_group"
+	local backend_augends = with_default_augends({
 		augend.constant.new({
 			elements = { "public", "private", "protected" },
 			word = true,
@@ -48,8 +63,18 @@ function M.config()
 		}),
 	})
 
-	local dependency_group_text = "dependency_group"
-	local dependency_group = {
+	local GIT_COMMIT_KEY = "git_group"
+	local git_commit_augends = with_default_augends({
+		augend.constant.new({
+			elements = { "feat", "refactor", "fix", "enhance" },
+			word = true,
+			cyclic = true,
+		}),
+	})
+
+	local DEPENDENCY_KEY = "dependency_group"
+	---@type Augend[]
+	local dependency_augends = {
 		augend.integer.alias.decimal,
 		augend.integer.alias.hex,
 		augend.constant.alias.bool,
@@ -59,36 +84,30 @@ function M.config()
 	require("dial.config").augends:register_group({
 		-- default augends used when no group name is specified
 		default = get_default_augends(),
-		[frontend_group_text] = frontend_group,
-		[backend_group_text] = backend_group,
-		[dependency_group_text] = dependency_group,
+		[FRONTEND_KEY] = frontend_group,
+		[BACKGROUND_KEY] = backend_augends,
+		[DEPENDENCY_KEY] = dependency_augends,
+		[GIT_COMMIT_KEY] = git_commit_augends,
 	})
-
-	--- mapping dial functions to a specific group
-	---@param group string
-	---@param bufnr number
-	local function mapped(group, bufnr)
-		bufnr = bufnr or vim.api.nvim_get_current_buf()
-		nnoremap({ "<C-A>", dial.inc_normal(group), buffer = bufnr })
-		nnoremap({ "<C-X>", dial.dec_normal(group), buffer = bufnr })
-		vnoremap({ "<C-A>", dial.inc_visual(group), buffer = bufnr })
-		vnoremap({ "<C-X>", dial.dec_visual(group), buffer = bufnr })
-		vnoremap({ "g<C-A>", dial.inc_gvisual(group), buffer = bufnr })
-		vnoremap({ "g<C-X>", dial.dec_gvisual(group), buffer = bufnr })
-		-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-a>", require("dial.map").inc_normal(group), { noremap = false })
-	end
 
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = { "vue", "html", "typescript", "javascript" },
 		callback = function(event)
-			mapped(frontend_group_text, event.buf)
+			create_dial_mappings(FRONTEND_KEY, event.buf)
 		end,
 	})
 
 	vim.api.nvim_create_autocmd("FileType", {
 		pattern = { "yaml", "toml", "json" },
 		callback = function(event)
-			mapped(dependency_group_text, event.buf)
+			create_dial_mappings(DEPENDENCY_KEY, event.buf)
+		end,
+	})
+
+	vim.api.nvim_create_autocmd("FileType", {
+		pattern = "gitcommit",
+		callback = function(event)
+			create_dial_mappings(GIT_COMMIT_KEY, event.buf)
 		end,
 	})
 end
