@@ -6,9 +6,8 @@ local M = {
 
 M.config = function()
 	local mapper = require("core.utils.mapper")
-	local nnoremap = mapper.nnoremap
-	nnoremap({ "<Leader>tb", "<Cmd>Gitsigns toggle_current_line_blame<CR>" })
 	local icons = require("core.global.style").icons.git
+	mapper.nnoremap({ "<Leader>tb", "<Cmd>Gitsigns toggle_current_line_blame<CR>" })
 
 	require("gitsigns").setup({
 		signs = {
