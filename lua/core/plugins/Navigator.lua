@@ -2,23 +2,35 @@
 local M = {
 	"numToStr/Navigator.nvim",
 	keys = {
-		"<C-h>",
-		"<C-k>",
-		"<C-l>",
-		"<C-j>",
+		{
+			"<C-h>",
+			function()
+				require("Navigator").left()
+			end,
+		},
+		{
+			"<C-k>",
+			function()
+				require("Navigator").up()
+			end,
+		},
+		{
+			"<C-l>",
+			function()
+				require("Navigator").right()
+			end,
+		},
+		{
+			"<C-j>",
+			function()
+				require("Navigator").down()
+			end,
+		},
 	},
 }
 
 function M.config()
-	local navigator = require("Navigator")
-	navigator.setup({ auto_save = nil, disable_on_zoom = true })
-
-	local mapper = require("core.utils.mapper")
-	local nnoremap = mapper.nnoremap
-	nnoremap({ "<C-h>", navigator.left })
-	nnoremap({ "<C-k>", navigator.up })
-	nnoremap({ "<C-l>", navigator.right })
-	nnoremap({ "<C-j>", navigator.down })
+	require("Navigator").setup({ auto_save = nil, disable_on_zoom = true })
 end
 
 return M
