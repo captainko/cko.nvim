@@ -26,8 +26,8 @@ function M.config()
 	nnoremap({ "<C-A-]>", "<Cmd>lua require('harpoon.ui').nav_next()<CR>" })
 	for i = 1, 9 do
 		nnoremap({
-			string.format("<Leader>h%s", i),
-			string.format("<Cmd>lua require('harpoon.ui').nav_file(%s)<CR>", i),
+			("<Leader>h%s"):format(i),
+			("<Cmd>lua require('harpoon.ui').nav_file(%s)<CR>"):format(i),
 		})
 	end
 end
