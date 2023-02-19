@@ -1,6 +1,7 @@
 ---@type LazyPlugin
 local M = {
 	"onsails/diaglist.nvim",
+	enabled = false,
 	event = { "User LspDiagnosticsChanged" },
 	keys = {
 		-- {
