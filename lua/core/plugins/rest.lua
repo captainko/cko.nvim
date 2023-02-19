@@ -5,12 +5,10 @@ local M = {
 }
 
 function M.config()
-	local mapper = require("core.utils.mapper")
-	mapper.nnoremap({ "<LocalLeader>rx", "<Cmd>lua require('rest-nvim').run()<CR>" })
-	mapper.nnoremap({ "<LocalLeader>rp", "<Plug>RestNvimPreview<CR>" })
-	-- nnoremap { "<LocalLeader>rp", "<Plug>RestNvimPreview" }
-	-- nnoremap { "<LocalLeader>rl", "<Plug>RestNvimLast" }
-	require("rest-nvim").setup({
+	local rest_nvim = require("rest-nvim")
+	local commander = require("core.utils.commander")
+
+	rest_nvim.setup({
 		-- Open request results in a horizontal split
 		result_split_horizontal = false,
 		-- Skip SSL verification, useful for unknown certificates
@@ -20,6 +18,18 @@ function M.config()
 		-- Jump to request line on run
 		jump_to_request = false,
 		result = { formatters = { json = "jq" } },
+	})
+
+	commander.augroup("RestNvimAugroup", {
+		{
+			event = "FileType",
+			pattern = "http",
+			command = function(event)
+				local mapper = require("core.utils.mapper")
+				mapper.nnoremap({ "<LocalLeader>rx", rest_nvim.run, buffer = event.buf })
+				mapper.nnoremap({ "<LocalLeader>rp", "<Plug>RestNvimPreview<CR>", buffer = event.buf })
+			end,
+		},
 	})
 end
 
