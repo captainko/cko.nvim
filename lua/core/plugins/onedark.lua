@@ -1,6 +1,7 @@
 ---@type LazyPlugin
 local M = {
 	"navarasu/onedark.nvim",
+	lazy = false,
 }
 
 function M.config()
