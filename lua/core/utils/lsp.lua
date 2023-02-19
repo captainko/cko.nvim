@@ -1,3 +1,4 @@
+---@diagnostic disable: need-check-nil
 local mapper = require("core.utils.mapper")
 local map_tele = require("core.telescope.mappings")
 local commander = require("core.utils.commander")
@@ -239,12 +240,7 @@ function M.setup_mappings(client, bufnr)
 	end
 
 	if server_capabilities.documentRangeFormattingProvider then
-		vnoremap({
-			"<Leader><Leader>f",
-			extras.range_format or vim.lsp.buf.format,
-			buffer = bufnr,
-			nowait = true,
-		})
+		vnoremap({ "<Leader><Leader>f", extras.range_format or vim.lsp.buf.format, buffer = bufnr, nowait = true })
 	end
 
 	if server_capabilities.implementationProvider then
@@ -252,12 +248,7 @@ function M.setup_mappings(client, bufnr)
 	end
 
 	if server_capabilities.typeDefinitionProvider then
-		nnoremap({
-			"<Leader>gd",
-			vim.lsp.buf.type_definition,
-			buffer = bufnr,
-			nowait = true,
-		})
+		nnoremap({ "<Leader>gd", vim.lsp.buf.type_definition, buffer = bufnr, nowait = true })
 	end
 end
 
@@ -380,14 +371,14 @@ function M.setup_servers()
 		end,
 		["jdtls"] = empty_config,
 		["rust_analyzer"] = empty_config,
-		["tsserver"] = function(_)
+		["tsserver"] = function(server_name)
 			require("typescript").setup({
 				disable_commands = false, -- prevent the plugin from creating Vim commands
 				debug = false, -- enable debug logging for commands
 				go_to_source_definition = {
 					fallback = true, -- fall back to standard LSP definition on failure
 				},
-				server = get_server_option("tsserver"),
+				server = get_server_option(server_name),
 			})
 		end,
 	})
