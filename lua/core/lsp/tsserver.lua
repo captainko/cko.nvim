@@ -42,8 +42,9 @@ local M = {
 	init_options = {
 		preferences = {
 			quotePreference = "auto", -- "auto" | "double" | "single";
-			--   includeCompletionsForImportStatements = true,
-			--   includeAutomaticOptionalChainCompletions = true,
+			importModuleSpecifierPreference = "non-relative",
+			  includeCompletionsForImportStatements = true,
+			  includeAutomaticOptionalChainCompletions = true,
 		},
 	},
 	capabilities = capabilities,
