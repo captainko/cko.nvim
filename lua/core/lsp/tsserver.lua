@@ -43,8 +43,8 @@ local M = {
 		preferences = {
 			quotePreference = "auto", -- "auto" | "double" | "single";
 			importModuleSpecifierPreference = "non-relative",
-			  includeCompletionsForImportStatements = true,
-			  includeAutomaticOptionalChainCompletions = true,
+			includeCompletionsForImportStatements = true,
+			includeAutomaticOptionalChainCompletions = true,
 		},
 	},
 	capabilities = capabilities,
@@ -54,13 +54,20 @@ vim.api.nvim_command([[command! TsImportAll TypescriptAddMissingImports]])
 vim.api.nvim_command([[command! TsOrgImports TypescriptOrganizeImports]])
 
 M.on_attach = function(client, bufnr)
-local mapper = require("core.utils.mapper")
+	local clients = vim.lsp.get_active_clients({ name = "denols" })
+
+	if #clients > 0 then
+		client.stop()
+		return
+	end
+
+	local mapper = require("core.utils.mapper")
 	if vim.g.use_eslint or vim.g.use_prettier then
 		lsp.disable_formatting(client)
 	end
 	lsp.on_attach(client, bufnr)
 
-	mapper.nnoremap({ "gD", "<Cmd>TypescriptGoToSourceDefinition<CR>" })
+	mapper.nnoremap({ "gD", "<Cmd>TypescriptGoToSourceDefinition<CR>", bufnr })
 	-- no default maps, so you may want to define some here
 	-- local opts = { silent = true }
 	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", opts)
