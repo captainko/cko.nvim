@@ -2,14 +2,13 @@
 local M = {
 	"sindrets/diffview.nvim",
 	cmd = { "DiffviewOpen", "DiffviewFileHistory" },
-	keys = { "<LocalLeader>gd", "<LocalLeader>gh" },
+	keys = {
+		{ "<LocalLeader>gd", "<Cmd>DiffviewOpen<CR>" },
+		{ "<LocalLeader>gh", "<Cmd>DiffviewFileHistory<CR>" },
+	},
 }
 
 function M.config()
-	local mapper = require("core.utils.mapper")
-	mapper.nnoremap({ "<LocalLeader>gd", "<Cmd>DiffviewOpen<CR>" })
-	mapper.nnoremap({ "<LocalLeader>gh", "<Cmd>DiffviewFileHistory<CR>" })
-
 	-- local cb = require("diffview.config").diffview_callback
 	require("diffview").setup({
 		file_panel = { win_config = { position = "right" } },
