@@ -53,7 +53,7 @@ local M = {
 vim.api.nvim_command([[command! TsImportAll TypescriptAddMissingImports]])
 vim.api.nvim_command([[command! TsOrgImports TypescriptOrganizeImports]])
 
-M.on_attach = function(client, bufnr)
+function M.on_attach(client, bufnr)
 	local clients = vim.lsp.get_active_clients({ name = "denols" })
 
 	if #clients > 0 then
