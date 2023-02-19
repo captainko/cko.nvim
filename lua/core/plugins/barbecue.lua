@@ -1,6 +1,7 @@
 ---@type LazyPlugin
 local M = {
 	"utilyre/barbecue.nvim",
+	enabled = not vim.g.started_by_firenvim,
 	event = { "BufReadPost" },
 	dependencies = {
 		"SmiteshP/nvim-navic",
