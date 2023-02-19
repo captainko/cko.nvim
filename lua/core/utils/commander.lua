@@ -2,15 +2,26 @@
 ---@field description string
 ---@field event       string[]|string list of autocommand events
 ---@field pattern     string[]|string list of autocommand patterns
----@field command     string|function
+---@field command     string|core.AutoCommandCallbackType
 ---@field nested      boolean?
 ---@field once        boolean?
 ---@field buffer      number?
 
---- @class core.CommandArgs
---- @field args  string
---- @field fargs table
---- @field bang  boolean,
+---@class core.CallbackArgument
+---@field id    number     autocommand id
+---@field event string     name of triggered event id
+---@field group number|nil autocommand group id event
+---@field match string     expanded value of `<amatch>`
+---@field buf   number     expanded value of `<abuf>`
+---@field file  string     expanded value of `<afile>`
+---@field data  any        arbitrary data passed from `nvim_exec_autocmds()`
+
+---@alias core.AutoCommandCallbackType fun(event: core.CallbackArgument)
+
+---@class core.CommandArgs
+---@field args  string
+---@field fargs table
+---@field bang  boolean,
 
 local M = {}
 
