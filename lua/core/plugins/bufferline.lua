@@ -1,8 +1,8 @@
 ---@type LazyPlugin
 local M = {
 	"akinsho/bufferline.nvim",
-	lazy = false,
 	event = { "BufReadPre" },
+	enabled = not vim.g.started_by_firenvim,
 }
 
 function M.config()
