@@ -20,7 +20,7 @@
 
 ---@class core.MultiMappingOption: core.MappingOption
 ---@field noremap boolean
----@field remap boolean
+---@field remap   boolean
 
 local M = {}
 
