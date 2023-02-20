@@ -357,6 +357,7 @@ akinsho
 alacritty
 alg
 aliasrc
+amatch
 amqp
 andymass
 angular2
@@ -390,6 +391,7 @@ augroup
 auth
 authman
 autocmd
+autocmds
 autocommand
 autocommands
 autocomplete
@@ -664,6 +666,7 @@ expr
 exrc
 extern
 extname
+fargs
 fasterxml
 favicon
 fb
