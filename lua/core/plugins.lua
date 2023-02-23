@@ -91,8 +91,16 @@ local M = {
 		"akinsho/git-conflict.nvim",
 		enabled = not_has_vscode,
 		event = { "VeryLazy" },
+		keys = {
+			{ "<LocalLeader>co", "<Plug>(git-conflict-ours)" },
+			{ "<LocalLeader>ct", "<Plug>(git-conflict-theirs)" },
+			{ "<LocalLeader>cb", "<Plug>(git-conflict-both)" },
+			{ "<LocalLeader>c0", "<Plug>(git-conflict-none)" },
+			{ "]x", "<Plug>(git-conflict-prev-conflict)" },
+			{ "[x", "<Plug>(git-conflict-next-conflict)" },
+		},
 		config = function()
-			require("git-conflict").setup({})
+			require("git-conflict").setup({ default_mappings = false })
 		end,
 	},
 	{ "Joakker/lua-json5", build = "./install.sh" },
