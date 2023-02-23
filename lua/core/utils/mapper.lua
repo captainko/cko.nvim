@@ -24,13 +24,13 @@
 
 local M = {}
 
--- check if a mapping already exists
+---check if a mapping already exists
 ---@param lhs  string
----@param mode string default is `n`
+---@param mode core.MappingMode default is `n`
 ---@return boolean
 function M.has_map(lhs, mode)
 	mode = mode or "n"
-	return vim.fn.maparg(lhs, mode, nil, nil) ~= ""
+	return vim.fn.mapcheck(lhs, mode) ~= 0
 end
 
 ---@param opt core.MappingOption
