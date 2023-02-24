@@ -190,6 +190,16 @@ commander.augroup("TextYankHighlight", {
 	},
 })
 
+commander.augroup("SpellOff", {
+	{
+		event = "FileType",
+		pattern = { "Outline" },
+		command = function()
+			vim.opt_local.spell = false
+		end,
+	},
+})
+
 commander.augroup("UpdateVim", {
 	{
 		-- TODO: not clear what effect this has in the post vimscript world
