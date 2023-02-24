@@ -67,7 +67,7 @@ function M.on_attach(client, bufnr)
 	end
 	lsp.on_attach(client, bufnr)
 
-	mapper.nnoremap({ "gD", "<Cmd>TypescriptGoToSourceDefinition<CR>", bufnr })
+	mapper.nnoremap({ "gD", "<Cmd>TypescriptGoToSourceDefinition<CR>", buffer = bufnr })
 	-- no default maps, so you may want to define some here
 	-- local opts = { silent = true }
 	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", opts)
