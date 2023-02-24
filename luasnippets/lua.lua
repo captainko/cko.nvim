@@ -49,7 +49,7 @@ return M
 			]],
 			{
 				i(1, "contributor/repo"),
-				i(2, "-- run config"),
+				i(2),
 			}
 		)
 	),
