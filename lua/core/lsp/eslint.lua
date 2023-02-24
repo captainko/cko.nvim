@@ -97,7 +97,7 @@ local M = {
 	settings = {
 		format = true,
 		-- format = { enable = true },
-		-- autoFixOnSave = { enable = true },
+		autoFixOnSave = true,
 	},
 	on_attach = function(client, bufnr)
 		vim.g.use_eslint = true
