@@ -6,8 +6,8 @@ local M = {
 		{ mode = "v", "gc", remap = true },
 		{ mode = "v", "gC", "<Plug>(comment_toggle_blockwise_visual)", remap = true },
 		{ "<C-_>", "gcc", remap = true },
-		{ mode = "i", "<C-_>", remap = true, "<C-o>gcc", },
-		{ mode = "v", "<C-_>", "gcc", remap = true },
+		{ mode = "i", "<C-_>", remap = true, "<C-o>gcc" },
+		{ mode = "v", "<C-_>", "gc", remap = true },
 	},
 }
 function M.config()
