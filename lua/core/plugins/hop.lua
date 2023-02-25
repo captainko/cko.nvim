@@ -2,6 +2,7 @@
 local M = {
 	"phaazon/hop.nvim",
 	event = { "CursorMoved" },
+	enabled = false,
 }
 
 function M.config()

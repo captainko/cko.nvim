@@ -13,7 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup("core.plugins", {
 	defaults = { lazy = true },
-	-- concurrency = 47,
+	concurrency = 40,
 	install = { colorscheme = { "onedark" } },
 	-- dev = { patterns = jit.os:find("Windows") and {} or { "CaptainKo" } },
 	checker = { enabled = true },
