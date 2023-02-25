@@ -137,28 +137,6 @@ local M = {
 		end,
 	},
 	{
-		"mattn/emmet-vim",
-		enabled = not_has_vscode,
-		ft = { "html", "css", "vue", "javascriptreact", "typescriptreact" },
-		init = function()
-			vim.g.user_emmet_leader_key = "<C-y>"
-			vim.g.user_emmet_install_global = false
-		end,
-		config = function()
-			local commander = require("core.utils.commander")
-			commander.augroup("FileTypeEmmetInstall", {
-				{
-					event = "FileType",
-					pattern = { "html", "css" },
-					once = true,
-					nested = true,
-					command = "EmmetInstall",
-				},
-			})
-			vim.api.nvim_command([[do FileTypeEmmetInstall]])
-		end,
-	},
-	{
 		"ray-x/go.nvim",
 		enabled = not_has_vscode,
 		ft = { "go" },
