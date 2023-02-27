@@ -16,7 +16,7 @@ local M = {
 		"hrsh7th/cmp-cmdline", -- cmd complete
 		"hrsh7th/cmp-nvim-lsp-document-symbol",
 		-- { "tzachar/cmp-fuzzy-buffer", dependencies = { "tzachar/fuzzy.nvim" } },
-		{ "tzachar/cmp-tabnine", build = "./install.sh" },
+		"tzachar/cmp-tabnine",
 	},
 }
 
@@ -82,6 +82,7 @@ function M.config()
 
 	local source_buffer = {
 		name = "buffer",
+		priority = 7,
 		option = {
 			-- show recommends from other buffers
 			get_bufnrs = function()
@@ -128,30 +129,60 @@ function M.config()
 		},
 		sorting = {
 			comparators = {
-				require("cmp_tabnine.compare"),
+				-- require("cmp_tabnine.compare"),
 				-- compare.recently_used,
+				-- compare.offset,
+				-- compare.exact,
+				-- compare.score,
+				-- compare.kind,
+				-- compare.sort_text,
+				-- compare.length,
+				-- compare.order,
+
+				compare.locality,
+				compare.recently_used,
+				compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
 				compare.offset,
-				compare.exact,
-				compare.score,
-				compare.kind,
-				compare.sort_text,
-				compare.length,
 				compare.order,
 			},
 		},
-		sources = {
-			{ name = "nvim_lsp_signature_help" },
-			{ name = "calc" },
-			{ name = "path" },
-			{ name = "luasnip", max_item_count = 4 },
-			{ name = "nvim_lsp", priority = 10 },
-			-- { name = "gh_pr" },
-			-- { name = "jira" },
-			{ name = "cmp_tabnine", max_item_count = 2 },
-			-- { name = "fuzzy_buffer", max_item_count = 3 },
+		-- sources = {
+		-- 	{ name = "nvim_lsp_signature_help" },
+		-- 	{ name = "calc" },
+		-- 	{ name = "path" },
+		-- 	{ name = "luasnip", max_item_count = 4 },
+		-- 	{ name = "nvim_lsp", priority = 10 },
+		-- 	-- { name = "gh_pr" },
+		-- 	-- { name = "jira" },
+		-- 	{ name = "cmp_tabnine", max_item_count = 2 },
+		-- 	-- { name = "fuzzy_buffer", max_item_count = 3 },
+		-- 	source_buffer,
+		-- 	-- { name = "spell", max_item_count = 3 },
+		-- },
+		sources = cmp.config.sources({
+
+			{ name = "cmp_tabnine", priority = 8 },
+			{ name = "nvim_lsp", priority = 8 },
 			source_buffer,
+			{ name = "nvim_lsp_signature_help", priority = 8 },
+			{ name = "luasnip", max_item_count = 4, priority = 7 },
+			{ name = "spell", keywork_length = 3, priority = 5 },
+			{ name = "path", priority = 4 },
+			{ name = "fuzzy_buffer", max_item_count = 3, priority = 4 },
+			{ name = "calc", priority = 3 },
+
+			-- { name = "nvim_lsp_signature_help" },
+			-- { name = "calc" },
+			-- { name = "path" },
+			-- { name = "luasnip", max_item_count = 4 },
+			-- { name = "nvim_lsp", priority = 10 },
+			-- -- { name = "gh_pr" },
+			-- -- { name = "jira" },
+			-- { name = "cmp_tabnine", max_item_count = 2 },
+			-- { name = "fuzzy_buffer", max_item_count = 3 },
+			-- source_buffer,
 			-- { name = "spell", max_item_count = 3 },
-		},
+		}),
 	})
 
 	-- Use buffer source for `/`.
