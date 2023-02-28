@@ -96,7 +96,6 @@ function M.config()
 	}
 
 	local compare = cmp.config.compare
-	---@diagnostic disable-next-line: redundant-parameter
 	cmp.setup({
 		experimental = { ghost_text = true },
 		preselect = cmp.PreselectMode.None,

@@ -34,6 +34,8 @@ function M.config()
 			["@interface"] = { fg = "$yellow", fmt = "bold" },
 			TSOperator = { fg = "$purple" },
 			NvimTreeNormal = { bg = "$bg0" },
+			NeoTreeNormal = { bg = "$bg0" },
+			NeoTreeNormalNC = { bg = "$bg0" },
 			helpCommand = { fg = "$blue" },
 			helpExample = { fg = "$blue" },
 			jsonTSLabel = { fg = "$blue" },

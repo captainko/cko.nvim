@@ -137,8 +137,6 @@ ISOString
 Imple
 Infos
 Injectable
-InsertEnter
-InsertLeave
 Inserter
 Interop
 Intl
@@ -302,7 +300,6 @@ Tooltip
 Top0
 Top1
 Tp
-Tpl
 Transactional
 Truthy
 Três
@@ -1573,3 +1570,6 @@ zshrc
 zst
 zstyle
 zulu
+TSPlayground
+APPORT
+Apport

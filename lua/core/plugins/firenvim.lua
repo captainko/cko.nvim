@@ -10,4 +10,7 @@ local M = {
 	enabled = not not vim.g.started_by_firenvim,
 }
 
+function M.config()
+	vim.opt.lines = 10
+end
 return M

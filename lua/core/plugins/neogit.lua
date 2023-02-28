@@ -21,7 +21,7 @@ local M = {
 	},
 }
 
-M.config = function()
+function M.config()
 	local neogit = require("neogit")
 
 	neogit.setup({

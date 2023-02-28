@@ -14,7 +14,7 @@ o.shortmess = {
 	T = true, -- truncate non-file messages in middle
 	f = true, -- (file x of x) instead of just (x of x
 	F = true, -- Don't give file info when editing a file, WARN: this breaks AutoCommand messages
-	s = true,
+	s = true, -- show hit `BOTTOM/TOP` when searching
 	c = true, -- hide no match
 	W = true, -- Don't show [w] or written when writing
 }

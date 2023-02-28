@@ -1,10 +1,11 @@
 ---@type LazyPlugin
 local M = {
 	"Wansmer/treesj",
+	enabled = false,
 	dependencies = { "nvim-treesitter" },
 	keys = {
-		{ mode = "n", "gS", "<Cmd>TSJSplit<CR>", noremap = true },
-		{ mode = "n", "gJ", "<Cmd>TSJJoin<CR>", noremap = true },
+		{ "gS", "<Cmd>TSJSplit<CR>", noremap = true },--[[@as LazyKeys]]
+		{ "gJ", "<Cmd>TSJJoin<CR>", noremap = true },
 	},
 }
 

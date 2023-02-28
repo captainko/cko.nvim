@@ -1,4 +1,4 @@
-local mapper = require'core.utils.mapper';
+local mapper = require("core.utils.mapper")
 local nmap = mapper.nmap
 local nnoremap = mapper.nnoremap
 local inoremap = mapper.inoremap
@@ -6,7 +6,7 @@ local vnoremap = mapper.vnoremap
 local cnoremap = mapper.cnoremap
 local multi_noremap = mapper.multi_noremap
 
-if vim.g.vscode then
+if not not vim.g.vscode then
 	nnoremap({ "<Leader>ca", "<Cmd>call VSCodeNotify('editor.action.quickFix')<CR>" })
 	nnoremap({ "gi", "<Cmd>call VSCodeNotify('editor.action.goToImplementation')<CR>" })
 	nnoremap({ "gr", "<Cmd>call VSCodeNotify('editor.action.goToReferences')<CR>" })
@@ -53,7 +53,7 @@ multi_noremap({ "n", "v" }, { "S", '"_S' })
 -- paste as interface
 nnoremap({
 	"<C-A-v>",
-	"<Cmd>lua R('core.tools.json_ts').paste_from_reg('+')<CR>",
+	"<Cmd>lua require('core.tools.json_ts').paste_from_reg('+')<CR>",
 	silent = true,
 })
 

@@ -1,11 +1,9 @@
 if vim.g.vscode then
 	return
 end
--- vim.bo.syntax = "off"
 local bo = vim.bo
 
 bo.formatoptions = "jncrql"
-
 
 local mapper = require("core.utils.mapper")
 ---@param opts core.MappingOption

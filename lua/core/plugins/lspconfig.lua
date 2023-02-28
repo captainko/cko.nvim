@@ -22,7 +22,7 @@ function M.config()
 	local icons = require("core.global.style").icons.git
 
 	commander.command("LspLog", function()
-		vim.api.nvim_command("edit " .. vim.lsp.get_log_path())
+		vim.cmd.edit(vim.lsp.get_log_path())
 	end, {})
 
 	-- require("mason-lspconfig").setup()

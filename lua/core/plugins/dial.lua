@@ -46,7 +46,7 @@ function M.config()
 		return vim.list_extend(augends, default_augends)
 	end
 
-	---comment
+	---add augends to filetype_map
 	---@param filetype string|string[]
 	---@param augends Augend[]
 	local function add_to_filetype_map(filetype, augends)
@@ -76,11 +76,17 @@ function M.config()
 				word = true,
 				cyclic = true,
 			}),
-
 			augend.constant.new({
 				elements = { "Boolean", "String", "Number", "Object", "Array" },
 				word = true,
 				cyclic = true,
+			}),
+			-- Border Vision
+			augend.constant.new({
+				elements = { "Consignee", "Consignor" },
+				word = false,
+				cyclic = true,
+				preserve_case = true,
 			}),
 		})
 	)

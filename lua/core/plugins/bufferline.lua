@@ -47,7 +47,7 @@ function M.config()
 	local function right_area()
 		---@type table
 		---@diagnostic disable-next-line: assign-type-mismatch
-		local palette = require("onedark.colors")
+		local palette = vim.fn.copy(require("onedark.colors"))
 		local results = {}
 		local error = #vim.diagnostic.get(nil, { severity = vim.diagnostic.severity.ERROR })
 		local warn = #vim.diagnostic.get(nil, { severity = vim.diagnostic.severity.WARN })
@@ -67,10 +67,7 @@ function M.config()
 		end
 
 		if warn ~= 0 then
-			table.insert(results, {
-				text = fmt_icon(icons.warn, warn),
-				guifg = palette.yellow,
-			})
+			table.insert(results, { text = fmt_icon(icons.warn, warn), guifg = palette.yellow })
 		end
 
 		if info ~= 0 then
@@ -78,10 +75,7 @@ function M.config()
 		end
 
 		if hint ~= 0 then
-			table.insert(results, {
-				text = fmt_icon(icons.hint, hint),
-				guifg = palette.purple,
-			})
+			table.insert(results, { text = fmt_icon(icons.hint, hint), guifg = palette.purple })
 		end
 		return results
 	end

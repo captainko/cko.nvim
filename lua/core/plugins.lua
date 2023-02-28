@@ -9,7 +9,7 @@ local M = {
 	{ "mg979/vim-visual-multi", keys = { "<C-n>" } },
 	-- { "tpope/vim-sleuth", event = { "VeryLazy" }, enabled = not_has_vscode },
 	{ "tpope/vim-repeat" },
-	{ "tpope/vim-surround", event = { "VeryLazy" } }, -- Surround
+	-- { "tpope/vim-surround", event = { "VeryLazy" } }, -- Surround
 	{ "rbong/vim-flog", dependencies = { "vim-fugitive" }, enabled = not_has_vscode },
 	{ "gpanders/editorconfig.nvim", enabled = not_has_vscode, event = { "VeryLazy" } },
 	{
@@ -36,19 +36,17 @@ local M = {
 	},
 	{
 		"junegunn/vim-easy-align",
-		keys = { { "ga" }, { mode = "x", "ga" } },
-		config = function()
-			local mapper = require("core.utils.mapper")
-			mapper.xmap({ "ga", "<Plug>(EasyAlign)" })
-			mapper.nmap({ "ga", "<Plug>(EasyAlign)" })
-		end,
+		keys = {
+			{ "ga", "<Plug>(EasyAlign)", remap = true },
+			{ mode = "x", "ga", "<Plug>(EasyAlign)", remap = true },
+		},
 	},
 	{ "mfussenegger/nvim-jdtls", enabled = not_has_vscode },
 	{ "Decodetalkers/csharpls-extended-lsp.nvim", enabled = not_has_vscode },
 	{ "Hoffs/omnisharp-extended-lsp.nvim", enabled = not_has_vscode },
 	{
 		"heavenshell/vim-jsdoc",
-		ft = { "js", "jsx", "ts", "tsx", "vue" },
+		ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
 		cmd = { "JsDoc" },
 		build = "make install",
 		config = function()
@@ -134,6 +132,29 @@ local M = {
 		config = function()
 			vim.g.mkdp_auto_start = 0
 			vim.g.mkdp_auto_close = 1
+		end,
+	},
+	{
+		"mattn/emmet-vim",
+		enabled = not_has_vscode,
+		ft = { "html", "css", "vue", "javascriptreact", "typescriptreact", "css", "scss" },
+		init = function()
+			vim.g.user_emmet_leader_key = "<C-y>"
+			vim.g.user_emmet_install_global = false
+		end,
+		config = function()
+			local commander = require("core.utils.commander")
+			commander.augroup("FileTypeEmmetInstall", {
+				{
+					event = "FileType",
+					pattern = { "html", "css", "scss", "vue", "javascriptreact", "typescriptreact" },
+					once = true,
+					nested = true,
+					command = "EmmetInstall",
+				},
+			})
+			-- vim.api.nvim_command([[do FileTypeEmmetInstall]])
+			vim.cmd.doautocmd("FileTypeEmmetInstall")
 		end,
 	},
 	{
