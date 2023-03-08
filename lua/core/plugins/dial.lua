@@ -26,6 +26,7 @@ function M.config()
 		augend.constant.new({ elements = { "&&", "||" }, word = false, cyclic = true }),
 		augend.constant.new({ elements = { "and", "or" }, word = true, cyclic = true, preserve_case = true }),
 		augend.constant.new({ elements = { "yes", "no" }, word = true, cyclic = true, preserve_case = true }),
+		augend.constant.new({ elements = { "TODO", "WARN" }, word = true, cyclic = true }),
 		-- switch quotes
 		-- augend.paren.new({
 		-- 	patterns = { { "'", "'" }, { '"', '"' } },
