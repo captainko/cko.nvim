@@ -43,7 +43,7 @@ function M.config()
 
 	---@param augends Augend[]
 	---@return Augend[]
-	local function with_default_augends(augends)
+	local function add_default_augends(augends)
 		return vim.list_extend(augends, default_augends)
 	end
 
@@ -59,7 +59,7 @@ function M.config()
 
 	add_to_filetype_map(
 		{ "javascript", "typescript", "vue", "html" },
-		with_default_augends({
+		add_default_augends({
 			augend.constant.new({
 				elements = { "const", "let" },
 				word = true,
@@ -87,7 +87,7 @@ function M.config()
 
 	add_to_filetype_map(
 		{ "java", "typescript", "csharp" },
-		with_default_augends({
+		add_default_augends({
 			augend.constant.new({
 				elements = { "public", "private", "protected" },
 				word = true,
@@ -105,9 +105,9 @@ function M.config()
 
 	add_to_filetype_map(
 		"gitcommit",
-		with_default_augends({
+		add_default_augends({
 			augend.constant.new({
-				elements = { "feat", "refactor", "fix", "enhance" },
+				elements = { "feat", "refactor", "fix", "enhance", "chore" },
 				word = true,
 				cyclic = true,
 			}),
