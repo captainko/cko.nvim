@@ -2,6 +2,7 @@ ABI
 ACL
 APIs
 APPCONFIG
+APPORT
 ASC
 ASPNETCORE
 ASTNode
@@ -12,6 +13,7 @@ AWS
 Acc
 Accessor
 Addr
+Apport
 Arg
 AspNetCore
 Atd
@@ -111,6 +113,7 @@ GNUPGHOME
 GO111
 GOBIN
 GOPATH
+GPT
 GQLActions
 GQLEvents
 GQLService
@@ -875,6 +878,7 @@ jsonb
 jsonc
 jsonls
 jsonwebtoken
+jsx
 jti
 jumpable
 junit
@@ -1330,6 +1334,7 @@ superclass
 superinterfaces
 sval
 svc
+sveltejs
 sw
 swapfile
 switchbuf
@@ -1401,6 +1406,7 @@ tsconfig
 tslint
 tsplayground
 tsserver
+tsx
 ttl
 tty
 ttype
@@ -1492,6 +1498,8 @@ vimwiki
 virt
 virtualedit
 visualstudio
+vite
+vitest
 vmap
 vnoremap
 volar
@@ -1570,6 +1578,3 @@ zshrc
 zst
 zstyle
 zulu
-TSPlayground
-APPORT
-Apport
