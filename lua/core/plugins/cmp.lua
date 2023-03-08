@@ -80,20 +80,22 @@ function M.config()
 		end
 	end
 
-	local source_buffer = {
-		name = "buffer",
-		priority = 7,
-		option = {
-			-- show recommends from other buffers
-			get_bufnrs = function()
-				local bufs = {}
-				for _, win in ipairs(vim.api.nvim_list_wins()) do
-					bufs[vim.api.nvim_win_get_buf(win)] = true
-				end
-				return vim.tbl_keys(bufs)
-			end,
-		},
-	}
+	local function get_buffer_source()
+		return {
+			name = "buffer",
+			priority = 7,
+			option = {
+				-- show recommends from other buffers
+				get_bufnrs = function()
+					local bufs = {}
+					for _, win in ipairs(vim.api.nvim_list_wins()) do
+						bufs[vim.api.nvim_win_get_buf(win)] = true
+					end
+					return vim.tbl_keys(bufs)
+				end,
+			},
+		}
+	end
 
 	local compare = cmp.config.compare
 	cmp.setup({
@@ -162,8 +164,8 @@ function M.config()
 
 			{ name = "cmp_tabnine", priority = 8 },
 			{ name = "nvim_lsp", priority = 8 },
-			source_buffer,
 			{ name = "nvim_lsp_signature_help", priority = 8 },
+			get_buffer_source(),
 			{ name = "luasnip", max_item_count = 4, priority = 7 },
 			{ name = "spell", keywork_length = 3, priority = 5 },
 			{ name = "path", priority = 4 },
@@ -206,11 +208,11 @@ function M.config()
 
 	cmp.setup.filetype("gitcommit", {
 		sources = {
+			get_buffer_source(),
+			{ name = "cmp_tabnine", max_item_count = 2, priority = 8 },
 			{ name = "luasnip", max_item_count = 4 },
-			{ name = "cmp_tabnine", max_item_count = 2, priority = 5 },
 			{ name = "tab", max_item_count = 4 },
 			{ name = "path" },
-			source_buffer,
 			{ name = "jira" },
 		},
 	})
@@ -221,7 +223,7 @@ function M.config()
 			{ name = "nvim_lsp", priority = 3 },
 			{ name = "luasnip", max_item_count = 4 },
 			{ name = "path" },
-			source_buffer,
+			get_buffer_source(),
 		},
 	})
 
