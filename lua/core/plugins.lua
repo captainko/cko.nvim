@@ -9,7 +9,7 @@ local M = {
 	{ "mg979/vim-visual-multi", keys = { "<C-n>" } },
 	-- { "tpope/vim-sleuth", event = { "VeryLazy" }, enabled = not_has_vscode },
 	{ "tpope/vim-repeat" },
-	-- { "tpope/vim-surround", event = { "VeryLazy" } }, -- Surround
+	{ "tpope/vim-surround", event = { "VeryLazy" } }, -- Surround
 	{ "rbong/vim-flog", dependencies = { "vim-fugitive" }, enabled = not_has_vscode },
 	{ "gpanders/editorconfig.nvim", enabled = not_has_vscode, event = { "VeryLazy" } },
 	{

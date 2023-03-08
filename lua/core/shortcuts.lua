@@ -2,8 +2,8 @@ local prev_file
 local M = {}
 
 local function open_alter_file(alter)
-	prev_file = vim.fn.expand("%")
-	prev_file = vim.fn.substitute(prev_file, [[\(.spec\)]], "", nil)
+	local current_file = vim.fn.expand("%")
+	prev_file = vim.fn.substitute(current_file, [[\(.spec\)]], "", nil)
 	-- print(vim.fn.substitute("component.spec.ts", [[\(component\|module\|controller\|repository\|entity\|service\)\(spec.\)\?.\w\+$]], "module.ts",nil));
 	vim.api.nvim_command(
 		"find "

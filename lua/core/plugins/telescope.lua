@@ -35,7 +35,10 @@ function M.config()
 		defaults = {
 			find_cmd = "fd",
 			path_display = { "smart" },
-			layout_config = { prompt_position = "top", horizontal = { width = 0.88 } },
+			layout_config = {
+				prompt_position = "top",
+				horizontal = { width = 0.94 },
+			},
 			sorting_strategy = "ascending",
 			file_ignore_patterns = {
 				-- nodejs

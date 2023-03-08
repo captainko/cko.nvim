@@ -10,6 +10,7 @@ local M = {
 		{ mode = "v", "<C-_>", "gc", remap = true },
 	},
 }
+
 function M.config()
 	require("Comment").setup({
 		ignore = "^$",

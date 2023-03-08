@@ -24,6 +24,12 @@ function M.config()
 		hint = icons.hint,
 	}
 
+	local function custom_callback(callback_name)
+		return ("<Cmd>lua require('core.plugins.nvim-tree.utils').%s()<CR>"):format(callback_name)
+	end
+
+	-- this is passed in the call to setup
+
 	require("nvim-tree").setup({
 		-- project nvim
 		sync_root_with_cwd = true,
@@ -62,7 +68,13 @@ function M.config()
 				max = "40%",
 			},
 			side = "right",
-			mappings = { custom_only = false, list = {} },
+			mappings = {
+				custom_only = false,
+				list = {
+					{ key = "<C-f>", cb = custom_callback("launch_find_files") },
+					{ key = "<C-g>", cb = custom_callback("launch_live_grep") },
+				},
+			},
 		},
 
 		renderer = {

@@ -77,7 +77,7 @@ M.tmap = make_mapper("t", map_opt)
 M.smap = make_mapper("s", map_opt)
 M.cmap = make_mapper("c", { remap = true, silent = false })
 
-M.noremap  = make_mapper("", noremap_opt)
+M.noremap = make_mapper("", noremap_opt)
 M.nnoremap = make_mapper("n", noremap_opt)
 M.xnoremap = make_mapper("x", noremap_opt)
 M.vnoremap = make_mapper("v", noremap_opt)
