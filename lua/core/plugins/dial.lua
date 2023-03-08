@@ -52,14 +52,7 @@ function M.config()
 	local function add_to_filetype_map(filetype, augends)
 		local filetypes = (type(filetype) == "string" and { filetype }) or filetype --[[@as string[] ]]
 		for _, ft in ipairs(filetypes) do
-			local augend_list = filetype_map[ft]
-
-			if augend_list == nil then
-				filetype_map[ft] = {}
-				augend_list = filetype_map[ft]
-			end
-
-			vim.list_extend(augend_list, augends)
+			filetype_map[ft] = vim.list_extend(filetype_map[ft] or {}, augends)
 		end
 	end
 
