@@ -11,7 +11,7 @@
 -- Debugging
 -- =============================================================================
 
-P = vim.pretty_print
+P = vim.print
 --- binding arguments to a function
 function B(func, ...)
 	local opts = { ... }
