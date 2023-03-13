@@ -49,7 +49,7 @@ function M.config()
 
 	---add augends to filetype_map
 	---@param filetype string|string[]
-	---@param augends Augend[]
+	---@param augends  Augend[]
 	local function add_to_filetype_map(filetype, augends)
 		local filetypes = (type(filetype) == "string" and { filetype }) or filetype --[[@as string[] ]]
 		for _, ft in ipairs(filetypes) do
@@ -107,7 +107,7 @@ function M.config()
 		"gitcommit",
 		add_default_augends({
 			augend.constant.new({
-				elements = { "feat", "refactor", "fix", "enhance", "chore" },
+				elements = { "feat", "refactor", "fix", "enhance", "chore", "style" },
 				word = true,
 				cyclic = true,
 			}),
