@@ -4,11 +4,14 @@ local t = ls.text_node
 local i = ls.insert_node
 local c = ls.choice_node
 
-local M = { s({ trig = "jt", dscr = "| JIRA: " }, { t("| JIRA: ") }) }
+local M = {
+	s({ trig = "jt", dscr = "| JIRA: " }, { t("| JIRA: ") }),
+	s({ trig = "lz", name = "Lazy lockfile" }, { t("chore(lazy): update lockfile") }),
+}
 
 local projects = { { trig = "ph", txt = "PHRM" }, { trig = "bv", txt = "BV2" } }
 
-for _, project in pairs(projects) do
+for _, project in ipairs(projects) do
 	M[#M + 1] = s({
 		trig = string.format("t%s", project.trig),
 		dscr = string.format("%s-12 #time 3h", project.txt),
