@@ -51,7 +51,7 @@ o.inccommand = "nosplit" -- show substitute results on screen
 o.signcolumn = "yes"
 o.updatetime = 300
 o.showmode = false
-o.clipboard = "unnamedplus"
+o.clipboard:append("unnamedplus")
 o.colorcolumn = "80"
 o.encoding = "UTF-8"
 o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize"
@@ -104,7 +104,7 @@ o.shiftwidth = 2
 o.wrap = false
 o.joinspaces = false -- Two spaces and grade school, we're done
 o.virtualedit = "block"
-o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→','↪ '
+o.showbreak = [[↪ ]] -- Options include -> '…', '↳ ', '→ ','↪ '
 o.formatoptions = o.formatoptions
 	- "a" -- Auto formatting is BAD.
 	- "t" -- Don't auto format my code. I got linters for that.
@@ -197,7 +197,7 @@ o.spelllang = "en_us"
 o.spellsuggest:prepend({ 12 })
 o.spelloptions = "camel"
 o.spellcapcheck = "" -- don't check for capital letters at start of sentence
-o.fileformats = { "unix", "mac", "dos" }
+o.fileformats = "unix,mac,dos"
 g.spellfile_URL = "https://ftp.nluug.nl/vim/runtime/spell" -- change defaults spell host
 
 -- =============================================================================
