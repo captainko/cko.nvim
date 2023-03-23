@@ -388,4 +388,17 @@ end
 -- }}}
 -- =============================================================================
 
+-- =============================================================================
+-- Utils
+-- =============================================================================
+
+---@param filter {id: number, bufnr: number, name: string}
+function M.stop_client(filter)
+	local clients = vim.lsp.get_active_clients(filter)
+
+	for _, client in ipairs(clients) do
+		client.stop()
+	end
+end
+
 return M
