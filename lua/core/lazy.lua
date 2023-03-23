@@ -22,20 +22,20 @@ require("lazy").setup("core.plugins", {
 		enabled = true,
 		notify = false, -- get a notification when changes are found
 	},
-	-- performance = {
-	-- 	rtp = {
-	-- 		disabled_plugins = {
-	-- 			"gzip",
-	-- 			"matchit",
-	-- 			"matchparen",
-	-- 			"netrwPlugin",
-	-- 			"tarPlugin",
-	-- 			"tohtml",
-	-- 			"tutor",
-	-- 			"zipPlugin",
-	-- 		},
-	-- 	},
-	-- },
+	performance = {
+		rtp = {
+			disabled_plugins = {
+				"gzip",
+				"matchit",
+				-- "matchparen",
+				-- "netrwPlugin",
+				"tarPlugin",
+				"tohtml",
+				"tutor",
+				"zipPlugin",
+			},
+		},
+	},
 	-- debug = true,
 })
 
