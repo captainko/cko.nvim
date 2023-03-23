@@ -738,6 +738,7 @@ gettype
 getuid
 gif
 git
+gitattributes
 gitcommit
 gitgutter
 github
@@ -831,6 +832,7 @@ incsearch
 indentexpr
 indentkeys
 inet
+ini
 init
 initdb
 initializer
@@ -939,6 +941,7 @@ loadstring
 loadview
 localhost
 localrc
+lockfile
 loclist
 lodash
 logstash
