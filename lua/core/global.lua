@@ -13,10 +13,15 @@
 
 P = vim.print
 --- binding arguments to a function
-function B(func, ...)
-	local opts = { ... }
+---@generic TParam
+---@generic TReturn
+---@param   cb fun(...: TParam): TReturn
+---@vararg  TParam
+---@return fun():TReturn
+function B(cb, ...)
+	local args = { ... }
 	return function()
-		return func(unpack(opts))
+		return cb(unpack(args))
 	end
 end
 
