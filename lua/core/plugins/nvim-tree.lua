@@ -42,8 +42,6 @@ function M.config()
 		-- project nvim ~
 		disable_netrw = false,
 		hijack_netrw = true,
-		open_on_setup = false,
-		ignore_ft_on_setup = {},
 		-- auto_close = false,
 		auto_reload_on_write = false,
 		open_on_tab = false,
@@ -68,13 +66,13 @@ function M.config()
 				max = "40%",
 			},
 			side = "right",
-			mappings = {
-				custom_only = false,
-				list = {
-					{ key = "<C-f>", cb = custom_callback("launch_find_files") },
-					{ key = "<C-g>", cb = custom_callback("launch_live_grep") },
-				},
-			},
+			-- mappings = {
+			-- 	custom_only = false,
+			-- 	list = {
+			-- 		{ key = "<C-f>", cb = custom_callback("launch_find_files") },
+			-- 		{ key = "<C-g>", cb = custom_callback("launch_live_grep") },
+			-- 	},
+			-- },
 		},
 
 		renderer = {
