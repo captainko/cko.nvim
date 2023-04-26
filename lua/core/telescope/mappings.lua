@@ -2,14 +2,8 @@ TelescopeMapArgs = TelescopeMapArgs or {}
 
 local should_reload = false
 
----replace_termcodes
----@param str string
----@return string
-local function replace_termcodes(str)
-	return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
 local function map_tele(lhs, rhs, options, buffer, mode)
-	local map_key = replace_termcodes(lhs .. rhs .. (buffer or ""))
+	local map_key = vim.keycode(lhs .. rhs .. (buffer or ""))
 
 	TelescopeMapArgs[map_key] = options or {}
 
