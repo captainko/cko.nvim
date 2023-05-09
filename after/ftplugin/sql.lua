@@ -1,7 +1,7 @@
 if vim.g.vscode then
 	return
 end
-local mapper = require("core.util.mapper")
+local mapper = require("core.utils.mapper")
 
 mapper.nnoremap({
 	"<LocalLeader>be",
