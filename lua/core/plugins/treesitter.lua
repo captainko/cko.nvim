@@ -68,6 +68,7 @@ function M.config()
 		"markdown_inline",
 		"org",
 		"prisma",
+		"pug",
 		"query",
 		"regex",
 		"rust",
