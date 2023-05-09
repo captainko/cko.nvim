@@ -32,6 +32,8 @@ function M.config()
 			["@type.qualifier"] = { fg = "$purple" },
 			["@storageClass"] = { fg = "$purple" },
 			["@interface"] = { fg = "$yellow", fmt = "bold" },
+			["@lsp.type.property"] = { fg = "$cyan" },
+			["@lsp.type.variable"] = { fg = "$fg" },
 			TSOperator = { fg = "$purple" },
 			NvimTreeNormal = { bg = "$bg0" },
 			NeoTreeNormal = { bg = "$bg0" },
