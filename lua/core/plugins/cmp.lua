@@ -99,7 +99,7 @@ function M.config()
 
 	local compare = cmp.config.compare
 	cmp.setup({
-		experimental = { ghost_text = true },
+		experimental = { ghost_text = {} },
 		preselect = cmp.PreselectMode.None,
 		snippet = {
 			expand = function(args)
@@ -115,15 +115,14 @@ function M.config()
 			["<S-Tab>"] = cmp.mapping(s_tab, { "i", "s" }),
 			["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
 			["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-			---@diagnostic disable-next-line: missing-parameter
 			["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 			["<C-e>"] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
 			["<CR>"] = cmp.mapping.confirm({
 				behavior = cmp.ConfirmBehavior.Replace,
 				select = false,
-			}),
+			}) --[[@as cmp.Mapping]],
 		},
-		window = { documentation = true },
+		window = { documentation = {} },
 		formatting = {
 			deprecated = true,
 			format = require("lspkind").cmp_format({ with_text = true, menu = menu }),
@@ -140,8 +139,8 @@ function M.config()
 				-- compare.length,
 				-- compare.order,
 
-				compare.locality,
-				compare.recently_used,
+				compare.locality --[[@as function]],
+				compare.recently_used --[[@as function]],
 				compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
 				compare.offset,
 				compare.order,
