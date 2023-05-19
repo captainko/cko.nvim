@@ -33,7 +33,7 @@ function M.config()
 			["@storageClass"] = { fg = "$purple" },
 			["@interface"] = { fg = "$yellow", fmt = "bold" },
 			["@lsp.type.property"] = { fg = "$cyan" },
-			["@lsp.type.variable"] = { fg = "$fg" },
+			["@lsp.typemod.variable.defaultLibrary"] = { fg = "$yellow" },
 			TSOperator = { fg = "$purple" },
 			NvimTreeNormal = { bg = "$bg0" },
 			NeoTreeNormal = { bg = "$bg0" },
