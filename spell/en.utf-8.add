@@ -287,6 +287,7 @@ TEXTAREA
 TJ
 TMUX
 TODO
+TParam
 TReturn
 TSLsp
 TSPlayground
@@ -448,6 +449,7 @@ bufnrs
 bufread
 bufs
 buftype
+build
 builtins
 bwipeout
 bz2
@@ -1487,6 +1489,7 @@ v4
 vaca
 validator
 validators
+vararg
 varchar
 venv
 viewoptions
@@ -1581,5 +1584,3 @@ zshrc
 zst
 zstyle
 zulu
-build
-lpcoApplicationRequests/!
