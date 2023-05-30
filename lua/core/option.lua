@@ -120,7 +120,9 @@ o.listchars = {
 	tab = "▸ ",
 	trail = "~",
 	nbsp = "%",
-	eol = "", --[[↴]]
+	-- eol = "",
+	-- eol = "↴"
+	eol = ""
 }
 o.fillchars = {
 	-- vert = "▕", -- alternatives │

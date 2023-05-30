@@ -4,7 +4,6 @@ local M = {
 }
 
 function M.config()
-	local kinds = require("core.global.style").lsp.kinds
 	require("lspkind").init({
 		-- enables text annotations
 		--
@@ -21,7 +20,7 @@ function M.config()
 		-- override preset symbols
 		--
 		-- default: {}
-		symbol_map = kinds,
+		-- symbol_map = kinds,
 	})
 end
 

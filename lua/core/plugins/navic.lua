@@ -1,10 +1,13 @@
 ---@type LazyPlugin
 local M = {
 	"SmiteshP/nvim-navic",
+	dependencies = {
+		"onsails/lspkind-nvim",
+	},
 }
 
 function M.config()
-	local kinds = require("core.global.style").lsp.kinds
+	local kinds = require("lspkind").presets.codicons
 
 	require("nvim-navic").setup({
 		highlight = true,
