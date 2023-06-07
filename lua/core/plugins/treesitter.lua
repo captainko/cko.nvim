@@ -80,6 +80,7 @@ function M.config()
 		"vim",
 		"vue",
 		"yaml",
+		"passwd",
 		-- "comment",
 		-- "sql",
 	}
