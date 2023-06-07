@@ -8,17 +8,17 @@ function M.config()
 	require("project_nvim").setup({
 		manual_mode = false,
 		patterns = {
+			"src/",
 			".mvn",
-			".sln",
-			".git",
+			"*.sln",
 			"_darcs",
 			".hg",
 			".bzr",
 			".svn",
 			"Makefile",
 			"package.json",
-			"!>packages",
-			"!>src",
+			">packages",
+			".git",
 			-- "*.csproj",
 		},
 		ignore_lsp = {
@@ -31,8 +31,9 @@ function M.config()
 			"null-ls",
 			"tailwindcss",
 			"yamlls",
-			-- "lemminx",
+			"lemminx",
 			"null-ls",
+			"markdown",
 		},
 	})
 end
