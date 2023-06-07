@@ -3,6 +3,7 @@ local M = {
 	"L3MON4D3/LuaSnip",
 	event = { "InsertEnter" },
 	dependencies = { "rafamadriz/friendly-snippets" },
+	run = "make install_jsregexp",
 	keys = {
 		{ "<leader>cs", "<Cmd>LuaSnipUnlinkCurrent<CR>", noremap = true },
 		{ mode = { "i", "s" }, "<C-E>", "<Plug>luasnip-next-choice", remap = true },
