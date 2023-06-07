@@ -1091,6 +1091,7 @@ omitempty
 onedark
 oneshot
 onoremap
+onwards
 openvpn
 operand1
 operand2
@@ -1396,6 +1397,7 @@ toastr
 todo
 todos
 toggleterm
+tohtml
 toml
 tooltip
 topdelete
@@ -1584,4 +1586,5 @@ zshrc
 zst
 zstyle
 zulu
-tohtml
+text/!
+passwd
