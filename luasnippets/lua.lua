@@ -53,6 +53,28 @@ return M
 			}
 		)
 	),
+
+	s(
+		{ trig = "lps", name = "LazyPlugin" },
+		fmt(
+			[[---@type LazyPlugin[]
+local M = {{
+	{{
+		"{}",
+		dependencies = {{}},
+		config = function()
+		end,
+	}}
+}}
+
+return M
+]],
+			{
+				i(1, "contributor/repo"),
+				-- i(2),
+			}
+		)
+	),
 }
 
 return M
