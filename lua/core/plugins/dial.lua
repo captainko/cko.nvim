@@ -66,6 +66,16 @@ function M.config()
 				cyclic = true,
 			}),
 			augend.constant.new({
+				elements = { "null", "undefined", "''" },
+				word = true,
+				cyclic = true,
+			}),
+			augend.constant.new({
+				elements = { "catch", "finally" },
+				word = true,
+				cyclic = true,
+			}),
+			augend.constant.new({
 				elements = { "boolean", "string", "number", "object" },
 				word = true,
 				cyclic = true,
