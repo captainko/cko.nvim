@@ -66,7 +66,7 @@ function M.config()
 				cyclic = true,
 			}),
 			augend.constant.new({
-				elements = { "null", "undefined", "''" },
+				elements = { "null", "undefined" },
 				word = true,
 				cyclic = true,
 			}),
