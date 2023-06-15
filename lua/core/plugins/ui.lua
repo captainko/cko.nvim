@@ -53,7 +53,8 @@ local M = {
 			local function right_area()
 				---@type table
 				---@diagnostic disable-next-line: assign-type-mismatch
-				local palette = vim.fn.copy(require("onedark.colors"))
+				local palette = require("onedark.colors")
+
 				local results = {}
 				local error = #vim.diagnostic.get(nil, { severity = vim.diagnostic.severity.ERROR })
 				local warn = #vim.diagnostic.get(nil, { severity = vim.diagnostic.severity.WARN })
@@ -69,19 +70,19 @@ local M = {
 				end
 
 				if error ~= 0 then
-					table.insert(results, { text = fmt_icon(icons.error, error), guifg = palette.red })
+					table.insert(results, { text = fmt_icon(icons.error, error), fg = palette.red })
 				end
 
 				if warn ~= 0 then
-					table.insert(results, { text = fmt_icon(icons.warn, warn), guifg = palette.yellow })
+					table.insert(results, { text = fmt_icon(icons.warn, warn), fg = palette.yellow })
 				end
 
 				if info ~= 0 then
-					table.insert(results, { text = fmt_icon(icons.info, info), guifg = palette.blue })
+					table.insert(results, { text = fmt_icon(icons.info, info), fg = palette.blue })
 				end
 
 				if hint ~= 0 then
-					table.insert(results, { text = fmt_icon(icons.hint, hint), guifg = palette.purple })
+					table.insert(results, { text = fmt_icon(icons.hint, hint), fg = palette.purple })
 				end
 				return results
 			end
@@ -111,9 +112,27 @@ local M = {
 	{
 		"Bekaboo/dropbar.nvim",
 		event = { "VeryLazy" },
+		config = function()
+			local icons = require("lspkind")
+
+			require("dropbar").setup({
+				icons = icons.symbol_map,
+				general = {
+					update_events = {
+						buf = {
+							"BufModifiedSet",
+							"FileChangedShellPost",
+							"TextChanged",
+							-- "TextChangedI",
+						},
+					},
+				},
+			})
+		end,
 	},
 	{
 		"j-hui/fidget.nvim",
+		branch = "legacy",
 		event = { "VeryLazy" },
 		config = function()
 			require("fidget").setup()
