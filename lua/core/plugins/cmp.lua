@@ -10,7 +10,7 @@ local M = {
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-buffer",
 		"hrsh7th/cmp-calc",
-		"hrsh7th/cmp-nvim-lsp-signature-help",
+		-- "hrsh7th/cmp-nvim-lsp-signature-help",
 		-- { "hrsh7th/cmp-copilot", after = "nvim-cmp" },
 		"saadparwaiz1/cmp_luasnip",
 		"hrsh7th/cmp-cmdline", -- cmd complete
@@ -117,10 +117,7 @@ function M.config()
 			["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
 			["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
 			["<C-e>"] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
-			["<CR>"] = cmp.mapping.confirm({
-				behavior = cmp.ConfirmBehavior.Replace,
-				select = false,
-			}) --[[@as cmp.Mapping]],
+			["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
 		},
 		window = { documentation = {} },
 		formatting = {
@@ -139,8 +136,10 @@ function M.config()
 				-- compare.length,
 				-- compare.order,
 
-				compare.locality --[[@as function]],
-				compare.recently_used --[[@as function]],
+				---@diagnostic disable-next-line: assign-type-mismatch
+				compare.locality,
+				---@diagnostic disable-next-line: assign-type-mismatch
+				compare.recently_used,
 				compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
 				compare.offset,
 				compare.order,
@@ -161,9 +160,10 @@ function M.config()
 		-- },
 		sources = cmp.config.sources({
 
-			{ name = "cmp_tabnine", priority = 8 },
-			{ name = "nvim_lsp", priority = 8 },
-			{ name = "nvim_lsp_signature_help", priority = 8 },
+			-- { name = "cmp_tabnine", priority = 8 },
+			{ name = "nvim_lsp_signature_help", priority = 11 },
+			{ name = "nvim_lsp", priority = 10 },
+			-- { name = "nvim_lsp_signature_help", priority = 8 },
 			get_buffer_source(),
 			{ name = "luasnip", max_item_count = 4, priority = 7 },
 			{ name = "spell", keywork_length = 3, priority = 5 },
@@ -171,7 +171,6 @@ function M.config()
 			{ name = "fuzzy_buffer", max_item_count = 3, priority = 4 },
 			{ name = "calc", priority = 3 },
 
-			-- { name = "nvim_lsp_signature_help" },
 			-- { name = "calc" },
 			-- { name = "path" },
 			-- { name = "luasnip", max_item_count = 4 },
