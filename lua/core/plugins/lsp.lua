@@ -181,7 +181,7 @@ local M = {
 				lsp.setup_autocommands(client, bufnr)
 				lsp.setup_common_mappings(client, bufnr)
 
-				local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+				local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
 				local config = filetype_config[filetype] or {}
 				local mapper = require("core.utils.mapper")
 
