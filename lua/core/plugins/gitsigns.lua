@@ -9,7 +9,8 @@ M.config = function()
 	local icons = require("core.global.style").icons.git
 	mapper.nnoremap({ "<Leader>tb", "<Cmd>Gitsigns toggle_current_line_blame<CR>" })
 
-	require("gitsigns").setup({
+	local gs = require("gitsigns")
+	gs.setup({
 		signs = {
 			add = { text = icons.add },
 			change = { text = icons.change },
@@ -22,35 +23,68 @@ M.config = function()
 		linehl = false, -- Toggle with `:Gitsigns toggle_linehl`
 		word_diff = false, -- Toggle with `:Gitsigns toggle_word_diff`
 		-- keymap = nil, -- TODO: add keymaps
-		keymaps = {
-			--   -- Default keymap options
-			noremap = true,
-
-			["n ]c"] = {
+		on_attach = function()
+			-- Navigation
+			mapper.nmap({
+				"]c",
+				function()
+					if vim.wo.diff then
+						return "]c"
+					end
+					vim.schedule(gs.next_hunk)
+					return "<Ignore>"
+				end,
 				expr = true,
-				"&diff ? ']c' : '<Cmd>lua require\"gitsigns.actions\".next_hunk()<CR>'",
-			},
-			["n [c"] = {
-				expr = true,
-				"&diff ? '[c' : '<Cmd>lua require\"gitsigns.actions\".prev_hunk()<CR>'",
-			},
+			})
+			mapper.nmap({
+				"[c",
+				function()
+					if vim.wo.diff then
+						return "[c"
+					end
+					vim.schedule(gs.prev_hunk)
+					return "<Ignore>"
+				end,
+			})
 
-			["n <Leader>hp"] = '<Cmd>lua require"gitsigns".preview_hunk()<CR>',
-			["n <Leader>hs"] = '<Cmd>lua require"gitsigns".stage_hunk()<CR>',
-			["v <Leader>hs"] = '<Cmd>lua require"gitsigns".stage_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-			["n <Leader>hu"] = '<Cmd>lua require"gitsigns".undo_stage_hunk()<CR>',
-			["n <Leader>hr"] = '<Cmd>lua require"gitsigns".reset_hunk()<CR>',
-			["v <Leader>hr"] = '<Cmd>lua require"gitsigns".reset_hunk({vim.fn.line("."), vim.fn.line("v")})<CR>',
-			--   ["n <Leader>hR"] = "<Cmd>lua require\"gitsigns\".reset_buffer()<CR>",
-			--   ["n <Leader>hp"] = "<Cmd>lua require\"gitsigns\".preview_hunk()<CR>",
-			--   ["n <Leader>hb"] = "<Cmd>lua require\"gitsigns\".blame_line(true)<CR>",
-			--   ["n <Leader>hS"] = "<Cmd>lua require\"gitsigns\".stage_buffer()<CR>",
-			--   ["n <Leader>hU"] = "<Cmd>lua require\"gitsigns\".reset_buffer_index()<CR>",
+			-- Actions
+			mapper.nmap({ "<leader>hs", gs.stage_hunk })
+			mapper.nmap({ "<leader>hr", gs.reset_hunk })
+			mapper.vmap({
+				"<leader>hs",
+				function()
+					gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+				end,
+			})
+			mapper.vmap({
+				"<leader>hr",
+				function()
+					gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+				end,
+			})
+			mapper.nmap({ "<leader>hS", gs.stage_buffer })
+			mapper.nmap({ "<leader>hS", gs.reset_buffer })
+			mapper.nmap({ "<leader>hu", gs.undo_stage_hunk })
+			mapper.nmap({ "<leader>hp", gs.preview_hunk })
+			mapper.nmap({
+				"<leader>hb",
+				function()
+					gs.blame_line({ full = true })
+				end,
+			})
+			mapper.nmap({
+				"<leader>tb",
+				gs.toggle_current_line_blame,
+			})
 
-			--   -- Text objects
-			["o ih"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
-			["x ih"] = ':<C-U>lua require"gitsigns.actions".select_hunk()<CR>',
-		},
+			mapper.nmap({
+				"<leader>td",
+				gs.toggle_deleted,
+			})
+
+			-- Text object
+			mapper.multi_map({ "o", "x" }, { "ih", ":<C-U>Gitsigns select_hunk<CR>" })
+		end,
 		watch_gitdir = { interval = 1000, follow_files = true },
 		attach_to_untracked = true,
 		current_line_blame = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
