@@ -3,44 +3,7 @@ local not_has_vscode = not vim.g.vscode
 
 ---@type LazyPlugin[]
 local M = {
-	{ "nvim-lua/plenary.nvim" },
 	{ "tweekmonster/startuptime.vim", cmd = { "StartupTime" } },
-	{ "nvim-lua/popup.nvim" },
-	{ "mg979/vim-visual-multi", keys = { "<C-n>" } },
-	-- { "tpope/vim-sleuth", event = { "VeryLazy" }, enabled = not_has_vscode },
-	{ "tpope/vim-repeat" },
-	{ "tpope/vim-surround", event = { "VeryLazy" } }, -- Surround
-	{ "rbong/vim-flog", dependencies = { "vim-fugitive" }, enabled = not_has_vscode },
-	{ "gpanders/editorconfig.nvim", enabled = not_has_vscode, event = { "VeryLazy" } },
-	{
-		"mbbill/undotree",
-		event = { "VeryLazy" },
-		enabled = not_has_vscode,
-		config = function()
-			local mapper = require("core.utils.mapper")
-			vim.o.undofile = true
-			vim.o.undodir = vim.fn.stdpath("data") .. "/undodir"
-			mapper.nnoremap({ "<Leader>tu", "<Cmd>UndotreeToggle<CR>" })
-		end,
-	},
-	{
-		"windwp/nvim-autopairs",
-		event = { "InsertEnter" },
-		config = function()
-			require("nvim-autopairs").setup({
-				check_ts = true,
-				fast_wrap = {},
-				map_cr = true,
-			})
-		end,
-	},
-	{
-		"junegunn/vim-easy-align",
-		keys = {
-			{ "ga", "<Plug>(EasyAlign)", remap = true },
-			{ mode = "x", "ga", "<Plug>(EasyAlign)", remap = true },
-		},
-	},
 	{ "mfussenegger/nvim-jdtls", enabled = not_has_vscode },
 	{ "Decodetalkers/csharpls-extended-lsp.nvim", enabled = not_has_vscode },
 	{ "Hoffs/omnisharp-extended-lsp.nvim", enabled = not_has_vscode },
@@ -132,29 +95,6 @@ local M = {
 		config = function()
 			vim.g.mkdp_auto_start = 0
 			vim.g.mkdp_auto_close = 1
-		end,
-	},
-	{
-		"mattn/emmet-vim",
-		enabled = not_has_vscode,
-		ft = { "html", "css", "vue", "javascriptreact", "typescriptreact", "css", "scss" },
-		init = function()
-			vim.g.user_emmet_leader_key = "<C-y>"
-			vim.g.user_emmet_install_global = false
-		end,
-		config = function()
-			local commander = require("core.utils.commander")
-			commander.augroup("FileTypeEmmetInstall", {
-				{
-					event = "FileType",
-					pattern = { "html", "css", "scss", "vue", "javascriptreact", "typescriptreact" },
-					once = true,
-					nested = true,
-					command = "EmmetInstall",
-				},
-			})
-			-- vim.api.nvim_command([[do FileTypeEmmetInstall]])
-			vim.cmd.doautocmd("FileTypeEmmetInstall")
 		end,
 	},
 	{
