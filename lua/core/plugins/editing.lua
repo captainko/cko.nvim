@@ -10,7 +10,7 @@ local M = {
 	{ "gpanders/editorconfig.nvim", enabled = not_has_vscode, event = { "VeryLazy" } },
 	{
 		"mbbill/undotree",
-		event = { "VeryLazy" },
+		lazy = false,
 		enabled = not_has_vscode,
 		config = function()
 			local mapper = require("core.utils.mapper")
