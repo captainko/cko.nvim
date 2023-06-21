@@ -34,6 +34,7 @@ function M.config()
 			"lemminx",
 			"null-ls",
 			"markdown",
+			"taplo",
 		},
 	})
 end
