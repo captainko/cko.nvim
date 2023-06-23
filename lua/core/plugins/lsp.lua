@@ -367,6 +367,18 @@ local M = {
 			})
 		end,
 	},
+
+	{
+		"pmizio/typescript-tools.nvim",
+		lazy = false,
+		enabled = false,
+		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+		config = function(self, opts)
+			require("typescript-tools").setup({
+				on_attach = require("core.lsp.tsserver").on_attach,
+			})
+		end,
+	},
 }
 
 return M
