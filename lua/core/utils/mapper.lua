@@ -1,8 +1,8 @@
 ---@alias core.MappingMode "c"|"i"|"n"|"o"|"s"|"t"|"v"|"x"
 
 ---@class core.MakeMappingOption
----@field remap boolean
----@field silent  boolean
+---@field remap  boolean
+---@field silent boolean
 
 ---@class core.MappingOption
 ---@field [1]              string - lhs
