@@ -4,9 +4,6 @@ local not_has_vscode = not vim.g.vscode
 ---@type LazyPlugin[]
 local M = {
 	{ "tweekmonster/startuptime.vim", cmd = { "StartupTime" } },
-	{ "mfussenegger/nvim-jdtls", enabled = not_has_vscode },
-	{ "Decodetalkers/csharpls-extended-lsp.nvim", enabled = not_has_vscode },
-	{ "Hoffs/omnisharp-extended-lsp.nvim", enabled = not_has_vscode },
 	{
 		"heavenshell/vim-jsdoc",
 		ft = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
@@ -37,15 +34,6 @@ local M = {
 		event = { "VeryLazy" },
 		config = function()
 			require("nvim_context_vt").setup({})
-		end,
-	},
-	{
-		"nvim-treesitter/playground",
-		cmd = { "TSPlaygroundToggle" },
-		keys = { "<Leader>tp" },
-		config = function()
-			local mapper = require("core.utils.mapper")
-			mapper.nnoremap({ "<Leader>tp", "<Cmd>TSPlaygroundToggle<CR>" })
 		end,
 	},
 	{
