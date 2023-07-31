@@ -37,7 +37,7 @@ function M.config()
 			border = border,
 			-- width = <value>,
 			-- height = <value>,
-			winblend = 10,
+			-- winblend = 10,
 			highlights = { border = "Normal", background = "Terminal" },
 		},
 	})
