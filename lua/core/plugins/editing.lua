@@ -1,10 +1,9 @@
 local not_has_vscode = not vim.g.vscode
 
----@type LazyPlugin[]
 local M = {
 	{ "mg979/vim-visual-multi", keys = { "<C-n>" } },
 	-- { "tpope/vim-sleuth", event = { "VeryLazy" }, enabled = not_has_vscode },
-	{ "tpope/vim-repeat" },
+	{ "tpope/vim-repeat", event = { "VeryLazy" } },
 	{ "tpope/vim-surround", event = { "VeryLazy" } }, -- Surround
 	{ "rbong/vim-flog", dependencies = { "vim-fugitive" }, enabled = not_has_vscode },
 	{ "gpanders/editorconfig.nvim", enabled = not_has_vscode, event = { "VeryLazy" } },
