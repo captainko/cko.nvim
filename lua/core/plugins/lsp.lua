@@ -2,7 +2,6 @@
 local M = {
 	{
 		"onsails/lspkind-nvim",
-		dependencies = {},
 		config = function()
 			require("lspkind").init({
 				-- enables text annotations
@@ -379,6 +378,8 @@ local M = {
 			})
 		end,
 	},
+
+	{ "mfussenegger/nvim-jdtls", ft = { "java" } },
 }
 
 return M
