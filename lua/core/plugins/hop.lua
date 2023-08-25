@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"phaazon/hop.nvim",
 	event = { "CursorMoved" },

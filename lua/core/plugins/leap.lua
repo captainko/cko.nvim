@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"ggandor/leap.nvim",
 	enabled = false,

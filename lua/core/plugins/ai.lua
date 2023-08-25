@@ -1,7 +1,8 @@
----@type LazyPlugin[]
+---@type LazyPluginSpec[]
 local M = {
 	{
 		"jackMort/ChatGPT.nvim",
+		enabled = false,
 		cmd = { "ChatGPT", "ChatGPTActAs" },
 		dependencies = {
 			"MunifTanjim/nui.nvim",

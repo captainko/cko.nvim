@@ -1,7 +1,7 @@
 ---@type boolean
 local not_has_vscode = not vim.g.vscode
 
----@type LazyPlugin[]
+---@type LazyPluginSpec[]
 local M = {
 	{ "tweekmonster/startuptime.vim", cmd = { "StartupTime" } },
 	{

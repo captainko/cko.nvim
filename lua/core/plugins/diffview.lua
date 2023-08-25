@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"sindrets/diffview.nvim",
 	cmd = { "DiffviewOpen", "DiffviewFileHistory" },

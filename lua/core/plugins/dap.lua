@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"mfussenegger/nvim-dap",
 	keys = { "<F5>", "<Leader>db" },

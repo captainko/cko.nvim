@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"akinsho/toggleterm.nvim",
 	keys = { "<c-`>", "<LocalLeader>gg" },

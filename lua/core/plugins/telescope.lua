@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"nvim-telescope/telescope.nvim",
 	enabled = not vim.g.vscode,

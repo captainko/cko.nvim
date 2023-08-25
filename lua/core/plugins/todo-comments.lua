@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"folke/todo-comments.nvim",
 	event = { "VeryLazy" },

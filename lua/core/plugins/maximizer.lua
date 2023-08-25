@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"szw/vim-maximizer",
 	keys = { "<Leader>tz" },

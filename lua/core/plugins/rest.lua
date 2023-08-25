@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"NTBBloodbath/rest.nvim",
 	ft = { "http" },

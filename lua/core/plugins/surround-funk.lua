@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"Matt-A-Bennett/vim-surround-funk",
 	event = { "VeryLazy" },

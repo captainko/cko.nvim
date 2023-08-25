@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"nmac427/guess-indent.nvim",
 	enabled = not vim.g.vscode,

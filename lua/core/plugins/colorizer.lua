@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"norcalli/nvim-colorizer.lua",
 	event = { "VeryLazy" },

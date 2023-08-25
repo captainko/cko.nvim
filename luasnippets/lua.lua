@@ -36,7 +36,7 @@ local M = {
 	s(
 		{ trig = "lp", name = "LazyPlugin" },
 		fmt(
-			[[---@type LazyPlugin
+			[[---@type LazyPluginSpec
 local M = {{
 	"{}"
 }}
@@ -57,7 +57,7 @@ return M
 	s(
 		{ trig = "lps", name = "LazyPlugin" },
 		fmt(
-			[[---@type LazyPlugin[]
+			[[---@type LazyPluginSpec[]
 local M = {{
 	{{
 		"{}",

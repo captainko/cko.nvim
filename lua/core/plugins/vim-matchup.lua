@@ -1,4 +1,4 @@
----@type LazyPlugin
+---@type LazyPluginSpec
 local M = {
 	"andymass/vim-matchup",
 	event = { "CursorMoved" },
