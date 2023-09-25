@@ -3,7 +3,6 @@ local M = {
 	{
 
 		"nvim-treesitter/nvim-treesitter",
-		-- commit = "3af1220e18034eb2ce7d1c8e77055bc3bf3c1c36",
 		build = ":TSUpdate", -- We recommend updating the parsers on update
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
@@ -73,6 +72,7 @@ local M = {
 				"regex",
 				"rust",
 				"scss",
+				"ssh_config",
 				"sxhkdrc",
 				"toml",
 				"tsx",
@@ -85,6 +85,11 @@ local M = {
 				-- "sql",
 			}
 			require("nvim-treesitter.configs").setup({
+				modules = {},
+				sync_install = false,
+				auto_install = false,
+				ignore_install = {},
+				parser_install_dir = nil,
 				ensure_installed = langs, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
 				-- ignore_install = { "rust" },
 				highlight = {
@@ -183,6 +188,7 @@ local M = {
 	{
 		"HiPhish/rainbow-delimiters.nvim",
 		url = "https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git",
+		commit = "a25b081d956bc1963d73620c2251bebd88ed354b",
 		lazy = false,
 		config = function()
 			require("rainbow-delimiters.setup")({
