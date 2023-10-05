@@ -32,7 +32,9 @@ function M.do_cursor_hold()
 		},
 	})
 end
-
+function M.clear_references()
+	vim.lsp.buf.clear_references()
+end
 function M.setup_autocommands(client, bufnr)
 	local server_capabilities = client.server_capabilities
 
@@ -57,7 +59,7 @@ function M.setup_autocommands(client, bufnr)
 			{
 				event = { "CursorMoved", "CursorMovedI" },
 				buffer = bufnr,
-				command = vim.lsp.buf.clear_references,
+				command = M.clear_references,
 			},
 		})
 	end

@@ -120,7 +120,7 @@ local M = {
 		end,
 	},
 	{
-		"jose-elias-alvarez/null-ls.nvim",
+		"nvimtools/none-ls.nvim",
 		lazy = false,
 		enabled = not vim.g.vscode,
 		dependencies = {
@@ -137,7 +137,7 @@ local M = {
 					"jq",
 					"prettierd",
 					"stylelint",
-					"goimports",
+					-- "goimports",
 					"shellcheck",
 					"uncrustify",
 					"hadolint",
