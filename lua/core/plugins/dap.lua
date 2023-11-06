@@ -1,7 +1,7 @@
 ---@type LazyPluginSpec
 local M = {
 	"mfussenegger/nvim-dap",
-	keys = { "<F5>", "<Leader>db" },
+	keys = { "<F5>", "<Leader>dc", "<Leader>db" },
 	enabled = not vim.g.vscode,
 	dependencies = {
 		"williamboman/mason.nvim",
@@ -25,17 +25,20 @@ function M.config()
 	local mason_dap = require("mason-nvim-dap")
 	mason_dap.setup({
 		automatic_setup = { adapters = {} },
-	})
-	mason_dap.setup_handlers({
-		require("mason-nvim-dap.automatic_setup"),
-		coreclr = function()
-			require("core.daps.coreclr")()
-		end,
+		ensure_installed = {},
+		automatic_installation = false,
+		handlers = {
+			require("mason-nvim-dap.automatic_setup"),
+			coreclr = function()
+				require("core.daps.coreclr")()
+			end,
+		},
 	})
 
 	local mapper = require("core.utils.mapper")
 	local nnoremap = mapper.nnoremap
 	nnoremap({ "<F5>", "<Cmd>lua require'dap'.continue()<CR>" })
+	nnoremap({ "<Leader>dc", "<Cmd>lua require'dap'.continue()<CR>" })
 	nnoremap({ "<F10>", "<Cmd>lua require'dap'.step_over()<CR>" })
 	nnoremap({ "<F11>", "<Cmd>lua require'dap'.step_into()<CR>" })
 	nnoremap({ "<F12>", "<Cmd>lua require'dap'.step_out()<CR>" })

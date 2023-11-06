@@ -2,6 +2,8 @@
 local mapper = require("core.utils.mapper")
 local map_tele = require("core.telescope.mappings")
 local commander = require("core.utils.commander")
+local Methods = vim.lsp.protocol.Methods
+
 local M = {}
 
 function M.disable_formatting(client)
@@ -38,7 +40,7 @@ end
 function M.setup_autocommands(client, bufnr)
 	local server_capabilities = client.server_capabilities
 
-	if server_capabilities.codeLensProvider then
+	if client.supports_method(Methods.textDocument_codeLens) then
 		commander.augroup("LspCodeLens", {
 			{
 				event = { "BufEnter", "CursorHold", "InsertLeave" },
@@ -49,7 +51,7 @@ function M.setup_autocommands(client, bufnr)
 		mapper.nnoremap({ "<Leader>cl", vim.lsp.codelens.run, buffer = bufnr })
 	end
 
-	if server_capabilities.documentHighlightProvider then
+	if client.supports_method(Methods.textDocument_documentHighlight) then
 		commander.augroup("LspCursorCommands", {
 			{
 				event = "CursorHold",
@@ -164,19 +166,19 @@ function M.setup_common_mappings(client, bufnr)
 	nnoremap({ "]e", M.diag_go_next_err, buffer = bufnr, nowait = true })
 	nnoremap({ "[e", M.diag_go_prev_err, buffer = bufnr, nowait = true })
 
-	if server_capabilities.renameProvider then
+	if client.supports_method(Methods.textDocument_rename) then
 		nnoremap({ "<Leader>rr", vim.lsp.buf.rename, buffer = bufnr, nowait = true })
 	end
 
-	if server_capabilities.definitionProvider then
+	if client.supports_method(Methods.textDocument_declaration) then
 		nnoremap({ "gd", vim.lsp.buf.definition, buffer = bufnr, nowait = true })
 	end
 
-	if server_capabilities.inlayHintProvider then
+	if client.supports_method(Methods.textDocument_inlayHint) then
 		nnoremap({ "<Leader>ti", "<Cmd>lua require('lsp-inlayhints').toggle()", buffer = bufnr, nowait = true })
 	end
 
-	if server_capabilities.typeDefinitionProvider then
+	if client.supports_method(Methods.textDocument_typeDefinition) then
 		-- nnoremap({
 		-- 	"<Leader>gt",
 		-- 	vim.lsp.buf.type_definition,
@@ -187,23 +189,23 @@ function M.setup_common_mappings(client, bufnr)
 		map_tele("<Leader>gt", "lsp_type_definitions", nil, bufnr)
 	end
 
-	if server_capabilities.hoverProvider then
+	if client.supports_method(Methods.textDocument_hover) then
 		nnoremap({ "K", vim.lsp.buf.hover, buffer = bufnr, nowait = true })
 	end
 
-	if server_capabilities.callHierarchyProvider then
+	if client.supports_method(Methods.callHierarchy_incomingCalls) then
 		nnoremap({ "gI", vim.lsp.buf.incoming_calls, buffer = bufnr, nowait = true })
 	end
 
-	if server_capabilities.referencesProvider then
+	if client.supports_method(Methods.textDocument_references) then
 		nnoremap({ "gr", vim.lsp.buf.references, buffer = bufnr, nowait = true })
 	end
 
-	if server_capabilities.documentSymbolProvider then
+	if client.supports_method(Methods.textDocument_documentSymbol) then
 		map_tele("go", "lsp_document_symbols", nil, bufnr)
 	end
 
-	if server_capabilities.workspaceSymbolProvider then
+	if client.supports_method(Methods.workspace_symbol) then
 		map_tele("gO", "lsp_dynamic_workspace_symbols", nil, bufnr)
 	end
 	map_tele("<Leader>fd", "lsp_workspace_diagnostics", nil, bufnr)
@@ -225,12 +227,12 @@ function M.setup_mappings(client, bufnr)
 		nnoremap({ "<Leader>K", extras.hover, buffer = bufnr, nowait = true })
 	end
 
-	if server_capabilities.codeActionProvider then
+	if client.supports_method(Methods.textDocument_codeAction) then
 		nnoremap({ "<Leader>ca", vim.lsp.buf.code_action, buffer = bufnr, nowait = true })
 		vnoremap({ "<Leader>ca", vim.lsp.buf.code_action, buffer = bufnr, nowait = true })
 	end
 
-	if server_capabilities.documentFormattingProvider then
+	if client.supports_method(Methods.textDocument_formatting) then
 		nnoremap({
 			"<Leader><Leader>f",
 			function()
@@ -241,15 +243,15 @@ function M.setup_mappings(client, bufnr)
 		})
 	end
 
-	if server_capabilities.documentRangeFormattingProvider then
+	if client.supports_method(Methods.textDocument_rangeFormatting) then
 		vnoremap({ "<Leader><Leader>f", extras.range_format or vim.lsp.buf.format, buffer = bufnr, nowait = true })
 	end
 
-	if server_capabilities.implementationProvider then
+	if client.supports_method(Methods.textDocument_implementation) then
 		nnoremap({ "gi", vim.lsp.buf.implementation, buffer = bufnr, nowait = true })
 	end
 
-	if server_capabilities.typeDefinitionProvider then
+	if client.supports_method(Methods.textDocument_typeDefinition) then
 		nnoremap({ "<Leader>gd", vim.lsp.buf.type_definition, buffer = bufnr, nowait = true })
 	end
 end
@@ -396,11 +398,21 @@ end
 
 ---@param filter {id: number, bufnr: number, name: string}
 function M.stop_client(filter)
-	local clients = vim.lsp.get_active_clients(filter)
+	local clients = vim.lsp.get_clients(filter)
 
 	for _, client in ipairs(clients) do
 		client.stop()
 	end
 end
 
+function M.is_vue_root(startpath)
+	local u = require("lspconfig.util")
+	return u.root_pattern("nuxt.config.ts", "nuxt.config.js", "vue.config.js", "vue.config.js")(startpath)
+end
+
+function M.is_tsserver_root(startpath)
+	local u = require("lspconfig.util")
+	return u.root_pattern("tsconfig.json", "tsconfig.*.json")(startpath)
+		or u.root_pattern("package.json", "jsconfig.json", ".git")(startpath)
+end
 return M

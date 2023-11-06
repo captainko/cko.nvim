@@ -11,7 +11,11 @@ return function()
 		if vim.g["dotnet_last_proj_path"] ~= nil then
 			default_path = vim.g["dotnet_last_proj_path"]
 		end
-		local path = vim.fn.input({ prompt = "Path to your *proj file", default = default_path, completion = "file" })
+		local path = vim.fn.input({
+			prompt = "Path to your *proj file",
+			default = default_path,
+			completion = "file",
+		})
 		vim.g["dotnet_last_proj_path"] = path
 		local cmd = "dotnet build -c Debug " .. path .. " > /dev/null"
 		print("")
@@ -24,24 +28,52 @@ return function()
 		end
 	end
 
-	vim.g.dotnet_get_dll_path = function()
-		local function request()
-			return vim.fn.input({
-				prompt = "Path to dll",
-				default = vim.fn.getcwd() .. "/bin/Debug/",
-				completion = "file",
-			})
+	vim.g.dotnet_get_dll_path = function(coro)
+		local function request(co)
+			local opts = {}
+
+			local pickers = require("telescope.pickers")
+			local finders = require("telescope.finders")
+			local conf = require("telescope.config").values
+			local actions = require("telescope.actions")
+			local action_state = require("telescope.actions.state")
+			pickers.new(opts, {
+				prompt_title = "Debug DLL",
+				finder = finders.new_oneshot_job({
+					"fd",
+					"--hidden",
+					"--no-ignore",
+					"--full-path",
+					"--glob",
+					"**/bin/Debug/**/*.dll",
+				}, {}),
+				sorter = conf.generic_sorter(opts),
+				attach_mappings = function(buffer_number)
+					actions.select_default:replace(function()
+						actions.close(buffer_number)
+						local path = action_state.get_selected_entry()[1]
+						vim.g["dotnet_last_dll_path"] = path
+						coroutine.resume(co, path)
+					end)
+					return true
+				end,
+			}):find()
 		end
 
 		if vim.g["dotnet_last_dll_path"] == nil then
-			vim.g["dotnet_last_dll_path"] = request()
+			return request(coro)
 		else
-			if vim.fn.confirm("Keep the last dll?\n" .. vim.g["dotnet_last_dll_path"], "&yes\n&no", 1) == 2 then
-				vim.g["dotnet_last_dll_path"] = request()
+			if vim.fn.confirm("Keep the last dll?\n" .. vim.g["dotnet_last_dll_path"],
+					"&yes\n&no", 1) == 2 then
+				return request(coro)
 			end
 		end
 
-		return vim.g["dotnet_last_dll_path"]
+		coroutine.resume(coro, vim.g["dotnet_last_dll_path"])
+		-- if vim.fn.confirm("Keep the last dll?\n" .. vim.g["dotnet_last_dll_path"], "&yes\n&no", 1) == 2 then
+		-- 	vim.g["dotnet_last_dll_path"] = request(coro)
+		-- end
+		-- return vim.g["dotnet_last_dll_path"]
 	end
 
 	local config = {
@@ -57,10 +89,16 @@ return function()
 			},
 
 			program = function()
-				if vim.fn.confirm("Should I recompile first?", "&yes\n&no", 2) == 1 then
-					vim.g.dotnet_build_project()
-				end
-				return vim.g.dotnet_get_dll_path()
+				return coroutine.create(function(coro)
+					if vim.fn.confirm("Should I recompile first?", "&yes\n&no", 2) == 1 then
+						vim.g.dotnet_build_project()
+					end
+					vim.g.dotnet_get_dll_path(coro)
+				end)
+
+				-- if vim.fn.confirm("Should I recompile first?", "&yes\n&no", 2) == 1 then
+				-- 	vim.g.dotnet_build_project()
+				-- end
 			end,
 		},
 		{

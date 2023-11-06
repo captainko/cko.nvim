@@ -51,18 +51,33 @@ local M = {
 		enabled = not vim.g.vscode,
 		dependencies = {
 			"williamboman/mason.nvim",
-			"lvimuser/lsp-inlayhints.nvim",
+			-- "lvimuser/lsp-inlayhints.nvim",
 			"williamboman/mason-lspconfig.nvim",
 			"jose-elias-alvarez/typescript.nvim",
 			"folke/neodev.nvim",
 			"folke/neoconf.nvim",
 			"b0o/schemastore.nvim",
+			"Decodetalkers/csharpls-extended-lsp.nvim",
+			"Hoffs/omnisharp-extended-lsp.nvim",
 		},
 		config = function()
 			local lsp = require("core.utils.lsp")
 			local commander = require("core.utils.commander")
 			local icons = require("core.global.style").icons.git
 
+			local mason_lspconfig = require("mason-lspconfig")
+			mason_lspconfig.setup({
+				automatic_installation = true,
+				handlers = {
+					function(name)
+						local ok, config = PR(("core.lsp.%s"):format(name))
+						if not ok then
+							config = {}
+						end
+						require("lspconfig")[name].setup(config)
+					end,
+				},
+			})
 			commander.command("LspLog", function()
 				vim.cmd.edit(vim.lsp.get_log_path())
 			end, {})
