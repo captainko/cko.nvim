@@ -39,14 +39,14 @@ local M = {
 			},
 		},
 	},
-	init_options = {
-		preferences = {
-			quotePreference = "auto", -- "auto" | "double" | "single";
-			importModuleSpecifierPreference = "non-relative",
-			includeCompletionsForImportStatements = true,
-			includeAutomaticOptionalChainCompletions = true,
-		},
-	},
+	-- init_options = {
+	-- 	preferences = {
+	-- 		-- quotePreference = "auto", -- "auto" | "double" | "single";
+	-- 		-- importModuleSpecifierPreference = "non-relative",
+	-- 		-- includeCompletionsForImportStatements = true,
+	-- 		-- includeAutomaticOptionalChainCompletions = true,
+	-- 	},
+	-- },
 	capabilities = capabilities,
 }
 
@@ -54,7 +54,7 @@ vim.api.nvim_command([[command! TsImportAll TypescriptAddMissingImports]])
 vim.api.nvim_command([[command! TsOrgImports TypescriptOrganizeImports]])
 
 function M.on_attach(client, bufnr)
-	local clients = vim.lsp.get_active_clients({ name = "denols" })
+	local clients = vim.lsp.get_clients({ name = "denols" })
 
 	if #clients > 0 then
 		client.stop()

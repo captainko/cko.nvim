@@ -911,7 +911,7 @@ kty
 kubectl
 kubernetes
 kustomization
-lang
+#ang
 langs
 laststatus
 lastused
@@ -1586,6 +1586,6 @@ zshrc
 zst
 zstyle
 zulu
-text/!
 passwd
 yabai
+lang/!

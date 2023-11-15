@@ -2,5 +2,6 @@
     "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
     "Lua.diagnostics.disable": [
         "duplicate-doc-field"
-    ]
+    ],
+    "workspace.checkThirdParty": "Disable"
 }

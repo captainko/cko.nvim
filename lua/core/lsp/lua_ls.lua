@@ -27,20 +27,20 @@ local M = {
 				},
 			},
 			completion = { keywordSnippet = "Replace", callSnippet = "Replace" },
-			hint = { enable = true },
+			hint = { enable = true, setType = true },
 			telemetry = { enable = false },
 			workspace = {
 				checkThirdParty = false,
 			},
 		},
 	},
-	on_attach = function(client, bufnr)
-		-- if vim.g.use_stylua then
-		if true then
-			lsp.disable_formatting(client)
-			lsp.on_attach(client, bufnr)
-		end
-	end,
+	-- on_attach = function(client, bufnr)
+	-- 	-- if vim.g.use_stylua then
+	-- 	if true then
+	-- 		lsp.disable_formatting(client)
+	-- 		lsp.on_attach(client, bufnr)
+	-- 	end
+	-- end,
 }
 
 M.extras = {

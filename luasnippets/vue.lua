@@ -28,6 +28,12 @@ local M = {
 			}
 		)
 	),
+	s({ trig = "et", name = "{{$t()}}" }, fmt("{{{{ $t({}) }}}}", { i(1) })),
+	s({ trig = "ttc", name = "$t('Cancel')" }, t({ "$t('Cancel')" })),
+	s({ trig = "tts", name = "$t('Submit')" }, t({ "$t('Submit')" })),
+	s({ trig = "ttcf", name = "$t('Confirm')" }, t({ "$t('Confirm')" })),
+	s({ trig = "tto", name = "$t('OK')" }, t({ "$t('OK')" })),
+	s({ trig = "ttcl", name = "$t('Close')" }, t({ "$t('Close')" })),
 }
 
 return M

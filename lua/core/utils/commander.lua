@@ -1,7 +1,7 @@
 ---@class core.AutoCommand
----@field description string
----@field event       string[]|string list of autocommand events
----@field pattern     string[]|string list of autocommand patterns
+---@field description string?
+---@field event       string[]|string  list of autocommand events
+---@field pattern     string[]|string? list of autocommand patterns
 ---@field command     string|core.AutoCommandCallbackType
 ---@field nested      boolean?
 ---@field once        boolean?

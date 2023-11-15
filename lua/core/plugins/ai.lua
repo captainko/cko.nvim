@@ -15,6 +15,16 @@ local M = {
 			})
 		end,
 	},
+	{
+		"huggingface/hfcc.nvim",
+		enabled = false,
+		cmd = { "HFccToggleAutoSuggest" },
+		config = function()
+			require("hfcc").setup({
+				model = "meta-llama/Llama-2-7b",
+			})
+		end,
+	},
 }
 
 return M

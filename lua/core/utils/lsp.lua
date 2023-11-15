@@ -1,4 +1,3 @@
----@diagnostic disable: need-check-nil
 local mapper = require("core.utils.mapper")
 local map_tele = require("core.telescope.mappings")
 local commander = require("core.utils.commander")
@@ -34,12 +33,12 @@ function M.do_cursor_hold()
 		},
 	})
 end
+
 function M.clear_references()
 	vim.lsp.buf.clear_references()
 end
-function M.setup_autocommands(client, bufnr)
-	local server_capabilities = client.server_capabilities
 
+function M.setup_autocommands(client, bufnr)
 	if client.supports_method(Methods.textDocument_codeLens) then
 		commander.augroup("LspCodeLens", {
 			{
@@ -142,6 +141,7 @@ function M.diag_go_prev_err()
 		float = float_opt,
 	})
 end
+
 function M.extend_option(server_name, config)
 	if not server_name then
 		return config
@@ -174,9 +174,9 @@ function M.setup_common_mappings(client, bufnr)
 		nnoremap({ "gd", vim.lsp.buf.definition, buffer = bufnr, nowait = true })
 	end
 
-	if client.supports_method(Methods.textDocument_inlayHint) then
-		nnoremap({ "<Leader>ti", "<Cmd>lua require('lsp-inlayhints').toggle()", buffer = bufnr, nowait = true })
-	end
+	-- if client.supports_method(Methods.textDocument_inlayHint) then
+	-- 	nnoremap({ "<Leader>ti", "<Cmd>lua require('lsp-inlayhints').toggle()", buffer = bufnr, nowait = true })
+	-- end
 
 	if client.supports_method(Methods.textDocument_typeDefinition) then
 		-- nnoremap({
@@ -281,31 +281,27 @@ end
 -- end
 
 ---comment
----@param client any
+---@param client lsp.Client
 ---@param bufnr  number
 function M.on_attach(client, bufnr)
-	M.setup_autocommands(client, bufnr)
-	M.setup_mappings(client, bufnr)
+	-- M.setup_autocommands(client, bufnr)
+	-- M.setup_mappings(client, bufnr)
 
-	local ok_status, status = PR("lsp-status")
-	if ok_status then
-		status.on_attach(client)
-	end
+	-- local status = require("lsp-status")
+	-- status.on_attach(client)
 
-	local has_aerial, aerial = PR("aerial")
-	if has_aerial then
-		aerial.on_attach(client, bufnr)
-	end
+	-- local aerial = require("aerial")
+	-- aerial.on_attach(client, bufnr)
 
-	local has_inlay_hints, inlay_hints = PR("lsp-inlayhints")
-	if has_inlay_hints then
-		inlay_hints.on_attach(client, bufnr, false)
-	end
+	-- local has_inlay_hints, inlay_hints = PR("lsp-inlayhints")
+	-- if has_inlay_hints then
+	-- 	inlay_hints.on_attach(client, bufnr, false)
+	-- end
 
-	local has_navic, navic = PR("nvim-navic")
-	if has_navic and client.server_capabilities.documentSymbolProvider then
-		navic.attach(client, bufnr)
-	end
+	-- local navic = require("nvim-navic")
+	-- if client.supports_method(Methods.textDocument_documentSymbol, { bufnr = bufnr }) then
+	-- 	navic.attach(client, bufnr)
+	-- end
 
 	-- if client.server_capabilities.goto_definition then
 	--   vim.bo[bufnr].tagfunc = "v:lua.M.tagfunc"
@@ -415,4 +411,5 @@ function M.is_tsserver_root(startpath)
 	return u.root_pattern("tsconfig.json", "tsconfig.*.json")(startpath)
 		or u.root_pattern("package.json", "jsconfig.json", ".git")(startpath)
 end
+
 return M

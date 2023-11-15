@@ -1,3 +1,4 @@
+---@diagnostic disable: missing-fields
 ---@type LazyPluginSpec[]
 local M = {
 	{
@@ -123,13 +124,35 @@ local M = {
 					["<C-e>"] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
 					["<CR>"] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
 				},
-				window = { documentation = {} },
+				-- window = { documentation = {} },
 				formatting = {
 					deprecated = true,
 					format = require("lspkind").cmp_format({ with_text = true, menu = menu }),
 				},
 				sorting = {
 					comparators = {
+						compare.offset,
+						compare.exact,
+						compare.score,
+
+						-- copied from cmp-under, but I don't think I need the plugin for this.
+						-- I might add some more of my own.
+						function(entry1, entry2)
+							local _, entry1_under = entry1.completion_item.label:find("^_+")
+							local _, entry2_under = entry2.completion_item.label:find("^_+")
+							entry1_under = entry1_under or 0
+							entry2_under = entry2_under or 0
+							if entry1_under > entry2_under then
+								return false
+							elseif entry1_under < entry2_under then
+								return true
+							end
+						end,
+
+						compare.kind,
+						compare.sort_text,
+						compare.length,
+						compare.order,
 						-- require("cmp_tabnine.compare"),
 						-- compare.recently_used,
 						-- compare.offset,
@@ -141,12 +164,12 @@ local M = {
 						-- compare.order,
 
 						---@diagnostic disable-next-line: assign-type-mismatch
-						compare.locality,
+						-- compare.locality,
 						---@diagnostic disable-next-line: assign-type-mismatch
-						compare.recently_used,
-						compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
-						compare.offset,
-						compare.order,
+						-- compare.recently_used,
+						-- compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
+						-- compare.offset,
+						-- compare.order,
 					},
 				},
 				-- sources = {
@@ -166,14 +189,14 @@ local M = {
 
 					-- { name = "cmp_tabnine", priority = 8 },
 					{ name = "nvim_lsp_signature_help", priority = 11 },
-					{ name = "nvim_lsp", priority = 10 },
+					{ name = "nvim_lsp",                priority = 10 },
 					-- { name = "nvim_lsp_signature_help", priority = 8 },
 					get_buffer_source(),
-					{ name = "luasnip", max_item_count = 4, priority = 7 },
-					{ name = "spell", keywork_length = 3, priority = 5 },
-					{ name = "path", priority = 4 },
+					{ name = "luasnip",      max_item_count = 4, priority = 7 },
+					{ name = "spell",        keywork_length = 3, priority = 5 },
+					{ name = "path",         priority = 4 },
 					{ name = "fuzzy_buffer", max_item_count = 3, priority = 4 },
-					{ name = "calc", priority = 3 },
+					{ name = "calc",         priority = 3 },
 
 					-- { name = "calc" },
 					-- { name = "path" },
@@ -212,8 +235,8 @@ local M = {
 				sources = {
 					get_buffer_source(),
 					{ name = "cmp_tabnine", max_item_count = 2, priority = 8 },
-					{ name = "luasnip", max_item_count = 4 },
-					{ name = "tab", max_item_count = 4 },
+					{ name = "luasnip",     max_item_count = 4 },
+					{ name = "tab",         max_item_count = 4 },
 					{ name = "path" },
 					{ name = "jira" },
 				},
@@ -223,7 +246,7 @@ local M = {
 				sources = {
 					{ name = "npm" },
 					{ name = "nvim_lsp", priority = 3 },
-					{ name = "luasnip", max_item_count = 4 },
+					{ name = "luasnip",  max_item_count = 4 },
 					{ name = "path" },
 					get_buffer_source(),
 				},

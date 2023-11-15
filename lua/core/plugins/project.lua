@@ -6,6 +6,7 @@ local M = {
 
 function M.config()
 	require("project_nvim").setup({
+		detection_methods = { "lsp", "pattern" },
 		manual_mode = false,
 		patterns = {
 			"src/",
@@ -16,7 +17,7 @@ function M.config()
 			".bzr",
 			".svn",
 			"Makefile",
-			"package.json",
+			-- "package.json",
 			">packages",
 			".git",
 			-- "*.csproj",
@@ -35,7 +36,8 @@ function M.config()
 			"null-ls",
 			"markdown",
 			"taplo",
-		},
+			-- "csharp_ls"
+		}
 	})
 end
 

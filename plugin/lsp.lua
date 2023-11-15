@@ -86,43 +86,6 @@ lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx, con
 	handler(err, result, ctx, config)
 end
 
-local float_opt = { scope = "cursor", focusable = false }
-function diag_go_next()
-	vim.diagnostic.goto_next({ float = float_opt })
-end
-
-function diag_go_prev()
-	vim.diagnostic.goto_prev({ float = float_opt })
-end
-
-function diag_go_next_warn()
-	vim.diagnostic.goto_next({
-		severity = { min = vim.diagnostic.severity.WARN },
-		float = float_opt,
-	})
-end
-
-function diag_go_prev_warn()
-	vim.diagnostic.goto_prev({
-		severity = { min = vim.diagnostic.severity.WARN },
-		float = float_opt,
-	})
-end
-
-function diag_go_next_err()
-	vim.diagnostic.goto_next({
-		severity = vim.diagnostic.severity.ERROR,
-		float = float_opt,
-	})
-end
-
-function diag_go_prev_err()
-	vim.diagnostic.goto_prev({
-		severity = vim.diagnostic.severity.ERROR,
-		float = float_opt,
-	})
-end
-
 -----------------------------------------------------------------------------//
 -- Mappings
 -----------------------------------------------------------------------------//
@@ -153,7 +116,7 @@ local function setup_mappings(client, bufnr)
 			"n",
 			"]w",
 			function()
-				diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN, float = true })
+				diagnostic.goto_next({ severity = S.WARN, float = true })
 			end,
 			desc = "go to next warning diagnostic",
 		},
@@ -161,7 +124,7 @@ local function setup_mappings(client, bufnr)
 			"n",
 			"[w",
 			function()
-				diagnostic.goto_prev({ severity = vim.diagnostic.severity.WARN, float = true })
+				diagnostic.goto_prev({ severity = S.WARN, float = true })
 			end,
 			desc = "go to previous warning diagnostic",
 		},
@@ -169,7 +132,7 @@ local function setup_mappings(client, bufnr)
 			"n",
 			"]e",
 			function()
-				diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR, float = true })
+				diagnostic.goto_next({ severity = S.ERROR, float = true })
 			end,
 			desc = "go to next error diagnostic",
 		},
@@ -177,7 +140,7 @@ local function setup_mappings(client, bufnr)
 			"n",
 			"[e",
 			function()
-				diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR, float = true })
+				diagnostic.goto_prev({ severity = S.ERROR, float = true })
 			end,
 			desc = "go to previous error diagnostic",
 		},
@@ -225,10 +188,10 @@ local function setup_mappings(client, bufnr)
 			"n",
 			"<leader>ci",
 			function()
-				lsp.inlay_hint(0)
+				lsp.inlay_hint.enable(0)
 			end,
 			desc = "inlay hints toggle",
-			M.textDocument_inlayHint,
+			capability = M.textDocument_inlayHint,
 		},
 		{ "n", "<leader>rr", lsp.buf.rename, desc = "rename", capability = M.textDocument_rename },
 		{ "n", "<leader>rm", rename_file, desc = "rename file", capability = M.textDocument_rename },
@@ -324,7 +287,7 @@ local function setup_autocommands(client, buf)
 	end
 
 	if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
-		vim.lsp.inlay_hint(buf, true)
+		vim.lsp.inlay_hint.enable(buf, true)
 	end
 
 	if client.supports_method(M.textDocument_documentHighlight) then

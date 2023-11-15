@@ -24,12 +24,13 @@ local M = {
 	-- 	},
 	-- },
 	-- settings = { html = { format = { wrapAttributes = "force-aligned" } } },
-	-- root_dir = u.root_pattern("package.json", "node_modules", ".git"),
+	root_dir = lsp.is_vue_root,
+	filetypes = { "vue", "javascript", "typescript" },
 	on_attach = function(client, bufnr)
 		if vim.g.use_eslint or vim.g.use_prettier then
 			lsp.disable_formatting(client)
 		end
-		lsp.on_attach(client, bufnr)
+		-- lsp.on_attach(client, bufnr)
 	end,
 }
 return M

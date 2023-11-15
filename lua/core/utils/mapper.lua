@@ -6,9 +6,9 @@
 
 ---@class core.MappingOption
 ---@field [1]              string - lhs
----@field [2]              string|function - rhs
----@field lhs              string - lhs
----@field rhs              string|function - rhs
+---@field [2]              string|function? - rhs
+---@field lhs              string? - lhs
+---@field rhs              string|function? - rhs
 ---@field buffer           number?
 ---@field desc             string?
 ---@field nowait           boolean?
@@ -19,8 +19,8 @@
 ---@field script           string?
 
 ---@class core.MultiMappingOption: core.MappingOption
----@field noremap boolean
----@field remap   boolean
+---@field noremap boolean?
+---@field remap   boolean?
 
 local M = {}
 
@@ -54,7 +54,11 @@ local function make_mapper(mode, default_opt)
 		opt = opt and vim.deepcopy(opt) or {}
 
 		local lhs = opt[1] or opt.lhs
-		local rhs = opt[2] or opt.rhs
+		assert(vim.fn.empty(lhs) ~= 1, "'[1]' or 'lhs' is required")
+
+		local rhs = opt[2] or opt.rhs --[[@as string|function]]
+		assert(vim.fn.empty(rhs) ~= 1, "'[2]' or 'rhs' is required")
+
 		clear_opt(opt)
 
 		opt = vim.tbl_extend("keep", opt, parent_opt)
@@ -99,7 +103,7 @@ local function multimap(remap)
 		opt.remap = remap
 
 		local lhs = opt[1] or opt.lhs
-		local rhs = opt[2] or opt.rhs
+		local rhs = opt[2] or opt.rhs --[[@as string|function]]
 
 		clear_opt(opt)
 		vim.keymap.set(modes, lhs, rhs, opt)

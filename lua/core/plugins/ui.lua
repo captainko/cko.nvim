@@ -99,11 +99,11 @@ local M = {
 					diagnostics = "nvim_lsp",
 					diagnostics_indicator = diagnostics_indicator,
 					diagnostics_update_in_insert = false,
-					highlights = {
-						-- background = { guibg = "#333" },
-						-- fill = { guibg = { attribute = "bg", highlight = "TabLineFill" } },
-						-- tab_selected = { guifg = { attribute = "fg", highlight = "WarningMsg" } },
-					},
+					-- highlights = {
+					-- 	-- background = { guibg = "#333" },
+					-- 	-- fill = { guibg = { attribute = "bg", highlight = "TabLineFill" } },
+					-- 	-- tab_selected = { guifg = { attribute = "fg", highlight = "WarningMsg" } },
+					-- },
 					custom_areas = { right = right_area },
 				},
 			})
@@ -112,6 +112,7 @@ local M = {
 	{
 		"Bekaboo/dropbar.nvim",
 		event = { "VeryLazy" },
+		tag = "v4.0.0",
 		config = function()
 			local icons = require("lspkind")
 
@@ -237,22 +238,58 @@ local M = {
 		end,
 	},
 	{
+		-- only needed if you want to use the commands with "_with_window_picker" suffix
+		"s1n7ax/nvim-window-picker",
+		config = function()
+			require("window-picker").setup({
+				autoselect_one = true,
+				include_current = false,
+				filter_rules = {
+					-- filter using buffer options
+					bo = {
+						-- if the file type is one of following, the window will be ignored
+						filetype = { "neo-tree", "neo-tree-popup", "notify" },
+
+						-- if the buffer type is one of following, the window will be ignored
+						buftype = { "terminal", "quickfix" },
+					},
+				},
+				other_win_hl_color = "#e35e4f",
+			})
+		end,
+	},
+	{
 		"nvim-neo-tree/neo-tree.nvim",
-		lazy = true,
+		cmd = { "Neotree" },
+		enabled = false,
 		branch = "v2.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
 			"MunifTanjim/nui.nvim",
+			"s1n7ax/nvim-window-picker",
+		},
+		keys = {
+			{
+				"<Leader><c-n>",
+				"<Cmd>Neotree reveal right toggle<CR>",
+			},
+			-- {
+			-- 	"<Leader>to",
+			-- 	"<Cmd>Neotree document_symbols left toggle<CR>",
+			-- },
 		},
 		config = function()
 			require("neo-tree").setup({
 				close_if_last_window = false, -- Close Neo-tree if it is the last window left in the tab
+				enable_refresh_on_write = true, -- Refresh the tree when a file is written. Only used if `use_libuv_file_watcher` is false.
 				popup_border_style = "rounded",
 				enable_git_status = true,
 				enable_diagnostics = true,
+				open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
 				sort_case_insensitive = false, -- used when sorting files and directories in the tree
 				sort_function = nil, -- use a custom function for sorting files and directories in the tree
+
 				-- sort_function = function (a,b)
 				--       if a.type == b.type then
 				--           return a.path > b.path
@@ -312,8 +349,12 @@ local M = {
 						},
 					},
 				},
+				-- A list of functions, each representing a global custom command
+				-- that will be available in all sources (if not overridden in `opts[source_name].commands`)
+				-- see `:h neo-tree-global-custom-commands`
+				commands = {},
 				window = {
-					position = "right",
+					position = "left",
 					width = 40,
 					mapping_options = {
 						noremap = true,
@@ -347,7 +388,7 @@ local M = {
 							-- this command supports BASH style brace expansion ("x{a,b,c}" -> xa,xb,xc). see `:h neo-tree-file-actions` for details
 							-- some commands may take optional config options, see `:h neo-tree-mappings` for details
 							config = {
-								show_path = "none", -- "none", "relative", "absolute"
+								show_path = "absolute", -- "none", "relative", "absolute"
 							},
 						},
 						["A"] = "add_directory", -- also accepts the optional config.show_path option like "add". this also supports BASH style brace expansion.
@@ -372,10 +413,17 @@ local M = {
 					},
 				},
 				nesting_rules = {},
+
+				sources = {
+					"filesystem",
+					"buffers",
+					"git_status",
+					-- "document_symbols",
+				},
 				filesystem = {
 					filtered_items = {
-						visible = true, -- when true, they will just be displayed differently than normal items
-						hide_dotfiles = true,
+						visible = false, -- when true, they will just be displayed differently than normal items
+						hide_dotfiles = false,
 						hide_gitignored = true,
 						hide_hidden = true, -- only works on Windows for hidden files/directories
 						hide_by_name = {
@@ -398,7 +446,7 @@ local M = {
 					},
 					follow_current_file = true, -- This will find and focus the file in the active buffer every
 					-- time the current file is changed while the tree is open.
-					group_empty_dirs = false, -- when true, empty folders will be grouped together
+					group_empty_dirs = true, -- when true, empty folders will be grouped together
 					hijack_netrw_behavior = "open_default", -- netrw disabled, opening a directory opens neo-tree
 					-- in whatever position is specified in window.position
 					-- "open_current",  -- netrw disabled, opening a directory opens within the
@@ -420,7 +468,15 @@ local M = {
 							["[g"] = "prev_git_modified",
 							["]g"] = "next_git_modified",
 						},
+						fuzzy_finder_mappings = { -- define keymaps for filter popup window in fuzzy_finder_mode
+							["<down>"] = "move_cursor_down",
+							["<C-n>"] = "move_cursor_down",
+							["<up>"] = "move_cursor_up",
+							["<C-p>"] = "move_cursor_up",
+						},
 					},
+
+					commands = {}, -- Add a custom command or override a global one using the same function name
 				},
 				buffers = {
 					follow_current_file = true, -- This will find and focus the file in the active buffer every
@@ -450,22 +506,19 @@ local M = {
 					},
 				},
 			})
-			--- vim.cmd([[nnoremap \ :Neotree reveal<cr>]])
-
-			-- vim.api.nvim_set_hl(0, "NeoTreeModified", { link = "GitSignsChange" })
-			-- vim.api.nvim_set_hl(0, "NeoTreeGitModified", { link = "GitSignsChange" })
-			vim.api.nvim_set_hl(0, "NeoTreeGitUntracked", { link = "GitSignsUntracked" })
 		end,
 	},
 	{
-
 		"nvim-tree/nvim-tree.lua",
-		keys = { {
-			"<Leader><c-n>",
-			function()
-				require("nvim-tree.api").tree.toggle(false, true)
-			end,
-		} },
+		enabled = true,
+		keys = {
+			{
+				"<Leader><c-n>",
+				function()
+					require("nvim-tree.api").tree.toggle(false, true)
+				end,
+			},
+		},
 		dependencies = { "antosha417/nvim-lsp-file-operations" },
 		config = function()
 			local icons = require("core.global.style").icons

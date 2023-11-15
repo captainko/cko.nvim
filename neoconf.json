@@ -1,0 +1,14 @@
+{
+  "lspconfig": {
+    "tsserver": {
+      "typescript.preferences.importModuleSpecifier": "non-relative",
+      "typescript.preferences.quoteStyle": "auto",
+      "typescript.suggest.includeAutomaticOptionalChainCompletions": true,
+      "typescript.suggest.includeCompletionsForImportStatements": true,
+      "javascript.preferences.importModuleSpecifier": "non-relative",
+      "javascript.preferences.quoteStyle": "auto",
+      "javascript.suggest.includeAutomaticOptionalChainCompletions": true,
+      "javascript.suggest.includeCompletionsForImportStatements": true
+    }
+  }
+}
