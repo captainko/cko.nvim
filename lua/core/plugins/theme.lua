@@ -39,7 +39,7 @@ local M = {
 					NeoTreeNormalNC = { bg = "$bg0" },
 					helpCommand = { fg = "$blue" },
 					helpExample = { fg = "$blue" },
-					jsonTSLabel = { fg = "$blue" },
+					["@label.json"] = { fg = "$blue" },
 				},
 			})
 
