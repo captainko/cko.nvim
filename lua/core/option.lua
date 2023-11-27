@@ -27,12 +27,14 @@ o.shortmess = {
 -- Folds{{{
 -- =============================================================================
 
-o.foldlevelstart = 3
-o.foldmethod = "expr"
 -- o.foldminlines = 15
-o.foldexpr = "nvim_treesitter#foldexpr()"
-o.foldtext = "v:lua.require('core.folds').folds()"
-o.foldopen = "search"
+if vim.g.vscode == nil then
+	o.foldlevelstart = 3
+	o.foldmethod = "expr"
+	o.foldexpr = "nvim_treesitter#foldexpr()"
+	o.foldtext = "v:lua.require('core.folds').folds()"
+	o.foldopen = "search"
+end
 
 -- =============================================================================
 -- }}}
@@ -122,7 +124,7 @@ o.listchars = {
 	nbsp = "%",
 	-- eol = "",
 	-- eol = "↴"
-	eol = ""
+	eol = "",
 }
 o.fillchars = {
 	-- vert = "▕", -- alternatives │
