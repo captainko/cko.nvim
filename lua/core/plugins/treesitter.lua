@@ -1,6 +1,12 @@
 ---@type LazyPluginSpec[]
 local M = {
 	{
+		"JoosepAlviste/nvim-ts-context-commentstring",
+		config = function()
+			require("ts_context_commentstring").setup({})
+		end,
+	},
+	{
 
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate", -- We recommend updating the parsers on update
@@ -11,7 +17,6 @@ local M = {
 			-- "ShooTeX/nvim-treesitter-angular",
 			"windwp/nvim-ts-autotag",
 			"RRethy/nvim-treesitter-endwise",
-			"JoosepAlviste/nvim-ts-context-commentstring",
 		},
 		config = function()
 			local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
@@ -98,11 +103,6 @@ local M = {
 					-- enable = false,
 					additional_vim_regex_highlighting = { "org" },
 				},
-				context_commentstring = {
-					enable = true,
-					enable_autocmd = false, --[[`false` for Comment.nvim]]
-				},
-
 				incremental_selection = {
 					enable = true,
 					keymaps = {
@@ -170,7 +170,7 @@ local M = {
 				autotag = { enable = true },
 				endwise = { enable = true },
 				matchup = {
-					enable = true, -- mandatory, false will disable the whole extension
+					enable = true,     -- mandatory, false will disable the whole extension
 					disable = { "c", "ruby", "lua" }, -- optional, list of language that will be disabled
 				},
 				query_linter = {
