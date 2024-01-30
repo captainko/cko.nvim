@@ -148,6 +148,7 @@ local M = {
 			local lsp = require("core.utils.lsp")
 
 			require("mason-null-ls").setup({
+				automatic_installation = {},
 				ensure_installed = {
 					"stylua",
 					"jq",
@@ -160,6 +161,7 @@ local M = {
 					"nginx_beautifier",
 					"codespell",
 					"csharpier",
+					"black",
 					-- "protolint",
 				},
 			})
@@ -331,6 +333,12 @@ local M = {
 					}),
 
 					-- =============================================================================
+					-- python
+					-- =============================================================================
+
+					null_ls.builtins.formatting.black,
+
+					-- =============================================================================
 					-- Docker
 					-- =============================================================================
 
@@ -386,11 +394,23 @@ local M = {
 	{
 		"pmizio/typescript-tools.nvim",
 		lazy = false,
-		enabled = false,
+		enabled = true,
 		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 		config = function(self, opts)
 			require("typescript-tools").setup({
 				on_attach = require("core.lsp.tsserver").on_attach,
+				settings = {
+					tsserver_file_preferences = {
+						includeInlayParameterNameHints = "all",
+						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+						includeInlayFunctionParameterTypeHints = true,
+						includeInlayVariableTypeHints = true,
+						includeInlayPropertyDeclarationTypeHints = true,
+						includeInlayFunctionLikeReturnTypeHints = true,
+						includeInlayEnumMemberValueHints = true,
+						quotePreference = "auto",
+					},
+				},
 			})
 		end,
 	},

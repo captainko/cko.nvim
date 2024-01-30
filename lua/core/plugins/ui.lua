@@ -133,10 +133,20 @@ local M = {
 	},
 	{
 		"j-hui/fidget.nvim",
-		branch = "legacy",
+		-- branch = "legacy",
 		event = { "VeryLazy" },
 		config = function()
-			require("fidget").setup()
+			require("fidget").setup({
+				progress = {
+					suppress_on_insert = true,
+				},
+				-- Options related to integrating with other plugins
+				integration = {
+					["nvim-tree"] = {
+						enable = true, -- Integrate with nvim-tree/nvim-tree.lua (if installed)
+					},
+				},
+			})
 		end,
 	},
 	{
@@ -262,7 +272,7 @@ local M = {
 		"nvim-neo-tree/neo-tree.nvim",
 		cmd = { "Neotree" },
 		enabled = false,
-		branch = "v2.x",
+		-- branch = "v2.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
@@ -287,8 +297,8 @@ local M = {
 				enable_git_status = true,
 				enable_diagnostics = true,
 				open_files_do_not_replace_types = { "terminal", "trouble", "qf" }, -- when opening files, do not use windows containing these filetypes or buftypes
-				sort_case_insensitive = false, -- used when sorting files and directories in the tree
-				sort_function = nil, -- use a custom function for sorting files and directories in the tree
+				sort_case_insensitive = false,                         -- used when sorting files and directories in the tree
+				sort_function = nil,                                   -- use a custom function for sorting files and directories in the tree
 
 				-- sort_function = function (a,b)
 				--       if a.type == b.type then

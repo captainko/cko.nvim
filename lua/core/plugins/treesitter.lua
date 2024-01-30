@@ -188,7 +188,6 @@ local M = {
 	{
 		"HiPhish/rainbow-delimiters.nvim",
 		url = "https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git",
-		commit = "a25b081d956bc1963d73620c2251bebd88ed354b",
 		lazy = false,
 		config = function()
 			require("rainbow-delimiters.setup")({

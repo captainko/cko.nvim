@@ -11,8 +11,9 @@ local lsp = require("core.utils.lsp")
 -- end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
 local M = {
+	root_dir = lsp.is_tsserver_root,
 	settings = {
 		typescript = {
 			surveys = { enabled = false },
@@ -50,8 +51,8 @@ local M = {
 	capabilities = capabilities,
 }
 
-vim.api.nvim_command([[command! TsImportAll TypescriptAddMissingImports]])
-vim.api.nvim_command([[command! TsOrgImports TypescriptOrganizeImports]])
+-- vim.api.nvim_command([[command! TsImportAll TypescriptAddMissingImports]])
+-- vim.api.nvim_command([[command! TsOrgImports TypescriptOrganizeImports]])
 
 function M.on_attach(client, bufnr)
 	local clients = vim.lsp.get_clients({ name = "denols" })
@@ -67,7 +68,7 @@ function M.on_attach(client, bufnr)
 	end
 	lsp.on_attach(client, bufnr)
 
-	mapper.nnoremap({ "gD", "<Cmd>TypescriptGoToSourceDefinition<CR>", buffer = bufnr })
+	-- mapper.nnoremap({ "gD", "<Cmd>TypescriptGoToSourceDefinition<CR>", buffer = bufnr })
 	-- no default maps, so you may want to define some here
 	-- local opts = { silent = true }
 	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", opts)

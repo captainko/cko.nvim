@@ -40,6 +40,13 @@ local M = {
 					helpCommand = { fg = "$blue" },
 					helpExample = { fg = "$blue" },
 					["@label.json"] = { fg = "$blue" },
+					["@variable.member.javascript"] = { fg = "$cyan" },
+					DropBarNormalFloat = { bg = "$none" },
+					DropBarPreview = { bg = "$none", ctermbg = "$none" },
+					DropBarCurrentContext = { bg = "$none" },
+					DropBarMenuNormalFloat = { bg = "$none", ctermbg = "$none" },
+					-- NormalFloat = { bg = "$none", ctermbg = "$none" },
+					-- Visual = { bg = "$none", ctermbg = "$none" },
 				},
 			})
 
