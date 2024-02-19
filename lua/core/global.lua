@@ -26,7 +26,6 @@ end
 ---Determine if a value of any type is empty
 ---@param item any
 ---@return boolean?
-
 function core.falsy(item)
 	if not item then
 		return true

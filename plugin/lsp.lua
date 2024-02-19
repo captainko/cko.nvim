@@ -94,7 +94,7 @@ end
 ---@param client lsp.Client
 ---@param bufnr integer
 local function setup_mappings(client, bufnr)
-	local ts = { "typescript", "typescriptreact" }
+	-- local ts = { "typescript", "typescriptreact" }
 	local mappings = {
 		{
 			"n",
@@ -151,7 +151,7 @@ local function setup_mappings(client, bufnr)
 			desc = "code action",
 			capability = M.textDocument_codeAction,
 		},
-		{ "n", "gd", lsp.buf.definition, desc = "definition", capability = M.textDocument_definition, exclude = ts },
+		{ "n", "gd", lsp.buf.definition, desc = "definition", capability = M.textDocument_definition },
 		{ "n", "gr", lsp.buf.references, desc = "references", capability = M.textDocument_references },
 		{
 			"n",
@@ -255,20 +255,20 @@ local client_overrides = {
 
 ---@param client lsp.Client
 ---@param bufnr number
-local function setup_semantic_tokens(client, bufnr)
-	local overrides = client_overrides[client.name]
-	if not overrides or not overrides.semantic_tokens then
-		return
-	end
-	augroup(fmt("LspSemanticTokens%s", client.name), {
-		event = "LspTokenUpdate",
-		buffer = bufnr,
-		desc = fmt("Configure the semantic tokens for the %s", client.name),
-		command = function(args)
-			overrides.semantic_tokens(args.buf, client, args.data.token)
-		end,
-	})
-end
+-- local function setup_semantic_tokens(client, bufnr)
+-- 	local overrides = client_overrides[client.name]
+-- 	if not overrides or not overrides.semantic_tokens then
+-- 		return
+-- 	end
+-- 	augroup(fmt("LspSemanticTokens%s", client.name), {
+-- 		event = "LspTokenUpdate",
+-- 		buffer = bufnr,
+-- 		desc = fmt("Configure the semantic tokens for the %s", client.name),
+-- 		command = function(args)
+-- 			overrides.semantic_tokens(args.buf, client, args.data.token)
+-- 		end,
+-- 	})
+-- end
 -----------------------------------------------------------------------------//
 -- Autocommands
 -----------------------------------------------------------------------------//
@@ -351,23 +351,7 @@ augroup("LspSetupCommands", {
 		end,
 	},
 })
------------------------------------------------------------------------------//
--- Signs
------------------------------------------------------------------------------//
 
----@param opts {highlight: string, icon: string}
-local function sign(opts)
-	fn.sign_define(opts.highlight, {
-		text = opts.icon,
-		texthl = opts.highlight,
-		linehl = opts.highlight .. "Line",
-	})
-end
-
-sign({ highlight = "DiagnosticSignError", icon = icons.error })
-sign({ highlight = "DiagnosticSignWarn", icon = icons.warn })
-sign({ highlight = "DiagnosticSignInfo", icon = icons.info })
-sign({ highlight = "DiagnosticSignHint", icon = icons.hint })
 -----------------------------------------------------------------------------//
 -- Handler Overrides
 -----------------------------------------------------------------------------//
@@ -414,6 +398,18 @@ diagnostic.config({
 	severity_sort = true,
 	signs = {
 		severity = { min = S.WARN },
+		text = {
+			[S.WARN] = icons.warn,
+			[S.INFO] = icons.info,
+			[S.HINT] = icons.hint,
+			[S.ERROR] = icons.error,
+		},
+		linehl = {
+			[S.WARN] = "DiagnosticSignWarnLine",
+			[S.INFO] = "DiagnosticSignInfoLine",
+			[S.HINT] = "DiagnosticSignHintLine",
+			[S.ERROR] = "DiagnosticSignErrorLine",
+		},
 	},
 	virtual_text = false and {
 		severity = { min = S.WARN },

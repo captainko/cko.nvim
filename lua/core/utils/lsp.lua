@@ -174,19 +174,23 @@ function M.setup_common_mappings(client, bufnr)
 		nnoremap({ "gd", vim.lsp.buf.definition, buffer = bufnr, nowait = true })
 	end
 
+	if client.supports_method(Methods.textDocument_definition) then
+		nnoremap({ "gD", vim.lsp.buf.declaration, buffer = bufnr, nowait = true })
+	end
+
 	-- if client.supports_method(Methods.textDocument_inlayHint) then
 	-- 	nnoremap({ "<Leader>ti", "<Cmd>lua require('lsp-inlayhints').toggle()", buffer = bufnr, nowait = true })
 	-- end
 
 	if client.supports_method(Methods.textDocument_typeDefinition) then
-		-- nnoremap({
-		-- 	"<Leader>gt",
-		-- 	vim.lsp.buf.type_definition,
-		-- 	bufnr = bufnr,
-		-- 	nowait = true,
-		-- })
+		nnoremap({
+			"<Leader>gt",
+			vim.lsp.buf.type_definition,
+			bufnr = bufnr,
+			nowait = true,
+		})
 
-		map_tele("<Leader>gt", "lsp_type_definitions", nil, bufnr)
+		-- map_tele("<Leader>gt", "lsp_type_definitions", nil, bufnr)
 	end
 
 	if client.supports_method(Methods.textDocument_hover) then

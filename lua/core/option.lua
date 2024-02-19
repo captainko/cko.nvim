@@ -63,7 +63,7 @@ o.emoji = false
 o.viewoptions = "cursor,folds"
 o.switchbuf = "useopen,uselast"
 o.cmdheight = 1 -- Height of the command bar
-o.mouse = "nv" -- mouse: no visual
+o.mouse = "nv"  -- mouse: no visual
 o.scrolloff = 20
 o.list = true
 o.equalalways = true -- TJ: I don't like my windows changing all the time
@@ -200,7 +200,7 @@ o.spell = true
 o.spelllang = "en_us"
 o.spellsuggest:prepend({ 12 })
 o.spelloptions = "camel"
-o.spellcapcheck = "" -- don't check for capital letters at start of sentence
+o.spellcapcheck = ""                                       -- don't check for capital letters at start of sentence
 o.fileformats = "unix,mac,dos"
 g.spellfile_URL = "https://ftp.nluug.nl/vim/runtime/spell" -- change defaults spell host
 
