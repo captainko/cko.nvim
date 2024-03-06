@@ -1589,3 +1589,15 @@ zulu
 passwd
 yabai
 lang/!
+ctrl
+bindsym
+ppt
+swaylock
+swaync
+libexec
+wayland
+swaymsg
+waybar
+swaybar
+stdout
+gammastep

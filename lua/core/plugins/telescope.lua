@@ -20,7 +20,7 @@ local M = {
 		{
 			"nvim-telescope/telescope-fzf-native.nvim",
 			build = "make",
-			dependencies = { "tami5/sqlite.lua" },
+			dependencies = { "kkharji/sqlite.lua" },
 		},
 	},
 }

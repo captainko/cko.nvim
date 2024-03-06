@@ -193,8 +193,8 @@ local function setup_mappings(client, bufnr)
 			desc = "inlay hints toggle",
 			capability = M.textDocument_inlayHint,
 		},
-		{ "n", "<leader>rr", lsp.buf.rename, desc = "rename", capability = M.textDocument_rename },
-		{ "n", "<leader>rm", rename_file, desc = "rename file", capability = M.textDocument_rename },
+		{ "n", "<leader>rr", lsp.buf.rename, desc = "rename",      capability = M.textDocument_rename },
+		{ "n", "<leader>rm", rename_file,    desc = "rename file", capability = M.textDocument_rename },
 		{
 			"n",
 			"go",
@@ -249,12 +249,12 @@ local client_overrides = {
 	},
 }
 
------------------------------------------------------------------------------//
--- Semantic Tokens
------------------------------------------------------------------------------//
+-- -----------------------------------------------------------------------------//
+-- -- Semantic Tokens
+-- -----------------------------------------------------------------------------//
 
----@param client lsp.Client
----@param bufnr number
+-- ---@param client lsp.Client
+-- ---@param bufnr number
 -- local function setup_semantic_tokens(client, bufnr)
 -- 	local overrides = client_overrides[client.name]
 -- 	if not overrides or not overrides.semantic_tokens then

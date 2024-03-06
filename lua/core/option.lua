@@ -55,7 +55,7 @@ o.updatetime = 300
 o.showmode = false
 o.clipboard:append("unnamedplus")
 o.colorcolumn = "80"
-o.encoding = "UTF-8"
+o.encoding = "utf-8"
 o.sessionoptions = "buffers,curdir,folds,help,tabpages,winsize"
 o.errorbells = false
 o.belloff = "all" -- turn that dang bell off
