@@ -292,11 +292,11 @@ local M = {
 					null_ls.builtins.formatting.stylua.with({ condition = has_stylua }),
 
 					-- use lua formatter as default
-					null_ls.builtins.formatting.lua_format.with({
-						condition = function(utils)
-							return not has_stylua(utils)
-						end,
-					}),
+					-- null_ls.builtins.formatting.lua_format.with({
+					-- 	condition = function(utils)
+					-- 		return not has_stylua(utils)
+					-- 	end,
+					-- }),
 
 					-- =============================================================================
 					-- C Sharp
@@ -321,7 +321,7 @@ local M = {
 					-- Shell script
 					-- =============================================================================
 
-					null_ls.builtins.diagnostics.shellcheck,
+					-- null_ls.builtins.diagnostics.shellcheck,
 					null_ls.builtins.formatting.shfmt.with({ filetypes = { "sh", "zsh" } }),
 
 					-- =============================================================================
