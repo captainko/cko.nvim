@@ -93,7 +93,6 @@ M.config = function()
 			virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
 			delay = 500,
 		},
-		current_line_blame_formatter_opts = { relative_time = true },
 		sign_priority = 6,
 		update_debounce = 100,
 		status_formatter = nil, -- Use default
@@ -108,7 +107,6 @@ M.config = function()
 		},
 		diff_opts = { internal = true },
 		-- use_internal_diff = true, -- If vim.diff or luajit is present
-		yadm = { enable = false },
 	})
 end
 
