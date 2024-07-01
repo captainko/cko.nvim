@@ -5,6 +5,7 @@ local Methods = vim.lsp.protocol.Methods
 
 local M = {}
 
+---@param client vim.lsp.Client
 function M.disable_formatting(client)
 	client.server_capabilities.documentFormattingProvider = false
 	client.server_capabilities.documentRangeFormattingProvider = false
@@ -38,16 +39,18 @@ function M.clear_references()
 	vim.lsp.buf.clear_references()
 end
 
+---@param client vim.lsp.Client
+---@param bufnr  integer
 function M.setup_autocommands(client, bufnr)
 	if client.supports_method(Methods.textDocument_codeLens) then
-		commander.augroup("LspCodeLens", {
-			{
-				event = { "BufEnter", "CursorHold", "InsertLeave" },
-				buffer = bufnr,
-				command = vim.lsp.codelens.refresh,
-			},
-		})
-		mapper.nnoremap({ "<Leader>cl", vim.lsp.codelens.run, buffer = bufnr })
+		-- commander.augroup("LspCodeLens", {
+		-- 	{
+		-- 		event = { "BufEnter", "CursorHold", "InsertLeave" },
+		-- 		buffer = bufnr,
+		-- 		command = vim.lsp.codelens.refresh,
+		-- 	},
+		-- })
+		-- mapper.nnoremap({ "<Leader>cl", vim.lsp.codelens.run, buffer = bufnr })
 	end
 
 	if client.supports_method(Methods.textDocument_documentHighlight) then
@@ -105,13 +108,14 @@ end
 -- Setup Mappings{{{
 -- =============================================================================
 
+---@type vim.diagnostic.Opts.Float
 local float_opt = { scope = "cursor", focusable = false }
 function M.diag_go_next()
-	vim.diagnostic.goto_next({ float = float_opt })
+	vim.diagnostic.goto_next({ float = true })
 end
 
 function M.diag_go_prev()
-	vim.diagnostic.goto_prev({ float = float_opt })
+	vim.diagnostic.goto_prev({ float = true })
 end
 
 function M.diag_go_next_warn()
@@ -170,7 +174,7 @@ function M.setup_common_mappings(client, bufnr)
 		nnoremap({ "<Leader>rr", vim.lsp.buf.rename, buffer = bufnr, nowait = true })
 	end
 
-	if client.supports_method(Methods.textDocument_declaration) then
+	if client.supports_method(Methods.textDocument_definition) then
 		nnoremap({ "gd", vim.lsp.buf.definition, buffer = bufnr, nowait = true })
 	end
 
@@ -186,7 +190,7 @@ function M.setup_common_mappings(client, bufnr)
 		nnoremap({
 			"<Leader>gt",
 			vim.lsp.buf.type_definition,
-			bufnr = bufnr,
+			-- bufnr = bufnr,
 			nowait = true,
 		})
 
@@ -206,17 +210,27 @@ function M.setup_common_mappings(client, bufnr)
 	end
 
 	if client.supports_method(Methods.textDocument_documentSymbol) then
-		map_tele("go", "lsp_document_symbols", nil, bufnr)
+		nnoremap({
+			"go",
+			require("telescope.builtin").lsp_document_symbols,
+			buffer = bufnr,
+			nowait = true,
+		})
 	end
 
 	if client.supports_method(Methods.workspace_symbol) then
-		map_tele("gO", "lsp_dynamic_workspace_symbols", nil, bufnr)
+		nnoremap({
+			"gO",
+			require("telescope.builtin").lsp_dynamic_workspace_symbols,
+			buffer = bufnr,
+			nowait = true,
+		})
 	end
-	map_tele("<Leader>fd", "lsp_workspace_diagnostics", nil, bufnr)
+	-- map_tele("<Leader>fd", "lsp_workspace_diagnostics", nil, bufnr)
 end
 
 ---Setup mapping when an lsp attaches to a buffer
----@param client table lsp client
+---@param client vim.lsp.Client
 ---@param bufnr  integer
 function M.setup_mappings(client, bufnr)
 	M.setup_common_mappings(client, bufnr)
@@ -285,11 +299,11 @@ end
 -- end
 
 ---comment
----@param client lsp.Client
+---@param client vim.lsp.Client
 ---@param bufnr  number
 function M.on_attach(client, bufnr)
-	-- M.setup_autocommands(client, bufnr)
-	-- M.setup_mappings(client, bufnr)
+	M.setup_autocommands(client, bufnr)
+	M.setup_mappings(client, bufnr)
 
 	-- local status = require("lsp-status")
 	-- status.on_attach(client)
@@ -302,13 +316,8 @@ function M.on_attach(client, bufnr)
 	-- 	inlay_hints.on_attach(client, bufnr, false)
 	-- end
 
-	-- local navic = require("nvim-navic")
-	-- if client.supports_method(Methods.textDocument_documentSymbol, { bufnr = bufnr }) then
-	-- 	navic.attach(client, bufnr)
-	-- end
-
 	-- if client.server_capabilities.goto_definition then
-	--   vim.bo[bufnr].tagfunc = "v:lua.M.tagfunc"
+	-- vim.bo[bufnr].tagfunc = "v:lua.M.tagfunc"
 	-- end
 end
 
