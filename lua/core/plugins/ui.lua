@@ -112,7 +112,6 @@ local M = {
 	{
 		"Bekaboo/dropbar.nvim",
 		event = { "VeryLazy" },
-		tag = "v4.0.0",
 		config = function()
 			local icons = require("lspkind")
 
