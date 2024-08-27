@@ -90,35 +90,13 @@ local M = {
 			-- require("mason-lspconfig").setup()
 			vim.diagnostic.config({
 				severity_sort = true,
-				signs = true,
 				underline = true,
 				update_on_insert = false,
-			})
-
-			-- =============================================================================
-			-- Signs
-			-- =============================================================================
-
-			vim.fn.sign_define({
-				{
-					name = "DiagnosticSignError",
-					text = icons.error,
-					texthl = "DiagnosticSignError",
-				},
-				{
-					name = "DiagnosticSignHint",
-					text = icons.hint,
-					texthl = "DiagnosticSignHint",
-				},
-				{
-					name = "DiagnosticSignWarn",
-					text = icons.warn,
-					texthl = "DiagnosticSignWarn",
-				},
-				{
-					name = "DiagnosticSignInfo",
-					text = icons.info,
-					texthl = "DiagnosticSignInfo",
+				signs = {
+					{ name = "DiagnosticSignError", text = icons.error, texthl = "DiagnosticSignError" },
+					{ name = "DiagnosticSignWarn",  text = icons.warn,  texthl = "DiagnosticSignWarn" },
+					{ name = "DiagnosticSignInfo",  text = icons.info,  texthl = "DiagnosticSignInfo" },
+					{ name = "DiagnosticSignHint",  text = icons.hint,  texthl = "DiagnosticSignHint" },
 				},
 			})
 
@@ -148,7 +126,7 @@ local M = {
 			local lsp = require("core.utils.lsp")
 
 			require("mason-null-ls").setup({
-				automatic_installation = {},
+				automatic_installation = true,
 				ensure_installed = {
 					"stylua",
 					"jq",
@@ -160,8 +138,9 @@ local M = {
 					"hadolint",
 					"nginx_beautifier",
 					"codespell",
-					"csharpier",
-					"black",
+					-- "csharpier",
+					-- "black",
+					-- "csharpier",
 					-- "protolint",
 				},
 			})
@@ -227,8 +206,11 @@ local M = {
 			end
 
 			null_ls.setup({
-				on_attach = on_attach,
+				-- on_attach = on_attach,
 				-- debug = true,
+				-- on_init = function(new_client, _)
+				-- 	new_client.offset_encoding = "utf-32"
+				-- end,
 				sources = {
 
 					-- =============================================================================
@@ -309,7 +291,7 @@ local M = {
 
 					-- null_ls.builtins.diagnostics.golint,
 					-- null_ls.builtins.formatting.gofmt,
-					null_ls.builtins.formatting.goimports,
+					-- null_ls.builtins.formatting.goimports,
 
 					-- =============================================================================
 					-- SQL
@@ -397,9 +379,23 @@ local M = {
 		enabled = true,
 		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 		config = function(self, opts)
+			local mason_registry = require("mason-registry")
+			local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
+				.. "/node_modules/@vue/language-server"
+
 			require("typescript-tools").setup({
-				on_attach = require("core.lsp.tsserver").on_attach,
 				settings = {
+					filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+					on_attach = require("core.lsp.tsserver").on_attach,
+					init_options = {
+						plugins = {
+							{
+								name = "@vue/typescript-plugin",
+								location = vue_language_server_path,
+								languages = { "vue" },
+							},
+						},
+					},
 					tsserver_file_preferences = {
 						includeInlayParameterNameHints = "all",
 						includeInlayParameterNameHintsWhenArgumentMatchesName = false,
@@ -416,6 +412,49 @@ local M = {
 	},
 
 	{ "mfussenegger/nvim-jdtls", ft = { "java" } },
+	{
+		"ray-x/go.nvim",
+		-- enabled = false,
+		enabled = not vim.g.vscode,
+		dependencies = { -- optional packages
+			"ray-x/guihua.lua",
+			"neovim/nvim-lspconfig",
+			"nvim-treesitter/nvim-treesitter",
+			"mfussenegger/nvim-dap",
+		},
+		config = function()
+			require("go").setup({
+				goimports = "gopls", -- if set to 'gopls' will use golsp format
+				gofmt = "gopls", -- if set to gopls will use golsp format
+				tag_transform = false,
+				test_dir = "",
+				comment_placeholder = "   ",
+				lsp_cfg = true, -- false: use your own lspconfig
+				lsp_gofumpt = true, -- true: set default gofmt in gopls format to gofumpt
+				lsp_on_attach = true, -- use on_attach from go.nvim
+				lsp_keymaps = false,
+				dap_debug = true,
+				lsp_inlay_hints = {
+					enable = false,
+					style = "inlay",
+				},
+			})
+
+			local commander = require("core.utils.commander")
+			commander.augroup("GoImports", {
+				{
+					event = "BufWritePre",
+					pattern = "*.go",
+					command = function()
+						require("go.format").goimports()
+					end,
+				},
+			})
+		end,
+		event = { "CmdlineEnter" },
+		ft = { "go", "gomod" },
+		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+	},
 }
 
 return M
