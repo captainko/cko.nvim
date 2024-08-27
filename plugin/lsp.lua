@@ -8,7 +8,6 @@ local L, S = vim.lsp.log_levels, vim.diagnostic.severity
 local M = vim.lsp.protocol.Methods
 
 local style = require("core.global.style")
-local map_tele = require("core.telescope.mappings")
 local icons = style.icons
 local commander = require("core.utils.commander")
 -- local border = core.ui.current.border
@@ -91,7 +90,7 @@ end
 -----------------------------------------------------------------------------//
 
 ---Setup mapping when an lsp attaches to a buffer
----@param client lsp.Client
+---@param client vim.lsp.Client
 ---@param bufnr integer
 local function setup_mappings(client, bufnr)
 	-- local ts = { "typescript", "typescriptreact" }
@@ -100,7 +99,7 @@ local function setup_mappings(client, bufnr)
 			"n",
 			"]g",
 			function()
-				diagnostic.goto_prev({ float = true })
+				diagnostic.jump({ float = true, count = 1 })
 			end,
 			desc = "go to prev diagnostic",
 		},
@@ -108,7 +107,7 @@ local function setup_mappings(client, bufnr)
 			"n",
 			"[g",
 			function()
-				diagnostic.goto_next({ float = true })
+				diagnostic.jump({ float = true, count = -1 })
 			end,
 			desc = "go to next diagnostic",
 		},
@@ -116,7 +115,7 @@ local function setup_mappings(client, bufnr)
 			"n",
 			"]w",
 			function()
-				diagnostic.goto_next({ severity = S.WARN, float = true })
+				diagnostic.jump({ severity = S.WARN, float = true, count = 1 })
 			end,
 			desc = "go to next warning diagnostic",
 		},
@@ -124,7 +123,7 @@ local function setup_mappings(client, bufnr)
 			"n",
 			"[w",
 			function()
-				diagnostic.goto_prev({ severity = S.WARN, float = true })
+				diagnostic.jump({ severity = S.WARN, float = true, count = -1 })
 			end,
 			desc = "go to previous warning diagnostic",
 		},
@@ -132,7 +131,7 @@ local function setup_mappings(client, bufnr)
 			"n",
 			"]e",
 			function()
-				diagnostic.goto_next({ severity = S.ERROR, float = true })
+				diagnostic.jump({ severity = S.ERROR, float = true, count = 1 })
 			end,
 			desc = "go to next error diagnostic",
 		},
@@ -140,7 +139,7 @@ local function setup_mappings(client, bufnr)
 			"n",
 			"[e",
 			function()
-				diagnostic.goto_prev({ severity = S.ERROR, float = true })
+				diagnostic.jump({ severity = S.ERROR, float = true, count = -1 })
 			end,
 			desc = "go to previous error diagnostic",
 		},
@@ -174,7 +173,7 @@ local function setup_mappings(client, bufnr)
 			lsp.buf.type_definition,
 			desc = 'go to type definition',
 			capability = M
-				.textDocument_definition
+					.textDocument_definition
 		},
 		-- stylua: ignore end
 		{
@@ -188,16 +187,16 @@ local function setup_mappings(client, bufnr)
 			"n",
 			"<leader>ci",
 			function()
-				lsp.inlay_hint.enable(0)
+				lsp.inlay_hint.enable(not lsp.inlay_hint.is_enabled({ bufnr = 0 }))
 			end,
 			desc = "inlay hints toggle",
 			capability = M.textDocument_inlayHint,
 		},
-		{ "n", "<leader>rr", lsp.buf.rename, desc = "rename",      capability = M.textDocument_rename },
-		{ "n", "<leader>rm", rename_file,    desc = "rename file", capability = M.textDocument_rename },
+		{ "n", "<leader>rr", lsp.buf.rename, desc = "rename", capability = M.textDocument_rename },
+		{ "n", "<leader>rm", rename_file, desc = "rename file", capability = M.textDocument_rename },
 		{
 			"n",
-			"go",
+			"gs",
 			function()
 				require("telescope.builtin").lsp_document_symbols()
 			end,
@@ -206,7 +205,7 @@ local function setup_mappings(client, bufnr)
 		},
 		{
 			"n",
-			"gO",
+			"gS",
 			function()
 				require("telescope.builtin").lsp_dynamic_workspace_symbols()
 			end,
@@ -214,10 +213,6 @@ local function setup_mappings(client, bufnr)
 			capability = M.workspace_symbol,
 		},
 	}
-
-	-- if client.supports_method(Methods.workspace_symbol) then
-	-- 	map_tele("gO", "lsp_dynamic_workspace_symbols", nil, bufnr)
-	-- end
 
 	vim.iter(mappings):each(function(m)
 		if
@@ -233,7 +228,7 @@ end
 -- LSP SETUP/TEARDOWN
 -----------------------------------------------------------------------------//
 
----@alias ClientOverrides {on_attach: fun(client: lsp.Client, bufnr: number), semantic_tokens: fun(bufnr: number, client: lsp.Client, token: table)}
+---@alias ClientOverrides {on_attach: fun(client: vim.lsp.Client, bufnr: number), semantic_tokens: fun(bufnr: number, client: vim.lsp.Client, token: table)}
 
 --- A set of custom overrides for specific lsp clients
 --- This is a way of adding functionality for specific lsps
@@ -273,7 +268,7 @@ local client_overrides = {
 -- Autocommands
 -----------------------------------------------------------------------------//
 
----@param client lsp.Client
+---@param client vim.lsp.Client
 ---@param buf integer
 local function setup_autocommands(client, buf)
 	if client.supports_method(M.textDocument_codeLens) then
@@ -287,7 +282,7 @@ local function setup_autocommands(client, buf)
 	end
 
 	if client.supports_method(M.textDocument_inlayHint, { bufnr = buf }) then
-		vim.lsp.inlay_hint.enable(buf, true)
+		vim.lsp.inlay_hint.enable(true, { bufnr = buf })
 	end
 
 	if client.supports_method(M.textDocument_documentHighlight) then
@@ -315,7 +310,7 @@ end
 -- Add buffer local mappings, autocommands etc for attaching servers
 -- this runs for each client because they have different capabilities so each time one
 -- attaches it might enable autocommands or mappings that the previous client did not support
----@param client lsp.Client the lsp client
+---@param client vim.lsp.Client the lsp client
 ---@param bufnr number
 local function on_attach(client, bufnr)
 	setup_autocommands(client, bufnr)

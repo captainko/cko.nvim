@@ -2,14 +2,14 @@
 local M = {
 	"nvim-telescope/telescope.nvim",
 	enabled = not vim.g.vscode,
-	-- keys = {
-	-- 	"<LocalLeader>fd",
-	-- 	"<LocalLeader>fo",
-	-- 	"<LocalLeader>ff",
-	-- 	"<LocalLeader>fb",
-	-- 	"<LocalLeader>fB",
-	-- 	"<LocalLeader>f.",
-	-- },
+	keys = {
+		"<LocalLeader>fd",
+		"<LocalLeader>fo",
+		"<LocalLeader>ff",
+		"<LocalLeader>fb",
+		"<LocalLeader>fB",
+		"<LocalLeader>f.",
+	},
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-lua/popup.nvim",
