@@ -10,6 +10,7 @@ local M = {
 
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate", -- We recommend updating the parsers on update
+		lazy = false,
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter-textobjects",
 			-- "nvim-treesitter/nvim-tree-docs",
@@ -83,6 +84,7 @@ local M = {
 				"tsx",
 				"typescript",
 				"vim",
+				"vimdoc",
 				"vue",
 				"yaml",
 				"passwd",
@@ -92,7 +94,7 @@ local M = {
 			require("nvim-treesitter.configs").setup({
 				modules = {},
 				sync_install = false,
-				auto_install = false,
+				auto_install = true,
 				ignore_install = {},
 				parser_install_dir = nil,
 				ensure_installed = langs, -- one of "all", "maintained" (parsers with maintainers), or a list of languages
