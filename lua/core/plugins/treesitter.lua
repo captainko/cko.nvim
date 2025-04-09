@@ -170,11 +170,11 @@ local M = {
 				},
 				autopairs = { enable = not vim.g.vscode },
 				autotag = { enable = true },
-				endwise = { enable = true },
-				matchup = {
-					enable = true,     -- mandatory, false will disable the whole extension
-					disable = { "c", "ruby", "lua" }, -- optional, list of language that will be disabled
-				},
+				endwise = { enable = true, disable = { "sh", "bash" } },
+				-- matchup = {
+				-- 	enable = false,     -- mandatory, false will disable the whole extension
+				-- 	disable = { "c", "ruby", "lua" }, -- optional, list of language that will be disabled
+				-- },
 				query_linter = {
 					enable = true,
 					use_virtual_text = true,

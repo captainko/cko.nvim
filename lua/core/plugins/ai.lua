@@ -54,6 +54,20 @@ local M = {
 	-- 		})
 	-- 	end,
 	-- },
+	{
+		"github/copilot.vim",
+		lazy = false,
+		config = function()
+			vim.g.copilot_no_tab_map = true
+			local mapper = require("core.utils.mapper")
+			mapper.inoremap({
+				"<C-J>",
+				'copilot#Accept("\\<CR>")',
+				expr = true,
+				replace_keycodes = false,
+			})
+		end,
+	}
 }
 
 return M

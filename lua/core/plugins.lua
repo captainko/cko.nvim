@@ -45,14 +45,14 @@ local M = {
 			{ "<LocalLeader>ct", "<Plug>(git-conflict-theirs)" },
 			{ "<LocalLeader>cb", "<Plug>(git-conflict-both)" },
 			{ "<LocalLeader>c0", "<Plug>(git-conflict-none)" },
-			{ "]x", "<Plug>(git-conflict-prev-conflict)" },
-			{ "[x", "<Plug>(git-conflict-next-conflict)" },
+			{ "]x",              "<Plug>(git-conflict-prev-conflict)" },
+			{ "[x",              "<Plug>(git-conflict-next-conflict)" },
 		},
 		config = function()
 			require("git-conflict").setup({ default_mappings = false })
 		end,
 	},
-	{ "Joakker/lua-json5", build = "./install.sh" },
+	{ "Joakker/lua-json5",            build = "./install.sh" },
 	{
 		"saecki/crates.nvim",
 		enabled = not_has_vscode,
@@ -78,8 +78,10 @@ local M = {
 	{
 		"iamcco/markdown-preview.nvim",
 		enabled = not_has_vscode,
-		build = "cd app && yarn install",
 		ft = { "markdown" },
+		build = function()
+			vim.fn["mkdp#util#install"]()
+		end,
 		config = function()
 			vim.g.mkdp_auto_start = 0
 			vim.g.mkdp_auto_close = 1
@@ -93,10 +95,10 @@ local M = {
 			require("go").setup()
 		end,
 	},
-	{ "chrisbra/csv.vim", ft = { "csv" }, enabled = not_has_vscode },
-	{ "chr4/nginx.vim", ft = { "nginx" }, enabled = not_has_vscode },
+	{ "chrisbra/csv.vim",        ft = { "csv" },     enabled = not_has_vscode },
+	{ "chr4/nginx.vim",          ft = { "nginx" },   enabled = not_has_vscode },
 	{ "baskerville/vim-sxhkdrc", ft = { "sxhkdrc" }, enabled = not_has_vscode },
-	{ "towolf/vim-helm", ft = { "helm" }, enabled = not_has_vscode },
+	{ "towolf/vim-helm",         ft = { "helm" },    enabled = not_has_vscode },
 }
 
 return M

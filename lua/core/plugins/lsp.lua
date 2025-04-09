@@ -54,7 +54,7 @@ local M = {
 			"williamboman/mason.nvim",
 			-- "lvimuser/lsp-inlayhints.nvim",
 			"williamboman/mason-lspconfig.nvim",
-			"jose-elias-alvarez/typescript.nvim",
+			-- "jose-elias-alvarez/typescript.nvim",
 			"folke/neodev.nvim",
 			"folke/neoconf.nvim",
 			"b0o/schemastore.nvim",
@@ -94,9 +94,9 @@ local M = {
 				update_on_insert = false,
 				signs = {
 					{ name = "DiagnosticSignError", text = icons.error, texthl = "DiagnosticSignError" },
-					{ name = "DiagnosticSignWarn",  text = icons.warn,  texthl = "DiagnosticSignWarn" },
-					{ name = "DiagnosticSignInfo",  text = icons.info,  texthl = "DiagnosticSignInfo" },
-					{ name = "DiagnosticSignHint",  text = icons.hint,  texthl = "DiagnosticSignHint" },
+					{ name = "DiagnosticSignWarn", text = icons.warn, texthl = "DiagnosticSignWarn" },
+					{ name = "DiagnosticSignInfo", text = icons.info, texthl = "DiagnosticSignInfo" },
+					{ name = "DiagnosticSignHint", text = icons.hint, texthl = "DiagnosticSignHint" },
 				},
 			})
 
@@ -341,7 +341,9 @@ local M = {
 					-- Spell
 					-- =============================================================================
 					-- English linter
-					null_ls.builtins.diagnostics.codespell,
+					null_ls.builtins.diagnostics.codespell.with({
+						disabled_filetypes = { "NvimTree" },
+					}),
 					-- English prose linter.
 					-- null_ls.builtins.diagnostics.write_good.with({
 					-- 	filetypes = { "markdown", "gitcommit" },
@@ -379,14 +381,20 @@ local M = {
 		enabled = true,
 		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 		config = function(self, opts)
+			local config = require("typescript-tools.config")
 			local mason_registry = require("mason-registry")
 			local vue_language_server_path = mason_registry.get_package("vue-language-server"):get_install_path()
 				.. "/node_modules/@vue/language-server"
 
 			require("typescript-tools").setup({
+				root_dir = require("core.utils.lsp").is_tsserver_root,
+				single_file_support = false,
+				default_config = {
+					root_dir = require("core.utils.lsp").is_tsserver_root,
+				},
+				-- on_attach = require("core.lsp.tsserver").on_attach,
 				settings = {
 					filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-					on_attach = require("core.lsp.tsserver").on_attach,
 					init_options = {
 						plugins = {
 							{

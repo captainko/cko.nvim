@@ -8,7 +8,7 @@ P = vim.print
 ---@generic TParam
 ---@generic TReturn
 ---@param   cb fun(...: TParam): TReturn
----@vararg  TParam
+---@param   ...TParam
 ---@return fun(): TReturn
 function B(cb, ...)
 	local args = { ... }
@@ -25,7 +25,7 @@ end
 
 ---Determine if a value of any type is empty
 ---@param item any
----@return boolean?
+---@return boolean
 function core.falsy(item)
 	if not item then
 		return true

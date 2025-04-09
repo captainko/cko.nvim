@@ -11,6 +11,14 @@ local M = {
 			top_delete = "┃",
 			change_delete = "┃",
 		},
+		--- Shared icons that don't really fit into a category.
+		misc = {
+			bug = "",
+			ellipsis = "…",
+			git = "",
+			search = "",
+			vertical_bar = "│",
+		},
 	},
 	-- lsp = {
 	-- 	kinds = {

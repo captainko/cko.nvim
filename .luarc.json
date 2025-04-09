@@ -1,3 +1,13 @@
 {
-    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json"
+    "$schema": "https://raw.githubusercontent.com/sumneko/vscode-lua/master/setting/schema.json",
+    "diagnostics.globals": [
+        "describe",
+        "it",
+        "before_each",
+        "after_each",
+        "pending",
+        "clear",
+        "teardown",
+        "core"
+    ]
 }

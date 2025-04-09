@@ -2,6 +2,7 @@
 local M = {
 	"andymass/vim-matchup",
 	event = { "CursorMoved" },
+	enabled = false,
 }
 
 function M.config()

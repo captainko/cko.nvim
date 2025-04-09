@@ -1,5 +1,4 @@
 local mapper = require("core.utils.mapper")
-local map_tele = require("core.telescope.mappings")
 local commander = require("core.utils.commander")
 local Methods = vim.lsp.protocol.Methods
 
@@ -21,7 +20,7 @@ end
 -- end
 
 function M.do_cursor_hold()
-	vim.lsp.buf.document_highlight()
+	-- vim.lsp.buf.document_highlight()
 	vim.diagnostic.open_float({
 		scope = "line",
 		focusable = false,
@@ -111,36 +110,40 @@ end
 ---@type vim.diagnostic.Opts.Float
 local float_opt = { scope = "cursor", focusable = false }
 function M.diag_go_next()
-	vim.diagnostic.goto_next({ float = true })
+	vim.diagnostic.jump({ count = 1, float = true })
 end
 
 function M.diag_go_prev()
-	vim.diagnostic.goto_prev({ float = true })
+	vim.diagnostic.jump({ coun = -1, float = true })
 end
 
 function M.diag_go_next_warn()
-	vim.diagnostic.goto_next({
+	vim.diagnostic.jump({
+		count = 1,
 		severity = { min = vim.diagnostic.severity.WARN },
 		float = float_opt,
 	})
 end
 
 function M.diag_go_prev_warn()
-	vim.diagnostic.goto_prev({
+	vim.diagnostic.jump({
+		count = -1,
 		severity = { min = vim.diagnostic.severity.WARN },
 		float = float_opt,
 	})
 end
 
 function M.diag_go_next_err()
-	vim.diagnostic.goto_next({
+	vim.diagnostic.jump({
+		count = 1,
 		severity = vim.diagnostic.severity.ERROR,
 		float = float_opt,
 	})
 end
 
 function M.diag_go_prev_err()
-	vim.diagnostic.goto_prev({
+	vim.diagnostic.jump({
+		count = -1,
 		severity = vim.diagnostic.severity.ERROR,
 		float = float_opt,
 	})
@@ -193,8 +196,6 @@ function M.setup_common_mappings(client, bufnr)
 			-- bufnr = bufnr,
 			nowait = true,
 		})
-
-		-- map_tele("<Leader>gt", "lsp_type_definitions", nil, bufnr)
 	end
 
 	if client.supports_method(Methods.textDocument_hover) then
@@ -226,7 +227,6 @@ function M.setup_common_mappings(client, bufnr)
 			nowait = true,
 		})
 	end
-	-- map_tele("<Leader>fd", "lsp_workspace_diagnostics", nil, bufnr)
 end
 
 ---Setup mapping when an lsp attaches to a buffer
@@ -301,7 +301,9 @@ end
 ---comment
 ---@param client vim.lsp.Client
 ---@param bufnr  number
+---@param registerDynamic boolean|nil
 function M.on_attach(client, bufnr)
+	registerDynamic = registerDynamic == nil and true or registerDynamic
 	M.setup_autocommands(client, bufnr)
 	M.setup_mappings(client, bufnr)
 
@@ -334,15 +336,15 @@ commander.command("LspLog", function()
 end, {})
 
 local function get_server_option(server_name)
-	local has_opt, result = PR("core.lsp." .. server_name) -- load config if it exists
+	local has_opt, server_opt = PR("core.lsp." .. server_name) -- load config if it exists
 
 	if has_opt then
-		if type(result) == "table" then
-			return result
+		if type(server_opt) == "table" then
+			return server_opt
 		end
 
-		if type(result) == "function" then
-			return result()
+		if type(server_opt) == "function" then
+			return server_opt()
 		end
 	end
 
@@ -384,16 +386,16 @@ function M.setup_servers()
 		end,
 		["jdtls"] = empty_config,
 		["rust_analyzer"] = empty_config,
-		["tsserver"] = function(server_name)
-			require("typescript").setup({
-				disable_commands = false, -- prevent the plugin from creating Vim commands
-				debug = false, -- enable debug logging for commands
-				go_to_source_definition = {
-					fallback = true, -- fall back to standard LSP definition on failure
-				},
-				server = get_server_option(server_name),
-			})
-		end,
+		-- ["tsserver"] = function(server_name)
+		-- 	require("typescript").setup({
+		-- 		disable_commands = false, -- prevent the plugin from creating Vim commands
+		-- 		debug = false, -- enable debug logging for commands
+		-- 		go_to_source_definition = {
+		-- 			fallback = true, -- fall back to standard LSP definition on failure
+		-- 		},
+		-- 		server = get_server_option(server_name),
+		-- 	})
+		-- end,
 	})
 end
 
@@ -421,8 +423,44 @@ end
 
 function M.is_tsserver_root(startpath)
 	local u = require("lspconfig.util")
-	return u.root_pattern("tsconfig.json", "tsconfig.*.json")(startpath)
-		or u.root_pattern("package.json", "jsconfig.json", ".git")(startpath)
+	if u.root_pattern("deno.json")(startpath) then
+		return nil
+	end
+
+	return not u.root_pattern("deno.json")(startpath)
+		-- and not u.find_node_modules_ancestor(startpath)
+		and (
+			u.root_pattern("tsconfig.json", "tsconfig.*.json")(startpath)
+			or u.root_pattern("package.json", "jsconfig.json", ".git")(startpath)
+		)
+end
+
+---@param patterns1 string[]
+---@param patterns2 string[]
+function M.deepest_root_pattern(patterns1, patterns2)
+	local u = require("lspconfig.util")
+	-- Create two root_pattern functions
+	local find_root1 = u.root_pattern(unpack(patterns1))
+	local find_root2 = u.root_pattern(unpack(patterns2))
+
+	return function(startpath)
+		local path1 = find_root1(startpath)
+		local path2 = find_root2(startpath)
+
+		if path1 and path2 then
+			-- Count the number of slashes to determine the path length
+			local path1_length = select(2, path1:gsub("/", ""))
+			local path2_length = select(2, path2:gsub("/", ""))
+
+			if path1_length > path2_length then
+				return path1
+			end
+		elseif path1 then
+			return path1
+		end
+
+		return nil
+	end
 end
 
 return M

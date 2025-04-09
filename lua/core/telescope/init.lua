@@ -24,19 +24,6 @@ _M.git_files = function()
 end
 
 _M.search_relative_files = function()
-	require("telescope.builtin").find_files({
-		prompt_title = "Current Folder",
-		---@diagnostic disable-next-line: missing-parameter
-		cwd = vim.fn.expand("%:p:h"),
-		find_command = {
-			"rg",
-			"--files",
-			"--iglob",
-			"!**/.git/**/*",
-			"--ignore",
-			"--hidden",
-		},
-	})
 end
 
 _M.find_files__test = function()

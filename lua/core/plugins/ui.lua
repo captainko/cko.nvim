@@ -18,7 +18,7 @@ local M = {
 			local mapper = require("core.utils.mapper")
 			local nnoremap = mapper.nnoremap
 			for i = 1, 9, 1 do
-				nnoremap({ "<Leader>" .. i, B(bufferline.go_to_buffer, i) })
+				nnoremap({ "<Leader>" .. i, B(bufferline.go_to, i) })
 			end
 			nnoremap({ "[b", "<Cmd>BufferLineCyclePrev<CR>" })
 			nnoremap({ "]b", "<Cmd>BufferLineCycleNext<CR>" })
@@ -117,7 +117,7 @@ local M = {
 
 			require("dropbar").setup({
 				icons = icons.symbol_map,
-				general = {
+				bar = {
 					update_events = {
 						buf = {
 							"BufModifiedSet",

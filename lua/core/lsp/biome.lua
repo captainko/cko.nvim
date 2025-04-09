@@ -17,32 +17,6 @@ local M = {
 	-- root_dir = function(startpath)
 	-- 	return lsp.is_tsserver_root(startpath) and not lsp.is_vue_root(startpath)
 	-- end,
-	settings = {
-		typescript = {
-			surveys = { enabled = false },
-			inlayHints = {
-				includeInlayParameterNameHints = "all",
-				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-				includeInlayFunctionParameterTypeHints = true,
-				includeInlayVariableTypeHints = true,
-				includeInlayPropertyDeclarationTypeHints = true,
-				includeInlayFunctionLikeReturnTypeHints = true,
-				includeInlayEnumMemberValueHints = true,
-			},
-		},
-		javascript = {
-			surveys = { enabled = false },
-			inlayHints = {
-				includeInlayParameterNameHints = "all",
-				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-				includeInlayFunctionParameterTypeHints = true,
-				includeInlayVariableTypeHints = true,
-				includeInlayPropertyDeclarationTypeHints = true,
-				includeInlayFunctionLikeReturnTypeHints = true,
-				includeInlayEnumMemberValueHints = true,
-			},
-		},
-	},
 	-- init_options = {
 	-- 	preferences = {
 	-- 		-- quotePreference = "auto", -- "auto" | "double" | "single";
@@ -58,19 +32,14 @@ local M = {
 -- vim.api.nvim_command([[command! TsOrgImports TypescriptOrganizeImports]])
 
 function M.on_attach(client, bufnr)
-	local deno_clients = vim.lsp.get_clients({ name = "denols" })
+	local ts_tools_config = require("typescript-tools.config")
+	local ts_client = vim.lsp.get_clients({ name = ts_tools_config.plugin_name })[1]
 
-	if #deno_clients > 0 then
-		client.stop()
-		return
+	-- if vim.g.use_eslint or vim.g.use_prettier then
+	if ts_client then
+		lsp.disable_formatting(ts_client)
 	end
-
-	local has_biome_client = #vim.lsp.get_clients({ name = "biome" }) > 0
-
-	local mapper = require("core.utils.mapper")
-	if vim.g.use_eslint or vim.g.use_prettier or has_biome_client then
-		lsp.disable_formatting(client)
-	end
+	-- lsp.on_attach(client, bufnr)
 
 	-- mapper.nnoremap({ "gD", "<Cmd>TypescriptGoToSourceDefinition<CR>", buffer = bufnr })
 	-- no default maps, so you may want to define some here

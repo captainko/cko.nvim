@@ -4,12 +4,12 @@
 local mapper = require("core.utils.mapper")
 local commander = require("core.utils.commander")
 -- Ensure all autocommands are cleared
-vim.api.nvim_exec(
+vim.api.nvim_exec2(
 	[[
 augroup vimrc
 	autocmd!
 augroup END]],
-	false
+	{ output = false }
 )
 
 -- WARNING: it will trim spaces in string

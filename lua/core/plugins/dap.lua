@@ -6,7 +6,10 @@ local M = {
 	dependencies = {
 		"williamboman/mason.nvim",
 		"jayp0521/mason-nvim-dap.nvim",
+		"leoluz/nvim-dap-go",
 		"rcarriga/nvim-dap-ui",
+		"nvim-neotest/nvim-nio",
+		"theHamsta/nvim-dap-virtual-text",
 		"stevearc/overseer.nvim", -- Task manager
 		"Joakker/lua-json5",
 	},
@@ -24,8 +27,8 @@ function M.config()
 
 	local mason_dap = require("mason-nvim-dap")
 	mason_dap.setup({
-		automatic_setup = { adapters = {} },
-		ensure_installed = {},
+		automatic_setup = { adapters = { "delve" } },
+		ensure_installed = { "delve" },
 		automatic_installation = false,
 		handlers = {
 			require("mason-nvim-dap.automatic_setup"),
@@ -34,6 +37,9 @@ function M.config()
 			end,
 		},
 	})
+
+	require("dap-go").setup()
+	require("nvim-dap-virtual-text").setup({})
 
 	local mapper = require("core.utils.mapper")
 	local nnoremap = mapper.nnoremap

@@ -5,6 +5,7 @@
       "typescript.preferences.quoteStyle": "auto",
       "typescript.suggest.includeAutomaticOptionalChainCompletions": true,
       "typescript.suggest.includeCompletionsForImportStatements": true,
+      "typescript.tsserver.experimental.enableProjectDiagnostics": true,
       "javascript.preferences.importModuleSpecifier": "non-relative",
       "javascript.preferences.quoteStyle": "auto",
       "javascript.suggest.includeAutomaticOptionalChainCompletions": true,

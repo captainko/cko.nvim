@@ -25,7 +25,12 @@ local M = {
 	-- },
 	-- settings = { html = { format = { wrapAttributes = "force-aligned" } } },
 	root_dir = lsp.is_vue_root,
-	filetypes = { "vue", "javascript", "typescript" },
+	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+	-- init_options = {
+	-- 	vue = {
+	-- 		hybridMode = false,
+	-- 	},
+	-- },
 	on_attach = function(client, bufnr)
 		if vim.g.use_eslint or vim.g.use_prettier then
 			lsp.disable_formatting(client)

@@ -1078,8 +1078,6 @@ nv
 nvarchar
 nvidia
 nvim
-nvim_buf_delete
-nvim_buf_set_keymap
 oauth
 oauth2
 octo
@@ -1601,3 +1599,4 @@ waybar
 swaybar
 stdout
 gammastep
+fee/!

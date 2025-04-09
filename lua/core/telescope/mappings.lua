@@ -82,7 +82,7 @@ mapper.nnoremap({
 
 		last_file_type = vim.fn.input({
 			prompt = "File pattern (default:*)",
-			default = last_file_type or "*",
+			default = last_file_type or "*"
 		})
 
 		if last_file_type ~= "" then
@@ -113,7 +113,19 @@ mapper.nnoremap({
 mapper.nnoremap({
 	"<LocalLeader>f.",
 	function()
-		builtin.search_relative_files()
+		require("telescope.builtin").find_files({
+			prompt_title = "Current Folder",
+			---@diagnostic disable-next-line: missing-parameter
+			cwd = vim.fn.expand("%:p:h"),
+			find_command = {
+				"rg",
+				"--files",
+				"--iglob",
+				"!**/.git/**/*",
+				"--ignore",
+				"--hidden",
+			},
+		})
 	end,
 })
 

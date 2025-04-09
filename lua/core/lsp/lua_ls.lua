@@ -13,7 +13,7 @@ require("neodev").setup({
 local M = {
 	settings = {
 		Lua = {
-			runtime = { version = "LuaJIT", special = { ["R"] = "require", ["PR"] = "require" } },
+			runtime = { version = "LuaJIT", special = { ["R"] = "require" } },
 			diagnostics = {
 				globals = {
 					"vim",

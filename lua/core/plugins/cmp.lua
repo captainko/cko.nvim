@@ -17,7 +17,7 @@ local M = {
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-calc",
 			-- "hrsh7th/cmp-nvim-lsp-signature-help",
-			-- { "hrsh7th/cmp-copilot", after = "nvim-cmp" },
+			{ "hrsh7th/cmp-copilot", after = "nvim-cmp" },
 			"saadparwaiz1/cmp_luasnip",
 			"hrsh7th/cmp-cmdline", -- cmd complete
 			"hrsh7th/cmp-nvim-lsp-document-symbol",

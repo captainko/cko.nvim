@@ -2,6 +2,7 @@
 local M = {
 	"NTBBloodbath/rest.nvim",
 	ft = { "http" },
+	enabled = false,
 }
 
 function M.config()
@@ -16,7 +17,7 @@ function M.config()
 		-- Highlight request on run
 		highlight = { enabled = true, timeout = 150 },
 		-- Jump to request line on run
-		jump_to_request = false,
+		-- jump_to_request = false,
 		result = { formatters = { json = "jq" } },
 	})
 

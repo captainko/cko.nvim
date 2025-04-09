@@ -10,6 +10,7 @@ local M = vim.lsp.protocol.Methods
 local style = require("core.global.style")
 local icons = style.icons
 local commander = require("core.utils.commander")
+local lsp_utils = require("core.utils.lsp")
 -- local border = core.ui.current.border
 local augroup = commander.augroup
 
@@ -78,11 +79,30 @@ local function show_related_locations(diag)
 	return diag
 end
 
-local handler = lsp.handlers[M.textDocument_publishDiagnostics]
+local publish_diagnostics_handler = lsp.handlers[M.textDocument_publishDiagnostics]
 ---@diagnostic disable-next-line: duplicate-set-field
-lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx, config)
+lsp.handlers[M.textDocument_publishDiagnostics] = function(err, result, ctx)
 	result.diagnostics = vim.tbl_map(show_related_locations, result.diagnostics)
-	handler(err, result, ctx, config)
+	publish_diagnostics_handler(err, result, ctx)
+end
+
+local inlay_hint_handler = vim.lsp.handlers[M.textDocument_inlayHint]
+lsp.handlers[M.textDocument_inlayHint] = function(err, result, ctx)
+	local client = vim.lsp.get_client_by_id(ctx.client_id)
+	if client and client.name == "typescript-tools" then
+		result = vim.iter(result)
+			:map(function(hint)
+				local label = hint.label ---@type string
+				if label:len() >= 30 then
+					label = label:sub(1, 29) .. icons.misc.ellipsis
+				end
+				hint.label = label
+				return hint
+			end)
+			:totable()
+	end
+
+	inlay_hint_handler(err, result, ctx)
 end
 
 -----------------------------------------------------------------------------//
@@ -172,8 +192,7 @@ local function setup_mappings(client, bufnr)
 			'<leader>gd',
 			lsp.buf.type_definition,
 			desc = 'go to type definition',
-			capability = M
-					.textDocument_definition
+			capability = M.textDocument_definition
 		},
 		-- stylua: ignore end
 		{
@@ -192,6 +211,8 @@ local function setup_mappings(client, bufnr)
 			desc = "inlay hints toggle",
 			capability = M.textDocument_inlayHint,
 		},
+		{ "n", "<leader>ff", lsp.buf.format, desc = "format file", capability = M.textDocument_formatting },
+		{ "v", "<leader>ff", lsp.buf.format, desc = "format range", capability = M.textDocument_rangeFormatting },
 		{ "n", "<leader>rr", lsp.buf.rename, desc = "rename", capability = M.textDocument_rename },
 		{ "n", "<leader>rm", rename_file, desc = "rename file", capability = M.textDocument_rename },
 		{
@@ -242,6 +263,25 @@ local client_overrides = {
 			end
 		end,
 	},
+	["typescript-tools"] = {
+		on_attach = function(client, bufnr)
+			local biome_client = vim.lsp.get_clients({ name = "biome" })[1]
+
+			if biome_client then
+				lsp_utils.disable_formatting(client)
+			end
+		end,
+	},
+	biome = {
+		on_attach = function(client, bufnr)
+			local ts_tools_config = require("typescript-tools.config")
+			local ts_client = vim.lsp.get_clients({ name = ts_tools_config.plugin_name })[1]
+
+			if ts_client then
+				lsp_utils.disable_formatting(ts_client)
+			end
+		end,
+	},
 }
 
 -- -----------------------------------------------------------------------------//
@@ -272,7 +312,7 @@ local client_overrides = {
 ---@param buf integer
 local function setup_autocommands(client, buf)
 	if client.supports_method(M.textDocument_codeLens) then
-		augroup(("LspCodeLens%d"):format(buf), {
+		augroup(("LspCodeLens%d"):format(buf or vim.api.nvim_get_current_buf()), {
 			event = { "BufEnter", "InsertLeave", "BufWritePost" },
 			desc = "LSP: Code Lens",
 			buffer = buf,
@@ -313,9 +353,9 @@ end
 ---@param client vim.lsp.Client the lsp client
 ---@param bufnr number
 local function on_attach(client, bufnr)
+	bufnr = bufnr or api.nvim_get_current_buf()
 	setup_autocommands(client, bufnr)
 	setup_mappings(client, bufnr)
-	-- setup_semantic_tokens(client, bufnr)
 end
 
 augroup("LspSetupCommands", {
@@ -327,12 +367,13 @@ augroup("LspSetupCommands", {
 			if not client then
 				return
 			end
-			on_attach(client, args.buf)
+
 			local overrides = client_overrides[client.name]
-			if not overrides or not overrides.on_attach then
-				return
+			if overrides and overrides.on_attach then
+				overrides.on_attach(client, args.buf)
 			end
-			overrides.on_attach(client, args.buf)
+
+			on_attach(client, args.buf)
 		end,
 	},
 	{
@@ -346,6 +387,18 @@ augroup("LspSetupCommands", {
 		end,
 	},
 })
+
+local crc = lsp.handlers[M.client_registerCapability]
+lsp.handlers[M.client_registerCapability] = function(error, result, ctx)
+	local r = crc(error, result, ctx)
+	local client = vim.lsp.get_client_by_id(ctx.client_id)
+
+	if client then
+		on_attach(client, ctx.bufnr)
+	end
+
+	return r
+end
 
 -----------------------------------------------------------------------------//
 -- Handler Overrides
@@ -392,7 +445,6 @@ diagnostic.config({
 	update_in_insert = false,
 	severity_sort = true,
 	signs = {
-		severity = { min = S.WARN },
 		text = {
 			[S.WARN] = icons.warn,
 			[S.INFO] = icons.info,
